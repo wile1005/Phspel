@@ -127,7 +127,7 @@
             //plockar upp ett object
             if(array_key_exists('pickup', $_POST))
             {
-              
+
               for ($i=0; $i < 5; $i++)
               {
                 if ($_SESSION["inventory"][$i]=="null")
@@ -259,6 +259,7 @@
                     echo "<br>";
                 }
             }
+            $_POST = array();
           ?>
         </div>
       </div>
