@@ -21,10 +21,25 @@
         <div class="php">
           <?php
             session_start();
+            //loggar in i databas
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "phspel";
 
+            //connects to mysqli server
+            $conn = new mysqli($servername, $username, $password, $dbname);
+            // Check connection
+            if ($conn->connect_error)
+            {
+                die("Connection failed: " . $conn->connect_error);
+            }
+            $sql = "SELECT `array2d` FROM `map` order by id desc limit 1";
+            $result = $conn->query($sql);
             //offset Variabler
             $X = 0;
             $Y = 0;
+
             //fixar variabler
             $_SESSION["craftmode"];
             $_SESSION["player_X"];
@@ -37,9 +52,70 @@
               $_SESSION["player_Y"]=2;
               //array som är inventory
               $_SESSION["inventory"] = array("null","null","null","null","null");
-              //array med kartan i
-              //1 = grass
-              //2 = tree
+            }
+
+            //ny kart variabelfixinator
+            while($row = $result->fetch_assoc())
+            {
+                $_SESSION["array2D"]=json_decode($row["array2d"]);
+                echo json_decode($row["array2d"])[1][1];
+            }
+
+            //rörelsekod för spelet
+            if(array_key_exists('upp', $_POST))
+            {
+              //Rörelse kod för ner
+              if ($_SESSION["player_X"]!=0 && movecheck($_SESSION["array2D"], $_SESSION["player_X"]-1, $_SESSION["player_Y"])==true)
+              {
+                echo "walk up";
+                $_SESSION["player_X"] -= 1;
+              }else
+              {
+                hit($X-1,$Y,$conn);
+              }
+
+            }else if(array_key_exists('down', $_POST))
+            {
+              //Rörelse kod för upp
+              if ($_SESSION["player_X"]!=10 && movecheck($_SESSION["array2D"], $_SESSION["player_X"]+1, $_SESSION["player_Y"])==true)
+              {
+                echo "walk down";
+                $_SESSION["player_X"] += 1;
+              }else
+              {
+                hit($X+1,$Y+0,$conn);
+              }
+
+            }else if(array_key_exists('left', $_POST))
+            {
+              //Rörelse kod för vänster
+              if ($_SESSION["player_Y"]!=0 && movecheck($_SESSION["array2D"], $_SESSION["player_X"], $_SESSION["player_Y"]-1)==true)
+              {
+                echo "walk left";
+                $_SESSION["player_Y"] -= 1;
+              }else
+              {
+                hit($X+0,$Y-1,$conn);
+              }
+
+            }else if(array_key_exists('right', $_POST))
+            {
+              //Rörelse kod för höger
+              if ($_SESSION["player_Y"]!=17 && movecheck($_SESSION["array2D"], $_SESSION["player_X"], $_SESSION["player_Y"]+1)==true)
+              {
+                echo "walk right";
+                $_SESSION["player_Y"] += 1;
+              }else
+              {
+                hit($X+0,$Y+1,$conn);
+              }
+
+              //funktion som nollställer variabler
+            }else if(array_key_exists('reset', $_POST))
+            {
+              $_SESSION["inventory"] = array("null","null","null","null","null");
+              $_SESSION["player_X"]=2;
+              $_SESSION["player_Y"]=2;
               $_SESSION["array2D"] = array(
                   array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 5, 5, 5, 5, 5),
                   array(1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 4, 5, 5, 5, 5),
@@ -53,61 +129,8 @@
                   array(1, 1, 2, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
                   array(1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
               );
-            }
-
-
-            //rörelsekod för spelet
-            if(array_key_exists('upp', $_POST))
-            {
-              //Rörelse kod för ner
-              if ($_SESSION["player_X"]!=0 && movecheck($_SESSION["array2D"], $_SESSION["player_X"]-1, $_SESSION["player_Y"])==true)
-              {
-                echo "walk up";
-                $_SESSION["player_X"] -= 1;
-              }else
-              {
-                hit($X-1,$Y);
-              }
-
-            }else if(array_key_exists('down', $_POST))
-            {
-              //Rörelse kod för upp
-              if ($_SESSION["player_X"]!=10 && movecheck($_SESSION["array2D"], $_SESSION["player_X"]+1, $_SESSION["player_Y"])==true)
-              {
-                echo "walk down";
-                $_SESSION["player_X"] += 1;
-              }else
-              {
-                hit($X+1,$Y+0);
-              }
-
-            }else if(array_key_exists('left', $_POST))
-            {
-              //Rörelse kod för vänster
-              if ($_SESSION["player_Y"]!=0 && movecheck($_SESSION["array2D"], $_SESSION["player_X"], $_SESSION["player_Y"]-1)==true)
-              {
-                echo "walk left";
-                $_SESSION["player_Y"] -= 1;
-              }else
-              {
-                hit($X+0,$Y-1);
-              }
-
-            }else if(array_key_exists('right', $_POST))
-            {
-              //Rörelse kod för höger
-              if ($_SESSION["player_Y"]!=17 && movecheck($_SESSION["array2D"], $_SESSION["player_X"], $_SESSION["player_Y"]+1)==true)
-              {
-                echo "walk right";
-                $_SESSION["player_Y"] += 1;
-              }else
-              {
-                hit($X+0,$Y+1);
-              }
-
-            }else if(array_key_exists('reset', $_POST))
-            {
-              session_destroy();
+              $sql = "INSERT INTO `map` (`id`, `vard`, `array2d`) VALUES (NULL, '1', '".json_encode($_SESSION["array2D"])."');";
+              $result = $conn->query($sql);
             }
 
             //placerar object
@@ -139,14 +162,14 @@
               }
             }
 
-
+            //uppdaterar databasen och grafiken
             Gfx($_SESSION["array2D"], $_SESSION["player_X"], $_SESSION["player_Y"]);
 
+
             //kollar om tilen kan bli slagen
-            function hit($X ,$Y)
+            function hit($X ,$Y,$conn)
             {
-              echo $Y;
-              echo $Y;
+              echo $X."-".$Y;
               if ($_SESSION["array2D"][$_SESSION["player_X"]+$X][$_SESSION["player_Y"]+$Y]==2)
               {
                 $_SESSION["array2D"][$_SESSION["player_X"]+$X][$_SESSION["player_Y"]+$Y]=1;
@@ -193,7 +216,6 @@
               }
 
             }
-
 
             //tror den fixar inventory grafik??? kanske flyttar till gfx funktionen
             for ($i=0; $i < 5; $i++)
@@ -259,10 +281,20 @@
                     echo "<br>";
                 }
             }
-            $_POST = array();
+            $sql = "INSERT INTO `map` (`id`, `vard`, `array2d`) VALUES (NULL, '1', '".json_encode($_SESSION["array2D"])."');";
+            $result = $conn->query($sql);
+            $sql = "DELETE FROM `map` WHERE `map`.`id` = 2"
           ?>
         </div>
       </div>
+
+
+
+
+
+
+
+
       <div id="craft">
 
         <form method="post" id="craftbutton">
