@@ -2,6 +2,7 @@
 {
   margin: 0;
   padding: 0;
+  gap: 0;
 }
 body
 {
@@ -11,7 +12,17 @@ body
 #spel
 {
   padding-top: 2vh;
-  background-color: white;
+  background-color: #4b692f;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#meny
+{
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  background-color: #4b692f;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -24,6 +35,13 @@ body
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
+#wrap2
+{
+  margin: 3vh;
+  grid-gap: 5vh;
+  display: grid;
+  grid-template-columns: 1fr;
+}
 #craftbutton
 {
   gap: 1vh;
@@ -31,4 +49,8 @@ body
   display: flex;
   flex-direction: column;
   padding: 5vh;
+}
+img
+{
+  margin-top: -10px;
 }

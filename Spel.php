@@ -17,6 +17,14 @@
                 <input id="place" type="submit" name="place" class="button" value="place" />
                 <input id="pickup" type="submit" name="pickup" class="button" value="pickup" />
                 <input id="reset" type="submit" name="reset" class="button" value="reset" />
+                <input id="drop" type="submit" name="drop" class="button" value="drop" />
+            </form>
+            <form class="" method="post">
+              <input id="1" type="submit" name="1" class="button" value="1" />
+              <input id="2" type="submit" name="2" class="button" value="2" />
+              <input id="3" type="submit" name="3" class="button" value="3" />
+              <input id="4" type="submit" name="4" class="button" value="4" />
+              <input id="5" type="submit" name="5" class="button" value="5" />
             </form>
         <div class="php">
           <?php
@@ -41,26 +49,29 @@
             $Y = 0;
 
             //fixar variabler
+            $_SESSION["num"];
             $_SESSION["craftmode"];
             $_SESSION["player_X"];
             $_SESSION["player_Y"];
             $_SESSION["array2D"];
-            if ($_SESSION["player_Y"] === null && $_SESSION["player_X"] === null || $_SESSION["array2D"] === null)
+            if ($_SESSION["player_Y"] === null && $_SESSION["player_X"] === null || $_SESSION["array2D"] === null || $_SESSION["num"] === null)
             {
               $_SESSION["craftmode"]="null";
-              $_SESSION["player_X"]=2;
               $_SESSION["player_Y"]=2;
+              $_SESSION["player_X"]=2;
               //array som är inventory
               $_SESSION["inventory"] = array("null","null","null","null","null");
-            }
 
+            }
+            echo ($_SESSION["num"]);
             //ny kart variabelfixinator
+            $sql = "SELECT `array2d` FROM `map`";
             while($row = $result->fetch_assoc())
             {
                 $_SESSION["array2D"]=json_decode($row["array2d"]);
-                echo json_decode($row["array2d"])[1][1];
+                echo json_decode($row["array2d"])[1][1].". ";
             }
-
+            echo "player id ".($_SESSION["playerid"].". ");
             //rörelsekod för spelet
             if(array_key_exists('upp', $_POST))
             {
@@ -77,7 +88,7 @@
             }else if(array_key_exists('down', $_POST))
             {
               //Rörelse kod för upp
-              if ($_SESSION["player_X"]!=10 && movecheck($_SESSION["array2D"], $_SESSION["player_X"]+1, $_SESSION["player_Y"])==true)
+              if ($_SESSION["player_X"]!=12 && movecheck($_SESSION["array2D"], $_SESSION["player_X"]+1, $_SESSION["player_Y"])==true)
               {
                 echo "walk down";
                 $_SESSION["player_X"] += 1;
@@ -101,7 +112,7 @@
             }else if(array_key_exists('right', $_POST))
             {
               //Rörelse kod för höger
-              if ($_SESSION["player_Y"]!=17 && movecheck($_SESSION["array2D"], $_SESSION["player_X"], $_SESSION["player_Y"]+1)==true)
+              if ($_SESSION["player_Y"]!=19 && movecheck($_SESSION["array2D"], $_SESSION["player_X"], $_SESSION["player_Y"]+1)==true)
               {
                 echo "walk right";
                 $_SESSION["player_Y"] += 1;
@@ -109,27 +120,54 @@
               {
                 hit($X+0,$Y+1,$conn);
               }
+            }
+            //ändrar vilken slot som är selectad
+            if (array_key_exists('drop', $_POST))
+            {
+              $_SESSION[$_SESSION["num"]] = "null";
+            }
 
-              //funktion som nollställer variabler
-            }else if(array_key_exists('reset', $_POST))
+
+            //ändrar vilken slot som är selectad
+            if (array_key_exists('1', $_POST))
+            {
+              $_SESSION["num"] = 0;
+            }elseif (array_key_exists('2', $_POST))
+            {
+              $_SESSION["num"] = 1;
+            }elseif (array_key_exists('3', $_POST))
+            {
+              $_SESSION["num"] = 2;
+            }elseif (array_key_exists('4', $_POST))
+            {
+              $_SESSION["num"] = 3;
+            }elseif (array_key_exists('5', $_POST))
+            {
+              $_SESSION["num"] = 4;
+            }
+
+            //funktion som nollställer databasen
+            if(array_key_exists('reset', $_POST))
             {
               $_SESSION["inventory"] = array("null","null","null","null","null");
               $_SESSION["player_X"]=2;
               $_SESSION["player_Y"]=2;
               $_SESSION["array2D"] = array(
-                  array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 5, 5, 5, 5, 5),
-                  array(1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 4, 5, 5, 5, 5),
-                  array(1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 4, 5, 4, 5, 5),
-                  array(1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 5, 5),
-                  array(1, 1, 2, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 5),
-                  array(1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4),
-                  array(1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-                  array(1, 1, 2, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-                  array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-                  array(1, 1, 2, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-                  array(1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+                  array(8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8),
+                  array(8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 5, 5, 5, 7, 7, 7, 8),
+                  array(8, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 4, 5, 5, 7, 6, 6, 8),
+                  array(8, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 4, 5, 4, 5, 6, 6, 8),
+                  array(8, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 5, 6, 5, 8),
+                  array(8, 1, 1, 2, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 5, 5, 8),
+                  array(8, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 8),
+                  array(8, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 8),
+                  array(8, 1, 1, 2, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 8),
+                  array(8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 8),
+                  array(8, 1, 1, 2, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 8),
+                  array(8, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 8),
+                  array(8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8),
               );
-              $sql = "INSERT INTO `map` (`id`, `vard`, `array2d`) VALUES (NULL, '1', '".json_encode($_SESSION["array2D"])."');";
+              $sql = "UPDATE `map` SET `array2d` = '".json_encode($_SESSION["array2D"])."' WHERE `map`.`id` = 1;";
               $result = $conn->query($sql);
             }
 
@@ -138,22 +176,26 @@
             {
               for ($i=0; $i < 5; $i++)
               {
-                if ($_SESSION["inventory"][$i]=="workbench")
+                if ($_SESSION["inventory"][$i]=="workbench"&&$_SESSION["array2D"][$_SESSION["player_X"]][$_SESSION["player_Y"]]!=3 && $_SESSION["num"] == $i)
                 {
                   $_SESSION["inventory"][$i] = "null";
                   $_SESSION["array2D"][$_SESSION["player_X"]][$_SESSION["player_Y"]]=3;
                   break;
+                }elseif ($_SESSION["inventory"][$i]=="Furnace"&&$_SESSION["array2D"][$_SESSION["player_X"]][$_SESSION["player_Y"]]!=9 && $_SESSION["num"] == $i)
+                {
+                  $_SESSION["inventory"][$i] = "null";
+                  $_SESSION["array2D"][$_SESSION["player_X"]][$_SESSION["player_Y"]]=9;
+                  break;
                 }
               }
             }
-
             //plockar upp ett object
-            if(array_key_exists('pickup', $_POST))
+            else if(array_key_exists('pickup', $_POST))
             {
 
               for ($i=0; $i < 5; $i++)
               {
-                if ($_SESSION["inventory"][$i]=="null")
+                if ($_SESSION["inventory"][$i]=="null"&&$_SESSION["array2D"][$_SESSION["player_X"]][$_SESSION["player_Y"]]==3 && $_SESSION["num"]==$i)
                 {
                   $_SESSION["inventory"][$i] = "workbench";
                   $_SESSION["array2D"][$_SESSION["player_X"]][$_SESSION["player_Y"]]=1;
@@ -161,10 +203,6 @@
                 }
               }
             }
-
-            //uppdaterar databasen och grafiken
-            Gfx($_SESSION["array2D"], $_SESSION["player_X"], $_SESSION["player_Y"]);
-
 
             //kollar om tilen kan bli slagen
             function hit($X ,$Y,$conn)
@@ -188,7 +226,7 @@
                 echo "hit stone";
                 for ($i=0; $i <5 ; $i++)
                 {
-                  if ($_SESSION["inventory"][$i] == "Wood_pickaxe")
+                  if ($_SESSION["inventory"][$i] == "Wood_pickaxe"&&$_SESSION["num"]==$i||$_SESSION["inventory"][$i] == "stone_pickaxe"&&$_SESSION["num"]==$i)
                   {
                     $_SESSION["array2D"][$_SESSION["player_X"]+$X][$_SESSION["player_Y"]+$Y]=4;
                     for ($j=0; $j < 5; $j++)
@@ -202,12 +240,50 @@
                   }
                 }
               }
+              if ($_SESSION["array2D"][$_SESSION["player_X"]+$X][$_SESSION["player_Y"]+$Y]==6)
+              {
+                echo "hit iron ore";
+                for ($i=0; $i <5 ; $i++)
+                {
+                  if ($_SESSION["inventory"][$i] == "stone_pickaxe"&&$_SESSION["num"]==$i)
+                  {
+                    $_SESSION["array2D"][$_SESSION["player_X"]+$X][$_SESSION["player_Y"]+$Y]=4;
+                    for ($j=0; $j < 5; $j++)
+                    {
+                      if ($_SESSION["inventory"][$j] == "null")
+                      {
+                        $_SESSION["inventory"][$j] = "raw_iron";
+                        break;
+                      }
+                    }
+                  }
+                }
+              }
+              if ($_SESSION["array2D"][$_SESSION["player_X"]+$X][$_SESSION["player_Y"]+$Y]==7)
+              {
+                echo "hit redstone ore";
+                for ($i=0; $i <5 ; $i++)
+                {
+                  if ($_SESSION["inventory"][$i] == "iron_pickaxe"&&$_SESSION["num"]==$i)
+                  {
+                    $_SESSION["array2D"][$_SESSION["player_X"]+$X][$_SESSION["player_Y"]+$Y]=4;
+                    for ($j=0; $j < 5; $j++)
+                    {
+                      if ($_SESSION["inventory"][$j] == "null")
+                      {
+                        $_SESSION["inventory"][$j] = "redstone";
+                        break;
+                      }
+                    }
+                  }
+                }
+              }
             }
 
             //checkar om spelaren kan ta sig till nästa tile
             function movecheck($array, $playerX, $playerY)
             {
-              if ($array[$playerX][$playerY] == 2||$array[$playerX][$playerY]==5)
+              if ($array[$playerX][$playerY] == 2||$array[$playerX][$playerY]==5||$array[$playerX][$playerY]==6||$array[$playerX][$playerY]==7||$array[$playerX][$playerY]==8)
               {
                 return(false);
               }else
@@ -216,75 +292,11 @@
               }
 
             }
-
-            //tror den fixar inventory grafik??? kanske flyttar till gfx funktionen
-            for ($i=0; $i < 5; $i++)
-            {
-              if ($_SESSION["inventory"][$i]=="null")
-              {
-                echo "<img src='image/slot.jpg' alt=''>";
-              }else
-              {
-                echo "<img src='image/".$_SESSION["inventory"][$i].".jpg' alt=''>";
-              }
-
-            }
-
-            //grafiken till spelet
-            function Gfx($array, $playerX, $playerY)
-            {
-              echo "<br>";
-                for ($X=-2+$playerX; $X < 3+$playerX; $X++)
-                {
-                    for ($Y=-2+$playerY; $Y < 3+$playerY; $Y++)
-                    {
-                      if ($X > -1 && $Y > -1 && $X < 11 && $Y < 18)
-                      {
-                        if ($playerX == $X && $playerY == $Y)
-                        {
-                          if ($array[$X][$Y]==3)
-                          {
-                            $_SESSION["craftmode"]="bench";
-                            echo "<img src='image/crafting.jpg' alt=''>";
-                          }elseif ($array[$X][$Y]==4)
-                          {
-                            echo "<img src='image/Player-stone.jpg' alt=''>";
-                          }else
-                          {
-                            $_SESSION["craftmode"]="null";
-                            echo "<img src='image/Player.jpg' alt=''>";
-                          }
-                        }elseif ($array[$X][$Y] == 1)
-                        {
-
-                          echo "<img src='image/grass".rand(1,2).".jpg' alt=''>";
-                        }elseif ($array[$X][$Y] == 2)
-                        {
-                          echo "<img src='image/tree.jpg' alt=''>";
-                        }elseif ($array[$X][$Y] == 3)
-                        {
-                          echo "<img src='image/workbench_place.jpg' alt=''>";
-                        }elseif ($array[$X][$Y] == 4)
-                        {
-                          echo "<img src='image/stone_floor.jpg' alt=''>";
-                        }elseif ($array[$X][$Y] == 5)
-                        {
-                          echo "<img src='image/stone_wall.jpg' alt=''>";
-                        }else
-                        {
-                          $value = $array[$X][$Y];
-                          echo $value;
-                        }
-                      }
-
-                    }
-                    echo "<br>";
-                }
-            }
-            $sql = "INSERT INTO `map` (`id`, `vard`, `array2d`) VALUES (NULL, '1', '".json_encode($_SESSION["array2D"])."');";
+            $sql = "UPDATE `map` SET `array2d` = '".json_encode($_SESSION["array2D"])."' WHERE `map`.`id` = 1;";
             $result = $conn->query($sql);
-            $sql = "DELETE FROM `map` WHERE `map`.`id` = 2"
           ?>
+          <br>
+          <iframe src="GFX.php" width="540" height="650"></iframe>
         </div>
       </div>
 
@@ -304,6 +316,8 @@
                 <input id="stick" type="submit" name="stick" class="button" value="stick" />
                 <input id="sword" type="submit" name="sword" class="button" value="sword" />
                 <input id="Wood_pickaxe" type="submit" name="Wood_pickaxe" class="button" value="Wood pickaxe" />
+                <input id="Stone_pickaxe" type="submit" name="Stone_pickaxe" class="button" value="Stone pickaxe" />
+                <input id="Furnace" type="submit" name="Furnace" class="button" value="Furnace" />
         </form>
 
         <div class="php">
@@ -341,6 +355,7 @@
           {
             for ($i=0; $i <5 ; $i++)
             {
+              echo ($_SESSION["craftmode"]);
               if ($_SESSION["inventory"][$i]=="plank"&&$_SESSION["craftmode"]=="bench")
               {
                 $_SESSION["inventory"][$i] ="stick";
@@ -383,8 +398,50 @@
                 break;
               }
             }
+          }else if(array_key_exists('Stone_pickaxe', $_POST))
+          {
+            for ($i=0; $i <5 ; $i++)
+            {
+              if ($_SESSION["inventory"][$i]=="stone"&&$_SESSION["craftmode"]=="bench")
+              {
+                for ($j=0; $j < 5; $j++)
+                {
+                  if ($_SESSION["inventory"][$j]=="stick")
+                  {
+                    for ($k=0; $k < 5; $k++)
+                    {
+                      if ($_SESSION["inventory"][$k]=="Wood_pickaxe")
+                      {
+                        $_SESSION["inventory"][$i] ="stone_pickaxe";
+                        $_SESSION["inventory"][$j] ="null";
+                        $_SESSION["inventory"][$k] ="null";
+                        break;
+                      }
+                    }
+                  }
+                }
+                break;
+              }
+            }
+          }else if(array_key_exists('Furnace', $_POST))
+          {
+            for ($i=0; $i <5 ; $i++)
+            {
+              if ($_SESSION["inventory"][$i]=="stone")
+              {
+                for ($j=0; $j < 5; $j++)
+                {
+                  if ($_SESSION["inventory"][$i]=="stone"&&$_SESSION["inventory"][$j]=="stone"&& $i!=$j)
+                  {
+                    $_SESSION["inventory"][$i] ="Furnace";
+                    $_SESSION["inventory"][$j] ="null";
+                    break;
+                  }
+                }
+                break;
+              }
+            }
           }
-
           ?>
         </div>
       </div>
@@ -396,23 +453,82 @@
     document.addEventListener('keydown', function(event) {
       if(event.keyCode == 37) {
           console.log('left');
-          //submit left
+          //trycker left
           document.getElementById("left").click();
       }
       else if(event.keyCode == 38) {
           console.log('up');
-          //submit up
+          //trycker up
           document.getElementById("up").click();
       }
       else if(event.keyCode == 39) {
           console.log('right');
-          //submit right
+          //trycker right
           document.getElementById("right").click();
       }
       else if(event.keyCode == 40) {
           console.log('down');
-          //submit down
+          //trycker down
           document.getElementById("down").click();
+      }else if(event.keyCode == 65) {
+          console.log('left');
+          //trycker left
+          document.getElementById("left").click();
+      }
+      else if(event.keyCode == 87) {
+          console.log('up');
+          //trycker up
+          document.getElementById("up").click();
+      }
+      else if(event.keyCode == 68) {
+          console.log('right');
+          //trycker right
+          document.getElementById("right").click();
+      }
+      else if(event.keyCode == 83) {
+          console.log('down');
+          //trycker down
+          document.getElementById("down").click();
+      }
+      else if(event.keyCode == 49) {
+          console.log('1');
+          //trycker 1
+          document.getElementById("1").click();
+      }
+      else if(event.keyCode == 50) {
+          console.log('2');
+          //trycker 2
+          document.getElementById("2").click();
+      }
+      else if(event.keyCode == 51) {
+          console.log('3');
+          //trycker 3
+          document.getElementById("3").click();
+      }
+      else if(event.keyCode == 52) {
+          console.log('4');
+          //trycker 4
+          document.getElementById("4").click();
+      }
+      else if(event.keyCode == 53) {
+          console.log('5');
+          //trycker 5
+          document.getElementById("5").click();
+      }
+      else if(event.keyCode == 13) {
+          console.log('place');
+          //trycker place
+          document.getElementById("place").click();
+      }
+      else if(event.keyCode == 81) {
+          console.log('pickup');
+          //trycker pickup
+          document.getElementById("pickup").click();
+      }
+      else if(event.keyCode == 69) {
+          console.log('drop');
+          //trycker pickup
+          document.getElementById("drop").click();
       }
     });
 </script>
