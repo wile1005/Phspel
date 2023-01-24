@@ -9,10 +9,21 @@ body
   background-color: #10f40b;
   width: 100%;
 }
+#php
+{
+  
+  top: 0;
+}
+#php p
+{
+  margin-bottom: 1.5vh;
+}
 #spel
 {
+  height: 700px;
+  margin-top: 2vh;
   padding-top: 2vh;
-  background-color: #4b692f;
+  background-color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -50,7 +61,55 @@ body
   flex-direction: column;
   padding: 5vh;
 }
+#admin
+{
+  position: relative;
+  left: 0;
+}
+#user_info
+{
+  width: 20vh;
+}
+#user_edit
+{
+  width: 25vh;
+  padding-bottom: 2vh;
+  padding-left: 5vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#user_actions
+{
+  width: 25vh;
+  padding-bottom: 2vh;
+  padding-left: 5vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#user
+{
+  margin-top: 1vh;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  padding-left: 5vh;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 img
 {
-  margin-top: -10px;
+  margin-top: -5px;
+}
+#a1
+{
+  background-color: #4b692f;
+}
+#a2
+{
+  background-color: #696b6a;
 }
