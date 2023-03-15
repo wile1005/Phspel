@@ -31,9 +31,6 @@ setInterval(() => {
     //selectar spelar tabelen och tar playery och playerx variablarna
     $sql = "SELECT `playerx`,`playery` FROM `player`";
     $result = $conn->query($sql);
-    //uptaterar spelar tabelens x och y värde
-    $sql = "UPDATE `player` SET `playerx` = '$playerX', `playery` = '$playerY' WHERE `player`.`id` = '".$_SESSION["playerid"]."';";
-    $result = $conn->query($sql);
     //???
     $sql = "SELECT `playerx`,`playery`,`id` FROM `player`;";
     $result = $conn->query($sql);
@@ -79,18 +76,18 @@ setInterval(() => {
                   if ($array[$X][$Y]==3)
                   {
                     $_SESSION["craftmode"]="bench";
-                    echo "<img src='image/crafting.png' alt='' id='".$_SESSION["background"][$X][$Y]."' >";
+                    echo "<img src='../image/crafting.png' alt='' id='".$_SESSION["background"][$X][$Y]."' >";
                   }elseif ($array[$X][$Y]==9)
                   {
                     $_SESSION["craftmode"]="furnace";
-                    echo "<img src='image/furnacing.png' alt='' id='".$_SESSION["background"][$X][$Y]."' >";
+                    echo "<img src='../image/furnacing.png' alt='' id='".$_SESSION["background"][$X][$Y]."' >";
                   }else
                   {
                     if ($id==$_SESSION["playerid"])
                     {
                       $_SESSION["craftmode"]="null";
                     }
-                    echo "<img src='image/Player.png' alt='' id='".$_SESSION["background"][$X][$Y]."' >";
+                    echo "<img src='../image/Player.png' alt='' id='".$_SESSION["background"][$X][$Y]."' >";
                   }
                   $playerprint = true;
                   break;
@@ -105,31 +102,31 @@ setInterval(() => {
               {
                 if ($array[$X][$Y] == 1)
                 {
-                  echo "<img src='image/grass".rand(1,2).".png' alt='' id='".$_SESSION["background"][$X][$Y]."' >";
+                  echo "<img src='../image/grass".rand(1,2).".png' alt='' id='".$_SESSION["background"][$X][$Y]."' >";
                 }elseif ($array[$X][$Y] == 2)
                 {
-                  echo "<img src='image/tree.png' alt='' id='".$_SESSION["background"][$X][$Y]."' >";
+                  echo "<img src='../image/tree.png' alt='' id='".$_SESSION["background"][$X][$Y]."' >";
                 }elseif ($array[$X][$Y] == 3)
                 {
-                  echo "<img src='image/workbench_place.png' alt='' id='".$_SESSION["background"][$X][$Y]."' >";
+                  echo "<img src='../image/workbench_place.png' alt='' id='".$_SESSION["background"][$X][$Y]."' >";
                 }elseif ($array[$X][$Y] == 4)
                 {
-                  echo "<img src='image/stone_floor.png' alt='' id='".$_SESSION["background"][$X][$Y]."' >";
+                  echo "<img src='../image/stone_floor.png' alt='' id='".$_SESSION["background"][$X][$Y]."' >";
                 }elseif ($array[$X][$Y] == 5)
                 {
-                  echo "<img src='image/stone_wall.png' alt='' id='".$_SESSION["background"][$X][$Y]."' >";
+                  echo "<img src='../image/stone_wall.png' alt='' id='".$_SESSION["background"][$X][$Y]."' >";
                 }elseif ($array[$X][$Y] == 6)
                 {
-                  echo "<img src='image/iron_ore.png' alt='' id='".$_SESSION["background"][$X][$Y]."' >";
+                  echo "<img src='../image/iron_ore.png' alt='' id='".$_SESSION["background"][$X][$Y]."' >";
                 }elseif ($array[$X][$Y] == 7)
                 {
-                  echo "<img src='image/redstone_ore.png' alt='' id='".$_SESSION["background"][$X][$Y]."' >";
+                  echo "<img src='../image/redstone_ore.png' alt='' id='".$_SESSION["background"][$X][$Y]."' >";
                 }elseif ($array[$X][$Y] == 8)
                 {
-                  echo "<img src='image/bedrock.jpg' alt='' id='".$_SESSION["background"][$X][$Y]."' >";
+                  echo "<img src='../image/bedrock.jpg' alt='' id='".$_SESSION["background"][$X][$Y]."' >";
                 }elseif ($array[$X][$Y] == 9)
                 {
-                  echo "<img src='image/furnace_place.png' alt='' id='".$_SESSION["background"][$X][$Y]."' >";
+                  echo "<img src='../image/furnace_place.png' alt='' id='".$_SESSION["background"][$X][$Y]."' >";
                 }else
                 {
                   if ($id==$_SESSION["playerid"])
@@ -153,10 +150,10 @@ setInterval(() => {
       {
         if ($_SESSION["inventory"][$i]=="null")
         {
-          echo "<img src='image/slot.jpg' alt=''>";
+          echo "<img src='../image/slot.jpg' alt=''>";
         }else
         {
-          echo "<img src='image/".$_SESSION["inventory"][$i].".jpg' alt=''>";
+          echo "<img src='../image/".$_SESSION["inventory"][$i].".jpg' alt=''>";
         }
 
       }
@@ -165,10 +162,10 @@ setInterval(() => {
       {
         if ($i==$_SESSION["num"])
         {
-          echo "<img src='image/selector_arrow.jpg' alt=''>";
+          echo "<img src='../image/selector_arrow.jpg' alt=''>";
         }else
         {
-          echo "<img src='image/selector_slot.jpg' alt=''>";
+          echo "<img src='../image/selector_slot.jpg' alt=''>";
         }
 
       }

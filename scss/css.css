@@ -1,25 +1,22 @@
-*
-{
+* {
   margin: 0;
   padding: 0;
-  gap: 0;
 }
-body
-{
+
+body {
   background-color: #10f40b;
   width: 100%;
 }
-#php
-{
-  
+
+#php {
   top: 0;
 }
-#php p
-{
+
+#php p {
   margin-bottom: 1.5vh;
 }
-#spel
-{
+
+#spel {
   height: 700px;
   margin-top: 2vh;
   padding-top: 2vh;
@@ -29,8 +26,8 @@ body
   justify-content: center;
   align-items: center;
 }
-#meny
-{
+
+#meny {
   padding-top: 2vh;
   padding-bottom: 2vh;
   background-color: #4b692f;
@@ -39,76 +36,53 @@ body
   justify-content: center;
   align-items: center;
 }
-#wrap
-{
+
+#wrap, #wrap2 {
   margin: 3vh;
-  grid-gap: 5vh;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-#wrap2
-{
-  margin: 3vh;
+  grid-template-columns: repeat(2, 1fr);
   grid-gap: 5vh;
-  display: grid;
-  grid-template-columns: 1fr;
 }
-#craftbutton
-{
-  gap: 1vh;
+
+#craftbutton {
   background-color: white;
   display: flex;
   flex-direction: column;
   padding: 5vh;
 }
-#admin
-{
+
+#admin {
   position: relative;
   left: 0;
 }
-#user_info
-{
-  width: 20vh;
-}
-#user_edit
-{
+
+#user_info, #user_edit, #user_actions {
   width: 25vh;
-  padding-bottom: 2vh;
   padding-left: 5vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-#user_actions
-{
-  width: 25vh;
-  padding-bottom: 2vh;
-  padding-left: 5vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-#user
-{
+
+#user {
   margin-top: 1vh;
-  padding-top: 2vh;
-  padding-bottom: 2vh;
-  padding-left: 5vh;
+  padding: 2vh 5vh;
   background-color: white;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-img
-{
+
+img {
   margin-top: -5px;
 }
+
 #a1
 {
   background-color: #4b692f;
 }
+
 #a2
 {
   background-color: #696b6a;

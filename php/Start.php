@@ -3,13 +3,14 @@
   <head>
     <meta charset="utf-8">
     <title></title>
-    <link rel="stylesheet" href="css.css">
+    <link rel="stylesheet" href="../scss/css.css">
   </head>
   <body>
     <div id="wrap2">
       <div id="meny">
         <a href="admin_loggin.php" id="admin">Admin</a>
         <h1>Loggin</h1>
+
         <form class="" action="" method="post">
           <p>Username</p>
           <input type="text" name="name" value="">
@@ -32,7 +33,10 @@
         <?php
         if (isset($_POST["name"])&&$_POST["name"]!=""||isset($_POST["new_user"])&&$_POST["new_user"]!="")
         {
+          //startar sessionen
           session_start();
+
+          //skapar variablar
           $_SESSION["name"] = $_POST["name"];
           $_SESSION["maxplayer"]=0;
           $name_taken = false;
@@ -49,6 +53,8 @@
               die("Connection failed: " . $conn->connect_error);
           }
 
+          include("session_checker.php");
+
           //tittar om spelaren finns och om lösenordet matchar sickas den till spelet
           $sql = "SELECT `playername`,`password`,`id`FROM `player`";
           $result = $conn->query($sql);
@@ -57,7 +63,7 @@
             if ($row["playername"]==$_SESSION["name"]&&$_POST["name"]!=""&&$row["password"]==$_POST["password1"])
             {
               $_SESSION["playerid"]=$row["id"];
-              header("location:Spel.php");
+              header("location:Spel(new).php");
             }
           }
 
