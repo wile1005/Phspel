@@ -20,8 +20,8 @@
         {
             die("Connection failed: " . $conn->connect_error);
         }
-        //selectar spelar tabelen och tar playery och playerx variablarna
-        $sql = "SELECT `playername`,`id`,`playerx`,`playery`,`perms`FROM `player`";
+        //selectar spelar tabelen och tar playerY och playerX variablarna
+        $sql = "SELECT `playername`,`id`,`playerX`,`playerY`,`perms`FROM `player`";
         $result = $conn->query($sql);
         while($row = $result->fetch_assoc())
         {
@@ -31,7 +31,7 @@
           echo "<br>";
           echo ("id:".$row["id"]);
           echo "<br>";
-          echo ("Position:".$row["playerx"].",".$row["playery"]);
+          echo ("Position:".$row["playerX"].",".$row["playerY"]);
           echo "<br>";
           echo ("perms:".$row["perms"]);
           echo '</div>';

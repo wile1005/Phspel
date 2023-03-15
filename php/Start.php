@@ -98,7 +98,7 @@
             echo "name was already taken";
           }else if ($name_taken == false&&$_POST["new_user"]!=""&&$_POST["password2"]!=""&&$_SESSION["maxplayer"]!=0)
           {
-            $sql = "INSERT INTO `player` (`id`,`playername`, `password`, `playerx`, `playery`,`perms`) VALUES ('".($_SESSION["maxplayer"])."','".$_POST["new_user"]."','".$_POST["password2"]."', '2', '2','none')";
+            $sql = "INSERT INTO `player` (`id`,`playername`, `password`, `playerX`, `playerY`,`perms`) VALUES ('".($_SESSION["maxplayer"])."','".$_POST["new_user"]."','".$_POST["password2"]."', '2', '2','none')";
             $result = $conn->query($sql);
             echo "New user created!";
           }else

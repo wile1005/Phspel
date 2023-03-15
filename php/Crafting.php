@@ -12,124 +12,156 @@
         </div>
         <div class="php">
           <?php
-          //crafting meny och logic
-          if(array_key_exists('plank', $_POST))
+          function craft($inventory)
           {
-            for ($i=0; $i <5 ; $i++)
+            //bla bla bla loggin till mysql
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "phspel";
+
+            //connects to mysqli server
+            $conn = new mysqli($servername, $username, $password, $dbname);
+            // Check connection
+            if ($conn->connect_error)
             {
-              if ($_SESSION["inventory"][$i]=="log")
-              {
-                $_SESSION["inventory"][$i] ="plank";
-                break;
-              }
+                die("Connection failed: " . $conn->connect_error);
             }
-          }else if(array_key_exists('workbench', $_POST))
-          {
-            for ($i=0; $i <5 ; $i++)
+          
+            //crafting meny och logic
+            if(array_key_exists('plank', $_POST))
             {
-              if ($_SESSION["inventory"][$i]=="plank")
+              for ($i=0; $i <5 ; $i++)
               {
-                for ($j=0; $j < 5; $j++)
+                if ($inventory[$i]=="log")
                 {
-                  if ($_SESSION["inventory"][$i]=="plank"&&$_SESSION["inventory"][$j]=="plank"&& $i!=$j)
-                  {
-                    $_SESSION["inventory"][$i] ="workbench";
-                    $_SESSION["inventory"][$j] ="null";
-                    break;
-                  }
+                  $inventory[$i] ="plank";
+                  break;
                 }
-                break;
               }
-            }
-          }else if(array_key_exists('stick', $_POST))
-          {
-            for ($i=0; $i <5 ; $i++)
+            }else if(array_key_exists('workbench', $_POST))
             {
-              echo ($_SESSION["craftmode"]);
-              if ($_SESSION["inventory"][$i]=="plank"&&$_SESSION["craftmode"]=="bench")
+              for ($i=0; $i <5 ; $i++)
               {
-                $_SESSION["inventory"][$i] ="stick";
-                break;
-              }
-            }
-          }else if(array_key_exists('sword', $_POST))
-          {
-            for ($i=0; $i <5 ; $i++)
-            {
-              if ($_SESSION["inventory"][$i]=="plank"&&$_SESSION["craftmode"]=="bench")
-              {
-                for ($j=0; $j < 5; $j++)
+                if ($inventory[$i]=="plank")
                 {
-                  if ($_SESSION["inventory"][$i]=="plank"&&$_SESSION["inventory"][$j]=="stick"&& $i!=$j)
+                  for ($j=0; $j < 5; $j++)
                   {
-                    $_SESSION["inventory"][$i] ="sword";
-                    $_SESSION["inventory"][$j] ="null";
-                    break;
-                  }
-                }
-                break;
-              }
-            }
-          }else if(array_key_exists('Wood_pickaxe', $_POST))
-          {
-            for ($i=0; $i <5 ; $i++)
-            {
-              if ($_SESSION["inventory"][$i]=="plank"&&$_SESSION["craftmode"]=="bench")
-              {
-                for ($j=0; $j < 5; $j++)
-                {
-                  if ($_SESSION["inventory"][$i]=="plank"&&$_SESSION["inventory"][$j]=="stick"&& $i!=$j)
-                  {
-                    $_SESSION["inventory"][$i] ="Wood_pickaxe";
-                    $_SESSION["inventory"][$j] ="null";
-                    break;
-                  }
-                }
-                break;
-              }
-            }
-          }else if(array_key_exists('Stone_pickaxe', $_POST))
-          {
-            for ($i=0; $i <5 ; $i++)
-            {
-              if ($_SESSION["inventory"][$i]=="stone"&&$_SESSION["craftmode"]=="bench")
-              {
-                for ($j=0; $j < 5; $j++)
-                {
-                  if ($_SESSION["inventory"][$j]=="stick")
-                  {
-                    for ($k=0; $k < 5; $k++)
+                    if ($inventory[$i]=="plank"&&$inventory[$j]=="plank"&& $i!=$j)
                     {
-                      if ($_SESSION["inventory"][$k]=="Wood_pickaxe")
+                      $inventory[$i] ="workbench";
+                      $inventory[$j] ="null";
+                      break;
+                    }
+                  }
+                  break;
+                }
+              }
+            }else if(array_key_exists('stick', $_POST))
+            {
+              for ($i=0; $i <5 ; $i++)
+              {
+                echo ($_SESSION["craftmode"]);
+                if ($inventory[$i]=="plank"&&$_SESSION["craftmode"]=="bench")
+                {
+                  $inventory[$i] ="stick";
+                  break;
+                }
+              }
+            }else if(array_key_exists('sword', $_POST))
+            {
+              for ($i=0; $i <5 ; $i++)
+              {
+                if ($inventory[$i]=="plank"&&$_SESSION["craftmode"]=="bench")
+                {
+                  for ($j=0; $j < 5; $j++)
+                  {
+                    if ($inventory[$i]=="plank"&&$inventory[$j]=="stick"&& $i!=$j)
+                    {
+                      $inventory[$i] ="sword";
+                      $inventory[$j] ="null";
+                      break;
+                    }
+                  }
+                  break;
+                }
+              }
+            }else if(array_key_exists('Wood_pickaxe', $_POST))
+            {
+              for ($i=0; $i <5 ; $i++)
+              {
+                if ($inventory[$i]=="plank"&&$_SESSION["craftmode"]=="bench")
+                {
+                  for ($j=0; $j < 5; $j++)
+                  {
+                    if ($inventory[$i]=="plank"&&$inventory[$j]=="stick"&& $i!=$j)
+                    {
+                      $inventory[$i] ="Wood_pickaxe";
+                      $inventory[$j] ="null";
+                      break;
+                    }
+                  }
+                  break;
+                }
+              }
+            }else if(array_key_exists('Stone_pickaxe', $_POST))
+            {
+              for ($i=0; $i <5 ; $i++)
+              {
+                if ($inventory[$i]=="stone"&&$_SESSION["craftmode"]=="bench")
+                {
+                  for ($j=0; $j < 5; $j++)
+                  {
+                    if ($inventory[$j]=="stick")
+                    {
+                      for ($k=0; $k < 5; $k++)
                       {
-                        $_SESSION["inventory"][$i] ="stone_pickaxe";
-                        $_SESSION["inventory"][$j] ="null";
-                        $_SESSION["inventory"][$k] ="null";
-                        break;
+                        if ($inventory[$k]=="Wood_pickaxe")
+                        {
+                          $inventory[$i] ="stone_pickaxe";
+                          $inventory[$j] ="null";
+                          $inventory[$k] ="null";
+                          break;
+                        }
                       }
                     }
                   }
+                  break;
                 }
-                break;
+              }
+            }else if(array_key_exists('Furnace', $_POST))
+            {
+              for ($i=0; $i <5 ; $i++)
+              {
+                if ($inventory[$i]=="stone")
+                {
+                  for ($j=0; $j < 5; $j++)
+                  {
+                    if ($inventory[$i]=="stone"&&$inventory[$j]=="stone"&& $i!=$j)
+                    {
+                      $inventory[$i] = "Furnace";
+                      $inventory[$j] = "null";
+                      break;
+                    }
+                  }
+                  break;
+                }
               }
             }
-          }else if(array_key_exists('Furnace', $_POST))
-          {
-            for ($i=0; $i <5 ; $i++)
+
+            $sql = "SELECT `id` FROM `player`;";
+            $result = $conn->query($sql);
+
+            if ($result === false) 
             {
-              if ($_SESSION["inventory"][$i]=="stone")
-              {
-                for ($j=0; $j < 5; $j++)
+                echo "Error: " . mysqli_error($conn);
+            } else 
+            {
+                while($row = $result->fetch_assoc()) 
                 {
-                  if ($_SESSION["inventory"][$i]=="stone"&&$_SESSION["inventory"][$j]=="stone"&& $i!=$j)
-                  {
-                    $_SESSION["inventory"][$i] ="Furnace";
-                    $_SESSION["inventory"][$j] ="null";
-                    break;
-                  }
+                    $sql = "UPDATE `player` SET `inventory` = '".json_encode($inventory)."' WHERE `player`.`id` = ".$row["id"].";";
+                    $updateResult = $conn->query($sql);
                 }
-                break;
-              }
             }
           }
           ?>

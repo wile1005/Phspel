@@ -1,77 +1,96 @@
 <?php
     //kollar om tilen kan bli slagen
-    function hit($player_X ,$player_Y, $conn)
+    function hit($map, $playerX, $playerY,$inventory)
     {
-    echo($player_X." ".$player_Y);
-    if ($map[$player_X][$player_Y]==2)
-    {
-        $map[$player_X][$player_Y]=1;
-        for ($i=0; $i <5 ; $i++)
+        //connectar till databasen
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "phspel";
+
+        $conn = new mysqli($servername, $username, $password, $dbname);
+        // Check connection
+        if ($conn->connect_error)
         {
-            if ($_SESSION["inventory"][$i] == "null")
-            {
-                $_SESSION["inventory"][$i] = "log";
-                break;
-            }
+            die("Connection failed: " . $conn->connect_error);
         }
-        echo "hit tree, ";
-    }
-    if ($map[$player_X][$player_Y]==5)
-    {
-        echo "hit stone, ";
-        for ($i=0; $i <5 ; $i++)
+
+        if ($map[$playerX][$playerY]==2)
         {
-            if ($_SESSION["inventory"][$i] == "Wood_pickaxe"&&$_SESSION["num"]==$i||$_SESSION["inventory"][$i] == "stone_pickaxe"&&$_SESSION["num"]==$i)
+            $map[$playerX][$playerY]=1;
+            for ($i=0; $i <5 ; $i++)
             {
-                $map[$player_X][$player_Y]=4;
-                for ($j=0; $j < 5; $j++)
+                if ($inventory[$i] == "null")
                 {
-                    if ($_SESSION["inventory"][$j] == "null")
+                    $inventory[$i] = "log";
+                    break;
+                }
+            }
+            echo "hit tree, ";
+        }
+        if ($map[$playerX][$playerY]==5)
+        {
+            echo "hit stone, ";
+            for ($i=0; $i <5 ; $i++)
+            {
+                if ($inventory[$i] == "Wood_pickaxe"&&$_SESSION["num"]==$i||$inventory[$i] == "stone_pickaxe"&&$_SESSION["num"]==$i)
+                {
+                    $map[$playerX][$playerY]=4;
+                    for ($j=0; $j < 5; $j++)
                     {
-                        $_SESSION["inventory"][$j] = "stone";
-                        break;
+                        if ($inventory[$j] == "null")
+                        {
+                            $inventory[$j] = "stone";
+                            break;
+                        }
                     }
                 }
             }
         }
-    }
-    if ($map[$player_X][$player_Y]==6)
-    {
-        echo "hit iron ore, ";
-        for ($i=0; $i <5 ; $i++)
+        if ($map[$playerX][$playerY]==6)
         {
-            if ($_SESSION["inventory"][$i] == "stone_pickaxe"&&$_SESSION["num"]==$i)
+            echo "hit iron ore, ";
+            for ($i=0; $i <5 ; $i++)
             {
-                $map[$player_X][$player_Y]=4;
-                for ($j=0; $j < 5; $j++)
+                if ($inventory[$i] == "stone_pickaxe"&&$_SESSION["num"]==$i)
                 {
-                    if ($_SESSION["inventory"][$j] == "null")
+                    $map[$playerX][$playerY]=4;
+                    for ($j=0; $j < 5; $j++)
                     {
-                        $_SESSION["inventory"][$j] = "raw_iron";
-                        break;
+                        if ($inventory[$j] == "null")
+                        {
+                            $inventory[$j] = "raw_iron";
+                            break;
+                        }
                     }
                 }
             }
         }
-    }
-    if ($map[$player_X][$player_Y]==7)
-    {
-        echo "hit redstone ore, ";
-        for ($i=0; $i <5 ; $i++)
+        if ($map[$playerX][$playerY]==7)
         {
-            if ($_SESSION["inventory"][$i] == "iron_pickaxe"&&$_SESSION["num"]==$i)
+            echo "hit redstone ore, ";
+            for ($i=0; $i <5 ; $i++)
             {
-                $map[$player_X][$player_Y]=4;
-                for ($j=0; $j < 5; $j++)
+                if ($inventory[$i] == "iron_pickaxe"&&$_SESSION["num"]==$i)
                 {
-                    if ($_SESSION["inventory"][$j] == "null")
+                    $map[$playerX][$playerY]=4;
+                    for ($j=0; $j < 5; $j++)
                     {
-                        $_SESSION["inventory"][$j] = "redstone";
-                        break;
+                        if ($inventory[$j] == "null")
+                        {
+                            $inventory[$j] = "redstone";
+                            break;
+                        }
                     }
                 }
             }
         }
-    }
+
+        $sql = "UPDATE `world` SET `map` = '".json_encode($map)."' WHERE `world`.`id` = 1;";
+        $result = $conn->query($sql);
+        
+        $sql = "UPDATE `player` SET `inventory` = '".json_encode($inventory)."' WHERE `player`.`id` = ".$_SESSION["id"].";";
+        $result = $conn->query($sql);
+        return($inventory);
     }
 ?>
