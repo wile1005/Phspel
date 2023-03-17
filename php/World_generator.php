@@ -1,9 +1,11 @@
 <?php
     function generate_world()
     {
+        ini_set('memory_limit','2048M');
+        include "World_generation/Border_fixer.php";
         //variabler
         $worldsize = 25;
-        $mountainsize = 1;
+        $mountainsize = 5;
         $mountaingain = 25;
         $map = array_fill(0,$worldsize,1);
         for($i=0; $i < count($map); $i++)
@@ -38,25 +40,28 @@
             {
                 if(rand(1,100) < 2)
                 {
+                    echo"a";
                     $map[$X][$Y] = 5;
                 }
             }
         }
+        $map2 = $map;
         for($i=0; $i < $mountainsize; $i++) 
         {
-            for($X=0; $X < count($map); $X++) 
+            for($X=0; $X < $worldsize; $X++) 
             {
-                for($Y=0; $Y < count($map[1]); $Y++) 
+                for($Y=0; $Y < $worldsize; $Y++) 
                 {
-                    if($map[$X][$Y] == 5||$Y!=0||$X!=0||$Y!=$worldsize-1||$X!=$worldsize-1) 
+                    if($map[$X][$Y] == 5) 
                     {
-                        $map[$X][$Y-1] = 5;
-                        $map[$X][$Y+1] = 5;
-                        $map[$X-1][$Y] = 5;
-                        $map[$X+1][$Y] = 5;
+                        if($Y!=0&&rand(1,100) < $mountaingain)$map2[$X][$Y-1] = 5;
+                        if($X!=0&&rand(1,100) < $mountaingain)$map2[$X][$Y+1] = 5;
+                        if($Y!=$worldsize-1&&rand(1,100) < $mountaingain)$map2[$X-1][$Y] = 5;
+                        if($X!=$worldsize-1&&rand(1,100) < $mountaingain)$map2[$X+1][$Y] = 5;
                     }
                 }
             }
+            $map = $map2;
         }
         //fixa detta
         //använd två 2d arrayer methoden (använde den i godot projektet)
@@ -74,17 +79,7 @@
             }
         }
 
-        //fixa border
-        for($X=0; $X < count($map); $X++)
-        {
-            for($Y=0; $Y < count($map[1]); $Y++)
-            {
-                if($Y==0||$X==0||$Y==$worldsize-1||$X==$worldsize-1)
-                {
-                    $map[$X][$Y] = 8;
-                }
-            }
-        }
+        $map = border_fix($map,$worldsize);
         
 
 

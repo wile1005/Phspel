@@ -88,9 +88,7 @@
 
         $sql = "UPDATE `world` SET `map` = '".json_encode($map)."' WHERE `world`.`id` = 1;";
         $result = $conn->query($sql);
-        
-        $sql = "UPDATE `player` SET `inventory` = '".json_encode($inventory)."' WHERE `player`.`id` = ".$_SESSION["id"].";";
-        $result = $conn->query($sql);
+
         return($inventory);
     }
 ?>

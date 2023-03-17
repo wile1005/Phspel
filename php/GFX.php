@@ -55,8 +55,9 @@
                     $result = $conn->query($sql);
                     while($row = $result->fetch_assoc())
                     {
+                        $playerprint = false;
                         //om spelare finns på X oxh y cordinaten skriv ut spelaren
-                        if ($row["playerX"]==$X && $row["playerY"]==$Y)
+                        if ($row["playerX"]==$X && $row["playerY"]==$Y && $map[$X][$Y]!=8)
                         {
                             if ($map[$X][$Y]==3)
                             {
@@ -74,46 +75,49 @@
                                 }
                                 echo "<img src='../image/Player.png' alt='' id='".$background[$X][$Y]."' >";
                             }
+                            $playerprint = true;
+                            break;
+                        }
+                    }
+                    if ($playerprint == false)
+                    {
+                        if ($map[$X][$Y] == 1)
+                        {
+                            echo "<img src='../image/grass".rand(1,2).".png' alt='' id='".$background[$X][$Y]."' >";
+                        }elseif ($map[$X][$Y] == 2)
+                        {
+                            echo "<img src='../image/tree.png' alt='' id='".$background[$X][$Y]."' >";
+                        }elseif ($map[$X][$Y] == 3)
+                        {
+                            echo "<img src='../image/workbench_place.png' alt='' id='".$background[$X][$Y]."' >";
+                        }elseif ($map[$X][$Y] == 4)
+                        {
+                            echo "<img src='../image/stone_floor.png' alt='' id='".$background[$X][$Y]."' >";
+                        }elseif ($map[$X][$Y] == 5)
+                        {
+                            echo "<img src='../image/stone_wall.png' alt='' id='".$background[$X][$Y]."' >";
+                        }elseif ($map[$X][$Y] == 6)
+                        {
+                            echo "<img src='../image/iron_ore.png' alt='' id='".$background[$X][$Y]."' >";
+                        }elseif ($map[$X][$Y] == 7)
+                        {
+                            echo "<img src='../image/redstone_ore.png' alt='' id='".$background[$X][$Y]."' >";
+                        }elseif ($map[$X][$Y] == 8)
+                        {
+                            echo "<img src='../image/bedrock.jpg' alt='' id='".$background[$X][$Y]."' >";
+                        }elseif ($map[$X][$Y] == 9)
+                        {
+                            echo "<img src='../image/furnace_place.png' alt='' id='".$background[$X][$Y]."' >";
                         }else
                         {
-                            if ($map[$X][$Y] == 1)
-                            {
-                                echo "<img src='../image/grass".rand(1,2).".png' alt='' id='".$background[$X][$Y]."' >";
-                            }elseif ($map[$X][$Y] == 2)
-                            {
-                                echo "<img src='../image/tree.png' alt='' id='".$background[$X][$Y]."' >";
-                            }elseif ($map[$X][$Y] == 3)
-                            {
-                                echo "<img src='../image/workbench_place.png' alt='' id='".$background[$X][$Y]."' >";
-                            }elseif ($map[$X][$Y] == 4)
-                            {
-                                echo "<img src='../image/stone_floor.png' alt='' id='".$background[$X][$Y]."' >";
-                            }elseif ($map[$X][$Y] == 5)
-                            {
-                                echo "<img src='../image/stone_wall.png' alt='' id='".$background[$X][$Y]."' >";
-                            }elseif ($map[$X][$Y] == 6)
-                            {
-                                echo "<img src='../image/iron_ore.png' alt='' id='".$background[$X][$Y]."' >";
-                            }elseif ($map[$X][$Y] == 7)
-                            {
-                                echo "<img src='../image/redstone_ore.png' alt='' id='".$background[$X][$Y]."' >";
-                            }elseif ($map[$X][$Y] == 8)
-                            {
-                                echo "<img src='../image/bedrock.jpg' alt='' id='".$background[$X][$Y]."' >";
-                            }elseif ($map[$X][$Y] == 9)
-                            {
-                                echo "<img src='../image/furnace_place.png' alt='' id='".$background[$X][$Y]."' >";
-                            }else
-                            {
 
-                            }
                         }
                     }
                 }
             }
             echo "<br>";
         }
-        for ($i=0; $i < 5; $i++)
+        for ($i=0; $i < count($inventory); $i++)
         {
             if ($inventory[$i]=="null")
             {

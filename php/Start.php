@@ -62,8 +62,8 @@
           {
             if ($row["playername"]==$_SESSION["name"]&&$_POST["name"]!=""&&$row["password"]==$_POST["password1"])
             {
-              $_SESSION["playerid"]=$row["id"];
-              header("location:Spel(new).php");
+              $_SESSION["id"]=$row["id"];
+              header("location:Spel.php");
             }
           }
 

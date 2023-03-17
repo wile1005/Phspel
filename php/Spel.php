@@ -43,7 +43,6 @@
                     //startar sessionen
                     session_start();
                     $_SESSION["selected_world"]=1;
-                    $_SESSION["id"]=1;
                     
                     //connectar till databasen
                     $servername = "localhost";
@@ -63,7 +62,7 @@
                     $result = $conn->query($sql);
                     while($row = $result->fetch_assoc())
                     {
-                        if($row["id"]==$_SESSION["playerid"])
+                        if($row["id"]===$_SESSION["playerid"])
                         {
                             $playerX=$row["playerX"];
                             $playerY=$row["playerY"];
@@ -134,12 +133,18 @@
                     //ändrar vilken inventory slot som är selectad
                     foreach($_POST as $key => $value) 
                     {
-                    if(is_numeric($key)) {
-                        $_SESSION["num"] = $key - 1;
-                        break;
-                    }
+                        if(is_numeric($key)) {
+                            $_SESSION["num"] = $key - 1;
+                            break;
+                        }
                     }
 
+
+                    if(array_key_exists('place', $_POST))
+                    {
+                        $inventory = place($inventory,$map,$playerX,$playerY);
+                    }
+                    
                     //updaterar spelar positionen
                     $sql = "UPDATE `player` SET `playerY` = '".$playerY."' WHERE `player`.`id` = ".$_SESSION["id"].";";
                     $result = $conn->query($sql);
