@@ -53,8 +53,6 @@
               die("Connection failed: " . $conn->connect_error);
           }
 
-          include("session_checker.php");
-
           //tittar om spelaren finns och om lösenordet matchar sickas den till spelet
           $sql = "SELECT `playername`,`password`,`id`FROM `player`";
           $result = $conn->query($sql);

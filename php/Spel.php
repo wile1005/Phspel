@@ -9,7 +9,7 @@
         <div id="spel">
 
             <form class="" method="post">
-                <h1>PhSpel</h1>
+                <h1>PHsPel</h1>
                 <input id="up" type="submit" name="upp" class="button" value="upp" />
                 <input id="down" type="submit" name="down" class="button" value="down" />
                 <input id="left" type="submit" name="left" class="button" value="left" />
@@ -58,15 +58,17 @@
                     }
 
                     //hämtar player variabler (playerX, playerY, inventory från player)
-                    $sql = "SELECT `id`,`playerX`,`playerY`,`inventory` FROM `player`";
+                    $sql = "SELECT `id`,`playerX`,`playerY`,`inventory`,`num`,`craftmode` FROM `player`";
                     $result = $conn->query($sql);
                     while($row = $result->fetch_assoc())
                     {
-                        if($row["id"]===$_SESSION["playerid"])
+                        if($row["id"]===$_SESSION["id"])
                         {
-                            $playerX=$row["playerX"];
-                            $playerY=$row["playerY"];
-                            $inventory=json_decode($row["inventory"]);
+                            $playerX = $row["playerX"];
+                            $playerY = $row["playerY"];
+                            $num = $row["num"];
+                            $craftmode = $row["craftmode"];
+                            $inventory = json_decode($row["inventory"]);
                         }
                     }
 
@@ -93,7 +95,7 @@
                             $playerX -= 1;
                         }else
                         {
-                            $inventory = hit($map,$playerX-1,$playerY,$inventory);
+                            $inventory = hit($map,$playerX-1,$playerY,$inventory,$num);
                         }
 
                     }else if(array_key_exists('down', $_POST))
@@ -104,7 +106,7 @@
                             $playerX += 1;
                         }else
                         {
-                            $inventory = hit($map,$playerX+1,$playerY,$inventory);
+                            $inventory = hit($map,$playerX+1,$playerY,$inventory,$num);
                         }
 
                     }else if(array_key_exists('left', $_POST))
@@ -115,7 +117,7 @@
                             $playerY -= 1;
                         }else
                         {
-                            $inventory = hit($map,$playerX,$playerY-1,$inventory);
+                            $inventory = hit($map,$playerX,$playerY-1,$inventory,$num);
                         }
 
                     }else if(array_key_exists('right', $_POST))
@@ -126,7 +128,7 @@
                             $playerY += 1;
                         }else
                         {
-                            $inventory = hit($map,$playerX,$playerY+1,$inventory);
+                            $inventory = hit($map,$playerX,$playerY+1,$inventory,$num);
                         }
                     }
 
@@ -134,7 +136,7 @@
                     foreach($_POST as $key => $value) 
                     {
                         if(is_numeric($key)) {
-                            $_SESSION["num"] = $key - 1;
+                            $num = $key - 1;
                             break;
                         }
                     }
@@ -142,13 +144,30 @@
 
                     if(array_key_exists('place', $_POST))
                     {
-                        $inventory = place($inventory,$map,$playerX,$playerY);
+                        $inventory = place($inventory,$map,$playerX,$playerY,$num);
                     }
-                    
+
+                    echo "</P>";
+                    echo "<br>";
+                    echo "<div class='result'></div>";
+                    echo "</div>";
+                    echo "</div>";
+                    echo "<div>";       
+
+                    //crafting meny
+                    include 'Crafting.php';    
+                    $inventory = craft($inventory,$craftmode);  
+
                     //updaterar spelar positionen
                     $sql = "UPDATE `player` SET `playerY` = '".$playerY."' WHERE `player`.`id` = ".$_SESSION["id"].";";
                     $result = $conn->query($sql);
                     $sql = "UPDATE `player` SET `playerX` = '".$playerX."' WHERE `player`.`id` = ".$_SESSION["id"].";";
+                    $result = $conn->query($sql);
+
+                    //updaterar spelarens inventory och num
+                    $sql = "UPDATE `player` SET `inventory` = '".json_encode($inventory)."' WHERE `player`.`id` = ".$_SESSION["id"].";";
+                    $result = $conn->query($sql);
+                    $sql = "UPDATE `player` SET `num` = '".$num."' WHERE `player`.`id` = ".$_SESSION["id"].";";
                     $result = $conn->query($sql);
 
                     if($debug==true)
@@ -167,19 +186,13 @@
                                 {
                                     echo("ID: ".$row["id"]);
                                     echo(", Position: ".$row["playerX"]."x,".$row["playerY"]."y, ");
-                                    echo("Inventory: ".$row["inventory"]);
+                                    echo("Inventory: ".$row["inventory"]." ");
+                                    echo("num: ".$num." ");
+                                    echo("Craftmode: ".$craftmode);
                                 }
                             }
                         }
-                    }
-                    echo "</P>";
-                    echo "<br>";
-                    echo "<div class='result'></div>";
-                    echo "</div>";
-                    echo "</div>";
-                    echo "<div>";
-                    include 'Crafting.php';            
-                    craft($inventory);    
+                    }   
                 ?>
                 <?php include 'Javascript.php';?>
             </div>

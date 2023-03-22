@@ -1,5 +1,5 @@
 <?php
-    function place($inventory,$map,$playerX,$playerY)
+    function place($inventory,$map,$playerX,$playerY,$num)
     {
         //bla bla bla loggin till mysql
         $servername = "localhost";
@@ -17,15 +17,15 @@
 
         for ($i=0; $i < count($inventory); $i++)
         {
-            if ($inventory[$i]=="workbench"&&$map[$playerX][$playerY]!=3 && $_SESSION["num"] == $i)
+            if ($inventory[$i]=="workbench"&&$map[$playerX][$playerY]!=3 && $num == $i)
             {
                 $inventory[$i] = "null";
                 $map[$playerX][$playerY]=3;
                 break;
-            }elseif ($inventory[$i]=="Furnace"&&$map[$playerX][$playerY]!=9 && $_SESSION["num"] == $i)
+            }elseif ($inventory[$i]=="Furnace"&&$map[$playerX][$playerY]!=9 && $num == $i)
             {
                 $inventory[$i] = "null";
-                $map[$playerX][$playeY]=9;
+                $map[$playerX][$playerY]=9;
                 break;
             }
         }

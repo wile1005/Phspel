@@ -18,6 +18,7 @@
 
         $playerY = 2;
         $playerX = 2;
+        $num = 0;
         $inventory = array("null","null","null","null","null");
         generate_world();
 
@@ -29,18 +30,24 @@
         } else {
             while($row = $result->fetch_assoc()) {
                 //Nollställer alla spelare
-                $sql = "UPDATE `player` SET `playerY` = '".$playerY."' WHERE `player`.`id` = ".$_SESSION["id"].";";
+                $sql = "UPDATE `player` SET `playerY` = '".$playerY."' WHERE `player`.`id` = ".$row["id"].";";
                 $updateResult = $conn->query($sql);
                 if ($updateResult === false) {
                     echo "Error: " . mysqli_error($conn);
                 }
                 
-                $sql = "UPDATE `player` SET `playerX` = '".$playerX."' WHERE `player`.`id` = ".$_SESSION["id"].";";
+                $sql = "UPDATE `player` SET `playerX` = '".$playerX."' WHERE `player`.`id` = ".$row["id"].";";
                 $updateResult = $conn->query($sql);
                 if ($updateResult === false) {
                     echo "Error: " . mysqli_error($conn);
                 }
                 
+                $sql = "UPDATE `player` SET `inventory` = '".$num."' WHERE `player`.`id` = ".$row["id"].";";
+                $updateResult = $conn->query($sql);
+                if ($updateResult === false) {
+                    echo "Error: " . mysqli_error($conn);
+                }
+
                 $sql = "UPDATE `player` SET `inventory` = '".json_encode($inventory)."' WHERE `player`.`id` = ".$row["id"].";";
                 $updateResult = $conn->query($sql);
                 if ($updateResult === false) {

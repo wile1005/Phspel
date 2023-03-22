@@ -1,6 +1,6 @@
 <?php
     //kollar om tilen kan bli slagen
-    function hit($map, $playerX, $playerY,$inventory)
+    function hit($map, $playerX, $playerY,$inventory, $num)
     {
         //connectar till databasen
         $servername = "localhost";
@@ -17,6 +17,7 @@
 
         if ($map[$playerX][$playerY]==2)
         {
+            //tree hit
             $map[$playerX][$playerY]=1;
             for ($i=0; $i <5 ; $i++)
             {
@@ -26,14 +27,13 @@
                     break;
                 }
             }
-            echo "hit tree, ";
         }
         if ($map[$playerX][$playerY]==5)
         {
-            echo "hit stone, ";
+            //stone hit
             for ($i=0; $i <5 ; $i++)
             {
-                if ($inventory[$i] == "Wood_pickaxe"&&$_SESSION["num"]==$i||$inventory[$i] == "stone_pickaxe"&&$_SESSION["num"]==$i)
+                if ($inventory[$i] == "Wood_pickaxe"&&$num==$i||$inventory[$i] == "stone_pickaxe"&&$num==$i)
                 {
                     $map[$playerX][$playerY]=4;
                     for ($j=0; $j < 5; $j++)
@@ -49,10 +49,10 @@
         }
         if ($map[$playerX][$playerY]==6)
         {
-            echo "hit iron ore, ";
+            //iron hit
             for ($i=0; $i <5 ; $i++)
             {
-                if ($inventory[$i] == "stone_pickaxe"&&$_SESSION["num"]==$i)
+                if ($inventory[$i] == "stone_pickaxe"&&$num==$i)
                 {
                     $map[$playerX][$playerY]=4;
                     for ($j=0; $j < 5; $j++)
@@ -68,10 +68,10 @@
         }
         if ($map[$playerX][$playerY]==7)
         {
-            echo "hit redstone ore, ";
+            //redstone ore hit
             for ($i=0; $i <5 ; $i++)
             {
-                if ($inventory[$i] == "iron_pickaxe"&&$_SESSION["num"]==$i)
+                if ($inventory[$i] == "iron_pickaxe"&&$num==$i)
                 {
                     $map[$playerX][$playerY]=4;
                     for ($j=0; $j < 5; $j++)

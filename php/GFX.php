@@ -16,7 +16,7 @@
         }
 
         //hämtar spelar X och Y
-        $sql = "SELECT `playerX`,`playerY`,`craftmode`,`inventory`,`id` FROM `player`;";
+        $sql = "SELECT `playerX`,`playerY`,`craftmode`,`inventory`,`num`,`id` FROM `player`;";
         $result = $conn->query($sql);
         while($row = $result->fetch_assoc())
         {
@@ -24,6 +24,8 @@
             {
                 $playerX = $row["playerX"];
                 $playerY = $row["playerY"];
+                $craftmode = $row["craftmode"];
+                $num = $row["num"];
                 $inventory=json_decode($row["inventory"]);
             }
         }
@@ -59,19 +61,23 @@
                         //om spelare finns på X oxh y cordinaten skriv ut spelaren
                         if ($row["playerX"]==$X && $row["playerY"]==$Y && $map[$X][$Y]!=8)
                         {
+                            
                             if ($map[$X][$Y]==3)
                             {
-                                $_SESSION["craftmode"]="bench";
+                                $craftmode="bench";
                                 echo "<img src='../image/crafting.png' alt='' id='".$background[$X][$Y]."' >";
                             }elseif ($map[$X][$Y]==9)
                             {
-                                $_SESSION["craftmode"]="furnace";
+                                $craftmode="furnace";
                                 echo "<img src='../image/furnacing.png' alt='' id='".$background[$X][$Y]."' >";
+                            }elseif ($map[$X][$Y]==10)
+                            {
+                                echo "<img src='../image/swiming.png' alt='' id='".$background[$X][$Y]."' >";
                             }else
                             {
-                                if ($row["id"]==$_SESSION["playerid"])
+                                if ($row["id"]==$_SESSION["id"])
                                 {
-                                    $_SESSION["craftmode"]="null";
+                                    $craftmode="null";
                                 }
                                 echo "<img src='../image/Player.png' alt='' id='".$background[$X][$Y]."' >";
                             }
@@ -108,6 +114,9 @@
                         }elseif ($map[$X][$Y] == 9)
                         {
                             echo "<img src='../image/furnace_place.png' alt='' id='".$background[$X][$Y]."' >";
+                        }elseif ($map[$X][$Y] == 10)
+                        {
+                            echo "<img src='../image/water.png' alt='' id='".$background[$X][$Y]."' >";
                         }else
                         {
 
@@ -131,7 +140,7 @@
         echo "<br>";
         for ($i=0; $i < 5; $i++)
         {
-            if ($i==$_SESSION["num"])
+            if ($i==$num)
             {
                 echo "<img src='../image/selector_arrow.jpg' alt=''>";
             }else
@@ -140,5 +149,7 @@
             }
 
         }
+        $sql = "UPDATE `player` SET `craftmode` = '".$craftmode."' WHERE `player`.`id` = ".$_SESSION["id"].";";
+        $result = $conn->query($sql);
     ?>
 </div>

@@ -1,12 +1,12 @@
 <?php
     function generate_world()
     {
-        ini_set('memory_limit','2048M');
+        ini_set('memory_limit','4G');
         include "World_generation/Border_fixer.php";
+        include "World_generation/Ocean_generator.php";
+        include "World_generation/Mountain_generator.php";
         //variabler
         $worldsize = 25;
-        $mountainsize = 5;
-        $mountaingain = 25;
         $map = array_fill(0,$worldsize,1);
         for($i=0; $i < count($map); $i++)
         {
@@ -27,45 +27,14 @@
             die("Connection failed: " . $conn->connect_error);
         }
 
-        //ocean generator
-        //todo
-
         //deseart generator
         //todo
 
         //mountain generator
-        for($X=0; $X < count($map); $X++)
-        {
-            for($Y=0; $Y < count($map[1]); $Y++)
-            {
-                if(rand(1,100) < 2)
-                {
-                    echo"a";
-                    $map[$X][$Y] = 5;
-                }
-            }
-        }
-        $map2 = $map;
-        for($i=0; $i < $mountainsize; $i++) 
-        {
-            for($X=0; $X < $worldsize; $X++) 
-            {
-                for($Y=0; $Y < $worldsize; $Y++) 
-                {
-                    if($map[$X][$Y] == 5) 
-                    {
-                        if($Y!=0&&rand(1,100) < $mountaingain)$map2[$X][$Y-1] = 5;
-                        if($X!=0&&rand(1,100) < $mountaingain)$map2[$X][$Y+1] = 5;
-                        if($Y!=$worldsize-1&&rand(1,100) < $mountaingain)$map2[$X-1][$Y] = 5;
-                        if($X!=$worldsize-1&&rand(1,100) < $mountaingain)$map2[$X+1][$Y] = 5;
-                    }
-                }
-            }
-            $map = $map2;
-        }
-        //fixa detta
-        //använd två 2d arrayer methoden (använde den i godot projektet)
+        Mountain_generator($map,$worldsize);
 
+        //ocean generator
+        ocean_generator($map,$worldsize);
 
         //tree placer
         for($X=0; $X < count($map); $X++)
@@ -95,9 +64,9 @@
                 }else if(preg_match('/[4-7]+/', $map[$X][$Y]))
                 {
                     $background[$X][$Y]="a2";
-                }else
+                }if($map[$X][$Y]==10)
                 {
-                    $background[$X][$Y]="a0";
+                    $background[$X][$Y]="a3";
                 }
             }
         }
