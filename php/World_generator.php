@@ -5,6 +5,7 @@
         include "World_generation/Border_fixer.php";
         include "World_generation/Ocean_generator.php";
         include "World_generation/Mountain_generator.php";
+        include "World_generation/Tree_placer.php";
         //variabler
         $worldsize = 25;
         $map = array_fill(0,$worldsize,1);
@@ -37,16 +38,7 @@
         ocean_generator($map,$worldsize);
 
         //tree placer
-        for($X=0; $X < count($map); $X++)
-        {
-            for($Y=0; $Y < count($map[1]); $Y++)
-            {
-                if(rand(1,10) < 2&&$map[$X][$Y]==1)
-                {
-                    $map[$X][$Y] = 2;
-                }
-            }
-        }
+        tree_placer($map,$worldsize);
 
         $map = border_fix($map,$worldsize);
         

@@ -2,7 +2,7 @@
   <head>
         <meta charset="utf-8">
         <title></title>
-        <link rel="stylesheet" href="../scss/css.css">
+        <link rel="stylesheet" href="../scss/phspel.css">
   </head>
   <body>
     <div id="wrap">

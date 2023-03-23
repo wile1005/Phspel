@@ -4,9 +4,9 @@
         $mountainsize = 5;
         $mountaingain = 25;
 
-        for($X=0; $X < count($map); $X++)
+        for($X=1; $X < $worldsize-1; $X++)
         {
-            for($Y=0; $Y < count($map[1]); $Y++)
+            for($Y=1; $Y < $worldsize-1; $Y++)
             {
                 if(rand(1,100) < 2)
                 {
@@ -17,9 +17,9 @@
         $map2 = $map;
         for($i=0; $i < $mountainsize; $i++) 
         {
-            for($X=0; $X < $worldsize; $X++) 
+            for($X=1; $X < $worldsize-1; $X++) 
             {
-                for($Y=0; $Y < $worldsize; $Y++) 
+                for($Y=1; $Y < $worldsize-1; $Y++) 
                 {
                     if($map[$X][$Y] == 5&&rand(1,100) < $mountaingain) 
                     {

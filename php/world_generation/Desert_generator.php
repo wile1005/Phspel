@@ -1,8 +1,8 @@
 <?php
-    function ocean_generator(&$map,$worldsize)
+    function desert_generator(&$map,$worldsize)
     {
-        $oceansize = 5;
-        $oceangain = 25;
+        $desertsize = 5;
+        $desertgain = 25;
 
         for($X=2; $X < $worldsize-1; $X++)
         {
@@ -10,23 +10,23 @@
             {
                 if(rand(1,100) < 2)
                 {
-                    $map[$X][$Y] = 10;
+                    $map[$X][$Y] = 11;
                 }
             }
         }
         $map2 = $map;
-        for($i=0; $i < $oceansize; $i++) 
+        for($i=0; $i < $desertsize; $i++) 
         {
             for($X=1; $X < $worldsize-1; $X++) 
             {
                 for($Y=1; $Y < $worldsize-1; $Y++) 
                 {
-                    if($map[$X][$Y] == 10&&rand(1,100) < $oceangain) 
+                    if($map[$X][$Y] == 11&&rand(1,100) < $desertgain) 
                     {
-                        $map2[$X][$Y-1] = 10;
-                        $map2[$X][$Y+1] = 10;
-                        $map2[$X-1][$Y] = 10;
-                        $map2[$X+1][$Y] = 10;
+                        $map2[$X][$Y-1] = 11;
+                        $map2[$X][$Y+1] = 11;
+                        $map2[$X-1][$Y] = 11;
+                        $map2[$X+1][$Y] = 11;
                     }
                 }
             }
