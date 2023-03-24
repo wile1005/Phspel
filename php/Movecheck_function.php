@@ -1,24 +1,16 @@
 <?php
     function movecheck($map, $playerX, $playerY)
     {
-        if ($map[$playerX][$playerY] == 2)
-        {
-            return(false);
-        }elseif($map[$playerX][$playerY]==5)
-        {
-            return(false);
-        }elseif($map[$playerX][$playerY]==6)
-        {
-            return(false);
-        }elseif($map[$playerX][$playerY]==7)
-        {
-            return(false);
-        }elseif($map[$playerX][$playerY]==8)
-        {
-            return(false);
-        }else
-        {
-            return(true);
+        switch ($map[$playerX][$playerY]) {
+            case 2:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 13: 
+                return(false);
+            default:
+                return(true);
         }
     }
 ?>

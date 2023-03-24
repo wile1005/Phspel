@@ -1,5 +1,7 @@
 <div id="GFX">
     <?php
+        include"GFX_Image_return.php";
+
         session_start();
         //bla bla bla loggin till mysql
         $servername = "localhost";
@@ -87,40 +89,7 @@
                     }
                     if ($playerprint == false)
                     {
-                        if ($map[$X][$Y] == 1)
-                        {
-                            echo "<img src='../image/grass".rand(1,2).".png' alt='' id='".$background[$X][$Y]."' >";
-                        }elseif ($map[$X][$Y] == 2)
-                        {
-                            echo "<img src='../image/tree.png' alt='' id='".$background[$X][$Y]."' >";
-                        }elseif ($map[$X][$Y] == 3)
-                        {
-                            echo "<img src='../image/workbench_place.png' alt='' id='".$background[$X][$Y]."' >";
-                        }elseif ($map[$X][$Y] == 4)
-                        {
-                            echo "<img src='../image/stone_floor.png' alt='' id='".$background[$X][$Y]."' >";
-                        }elseif ($map[$X][$Y] == 5)
-                        {
-                            echo "<img src='../image/stone_wall.png' alt='' id='".$background[$X][$Y]."' >";
-                        }elseif ($map[$X][$Y] == 6)
-                        {
-                            echo "<img src='../image/iron_ore.png' alt='' id='".$background[$X][$Y]."' >";
-                        }elseif ($map[$X][$Y] == 7)
-                        {
-                            echo "<img src='../image/redstone_ore.png' alt='' id='".$background[$X][$Y]."' >";
-                        }elseif ($map[$X][$Y] == 8)
-                        {
-                            echo "<img src='../image/bedrock.jpg' alt='' id='".$background[$X][$Y]."' >";
-                        }elseif ($map[$X][$Y] == 9)
-                        {
-                            echo "<img src='../image/furnace_place.png' alt='' id='".$background[$X][$Y]."' >";
-                        }elseif ($map[$X][$Y] == 10)
-                        {
-                            echo "<img src='../image/water.png' alt='' id='".$background[$X][$Y]."' >";
-                        }else
-                        {
-
-                        }
+                        echo Image_return($map, $background, $X, $Y);
                     }
                 }
             }

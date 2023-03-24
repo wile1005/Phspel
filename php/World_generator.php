@@ -5,9 +5,15 @@
         include "World_generation/Border_fixer.php";
         include "World_generation/Ocean_generator.php";
         include "World_generation/Mountain_generator.php";
+        include "World_generation/Desert_generator.php";
         include "World_generation/Tree_placer.php";
+        include "World_generation/Beach_fixer.php";
+        include "World_generation/Cactus_planter.php";
+        include "World_generation/Hole_fixer.php";
+        include "World_generation/Ore_generator.php";
+
         //variabler
-        $worldsize = 25;
+        $worldsize = 100;
         $map = array_fill(0,$worldsize,1);
         for($i=0; $i < count($map); $i++)
         {
@@ -28,8 +34,13 @@
             die("Connection failed: " . $conn->connect_error);
         }
 
+        function in_range($var, $min, $max) 
+        {
+            return ($var >= $min && $var <= $max);
+        }
+
         //deseart generator
-        //todo
+        Desert_generator($map,$worldsize);
 
         //mountain generator
         Mountain_generator($map,$worldsize);
@@ -39,6 +50,18 @@
 
         //tree placer
         tree_placer($map,$worldsize);
+
+        //cactus placer
+        cactus_placer($map,$worldsize);
+        
+        //beach fixer
+        beach_fixer($map,$worldsize);
+
+        //fixes holes in the map
+        hole_fixer($map,$worldsize);
+
+        //generates ores
+        ore_generator($map,$worldsize);
 
         $map = border_fix($map,$worldsize);
         
@@ -50,15 +73,21 @@
         {
             for($Y=0; $Y < count($map[1]); $Y++)
             {
-                if(preg_match('/[1-2]+/', $map[$X][$Y]))
+                if(in_range($map[$X][$Y],1,2))
                 {
                     $background[$X][$Y]="a1";
-                }else if(preg_match('/[4-7]+/', $map[$X][$Y]))
+                }elseif(in_range($map[$X][$Y],4,7))
                 {
                     $background[$X][$Y]="a2";
-                }if($map[$X][$Y]==10)
+                }elseif($map[$X][$Y]==10)
                 {
                     $background[$X][$Y]="a3";
+                }elseif(in_range($map[$X][$Y],11,12))
+                {
+                    $background[$X][$Y]="a4";
+                }elseif(in_range($map[$X][$Y],13,13))
+                {
+                    $background[$X][$Y]="a2";
                 }
             }
         }

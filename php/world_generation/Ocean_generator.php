@@ -4,7 +4,7 @@
         $oceansize = 5;
         $oceangain = 25;
 
-        for($X=2; $X < $worldsize-1; $X++)
+        for($X=1; $X < $worldsize-1; $X++)
         {
             for($Y=1; $Y < $worldsize-1; $Y++)
             {

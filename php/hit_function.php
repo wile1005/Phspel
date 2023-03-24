@@ -27,8 +27,7 @@
                     break;
                 }
             }
-        }
-        if ($map[$playerX][$playerY]==5)
+        }elseif ($map[$playerX][$playerY]==5)
         {
             //stone hit
             for ($i=0; $i <5 ; $i++)
@@ -46,8 +45,7 @@
                     }
                 }
             }
-        }
-        if ($map[$playerX][$playerY]==6)
+        }elseif ($map[$playerX][$playerY]==6)
         {
             //iron hit
             for ($i=0; $i <5 ; $i++)
@@ -65,13 +63,30 @@
                     }
                 }
             }
-        }
-        if ($map[$playerX][$playerY]==7)
+        }elseif ($map[$playerX][$playerY]==7)
         {
             //redstone ore hit
             for ($i=0; $i <5 ; $i++)
             {
                 if ($inventory[$i] == "iron_pickaxe"&&$num==$i)
+                {
+                    $map[$playerX][$playerY]=4;
+                    for ($j=0; $j < 5; $j++)
+                    {
+                        if ($inventory[$j] == "null")
+                        {
+                            $inventory[$j] = "redstone";
+                            break;
+                        }
+                    }
+                }
+            }
+        }elseif ($map[$playerX][$playerY]==13)
+        {
+            //redstone ore hit
+            for ($i=0; $i <5 ; $i++)
+            {
+                if ($inventory[$i] == "wood_pickaxe"&&$num==$i)
                 {
                     $map[$playerX][$playerY]=4;
                     for ($j=0; $j < 5; $j++)
