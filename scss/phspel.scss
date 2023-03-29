@@ -7,36 +7,37 @@ body
 {
     background-color: #10f40b;
     width: 100%;
-    #spel 
+    main
     {
-        background-color: white;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    #meny 
-    {
-        background-color: #4b692f;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    #wrap, #wrap2 
-    {
-        margin: 2vh;
+        padding: 1vh;
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        grid-gap: 5vh;
-    }
-    #craftbutton 
-    {
-        gap: 2px;
-        background-color: white;
-        display: flex;
-        flex-direction: column;
-        padding: 5vh;
+        iframe
+        {
+            position: absolute;
+            left: 1vh;
+            height: 107%;
+            width: 46%;
+        }
+        #craft_meny
+        {
+            h2
+            {
+                text-align: center;
+            }
+            background-color: white;
+            form
+            {
+                gap: 5px;
+                padding: 1vh;
+                display: flex;
+                flex-direction: column;
+            }
+        }
+        #spel
+        {
+            background-color: white;
+        }
     }
 }
 

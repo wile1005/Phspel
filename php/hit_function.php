@@ -1,25 +1,14 @@
 <?php
     //kollar om tilen kan bli slagen
-    function hit($map, $playerX, $playerY,$inventory, $num)
+    function hit(&$map, $playerX, $playerY,$inventory, $num)
     {
-        //connectar till databasen
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "phspel";
-
-        $conn = new mysqli($servername, $username, $password, $dbname);
-        // Check connection
-        if ($conn->connect_error)
-        {
-            die("Connection failed: " . $conn->connect_error);
-        }
-
+        include"Database_login.php";
+        $inventory_size=count($inventory);
         if ($map[$playerX][$playerY]==2)
         {
             //tree hit
             $map[$playerX][$playerY]=1;
-            for ($i=0; $i <5 ; $i++)
+            for ($i=0; $i <$inventory_size ; $i++)
             {
                 if ($inventory[$i] == "null")
                 {
@@ -30,12 +19,12 @@
         }elseif ($map[$playerX][$playerY]==5)
         {
             //stone hit
-            for ($i=0; $i <5 ; $i++)
+            for ($i=0; $i <$inventory_size ; $i++)
             {
                 if ($inventory[$i] == "Wood_pickaxe"&&$num==$i||$inventory[$i] == "stone_pickaxe"&&$num==$i)
                 {
                     $map[$playerX][$playerY]=4;
-                    for ($j=0; $j < 5; $j++)
+                    for ($j=0; $j < $inventory_size; $j++)
                     {
                         if ($inventory[$j] == "null")
                         {
@@ -48,12 +37,12 @@
         }elseif ($map[$playerX][$playerY]==6)
         {
             //iron hit
-            for ($i=0; $i <5 ; $i++)
+            for ($i=0; $i <$inventory_size ; $i++)
             {
                 if ($inventory[$i] == "stone_pickaxe"&&$num==$i)
                 {
                     $map[$playerX][$playerY]=4;
-                    for ($j=0; $j < 5; $j++)
+                    for ($j=0; $j < $inventory_size; $j++)
                     {
                         if ($inventory[$j] == "null")
                         {
@@ -66,12 +55,12 @@
         }elseif ($map[$playerX][$playerY]==7)
         {
             //redstone ore hit
-            for ($i=0; $i <5 ; $i++)
+            for ($i=0; $i <$inventory_size ; $i++)
             {
                 if ($inventory[$i] == "iron_pickaxe"&&$num==$i)
                 {
                     $map[$playerX][$playerY]=4;
-                    for ($j=0; $j < 5; $j++)
+                    for ($j=0; $j < $inventory_size; $j++)
                     {
                         if ($inventory[$j] == "null")
                         {
@@ -83,17 +72,17 @@
             }
         }elseif ($map[$playerX][$playerY]==13)
         {
-            //redstone ore hit
-            for ($i=0; $i <5 ; $i++)
+            //coal ore hit
+            for ($i=0; $i <$inventory_size ; $i++)
             {
-                if ($inventory[$i] == "wood_pickaxe"&&$num==$i)
+                if ($inventory[$i] == "Wood_pickaxe"&&$num==$i||$inventory[$i] == "stone_pickaxe"&&$num==$i)
                 {
                     $map[$playerX][$playerY]=4;
-                    for ($j=0; $j < 5; $j++)
+                    for ($j=0; $j < $inventory_size; $j++)
                     {
                         if ($inventory[$j] == "null")
                         {
-                            $inventory[$j] = "redstone";
+                            $inventory[$j] = "coal";
                             break;
                         }
                     }

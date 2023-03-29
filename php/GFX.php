@@ -1,35 +1,22 @@
 <div id="GFX">
     <?php
-        include"GFX_Image_return.php";
+        include"GFX_Tile_image.php";
+        include"GFX_Player_image.php";
+        include"Database_login.php";
 
         session_start();
-        //bla bla bla loggin till mysql
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "phspel";
-
-        //connects to mysqli server
-        $conn = new mysqli($servername, $username, $password, $dbname);
-        // Check connection
-        if ($conn->connect_error)
-        {
-            die("Connection failed: " . $conn->connect_error);
-        }
 
         //hämtar spelar X och Y
         $sql = "SELECT `playerX`,`playerY`,`craftmode`,`inventory`,`num`,`id` FROM `player`;";
         $result = $conn->query($sql);
-        while($row = $result->fetch_assoc())
+        $row = $result -> fetch_array(MYSQLI_ASSOC);
+        if($_SESSION["id"]==$row["id"])
         {
-            if($_SESSION["id"]==$row["id"])
-            {
-                $playerX = $row["playerX"];
-                $playerY = $row["playerY"];
-                $craftmode = $row["craftmode"];
-                $num = $row["num"];
-                $inventory=json_decode($row["inventory"]);
-            }
+            $playerX = $row["playerX"];
+            $playerY = $row["playerY"];
+            $craftmode = $row["craftmode"];
+            $num = $row["num"];
+            $inventory=json_decode($row["inventory"]);
         }
 
 
@@ -45,11 +32,11 @@
             }
         }
 
-
         //SPELARENS SYNFÄLLT
-        for ($X=-2+$playerX; $X < 3+$playerX; $X++)
+        $output = "";
+        for ($X=-3+$playerX; $X < 4+$playerX; $X++)
         {
-            for ($Y=-2+$playerY; $Y < 3+$playerY; $Y++)
+            for ($Y=-3+$playerY; $Y < 4+$playerY; $Y++)
             {
                 //ÄR SYNFÄLLT UTANFÖR ARRAY???
                 if ($X > -1 && $Y > -1 && $X < count($map) && $Y < count($map[1]))
@@ -63,62 +50,41 @@
                         //om spelare finns på X oxh y cordinaten skriv ut spelaren
                         if ($row["playerX"]==$X && $row["playerY"]==$Y && $map[$X][$Y]!=8)
                         {
-                            
-                            if ($map[$X][$Y]==3)
-                            {
-                                $craftmode="bench";
-                                echo "<img src='../image/crafting.png' alt='' id='".$background[$X][$Y]."' >";
-                            }elseif ($map[$X][$Y]==9)
-                            {
-                                $craftmode="furnace";
-                                echo "<img src='../image/furnacing.png' alt='' id='".$background[$X][$Y]."' >";
-                            }elseif ($map[$X][$Y]==10)
-                            {
-                                echo "<img src='../image/swiming.png' alt='' id='".$background[$X][$Y]."' >";
-                            }else
-                            {
-                                if ($row["id"]==$_SESSION["id"])
-                                {
-                                    $craftmode="null";
-                                }
-                                echo "<img src='../image/Player.png' alt='' id='".$background[$X][$Y]."' >";
-                            }
+                            $output .= Player_image($map, $background, $X, $Y, $craftmode);
                             $playerprint = true;
                             break;
                         }
                     }
-                    if ($playerprint == false)
+                    if (!$playerprint)
                     {
-                        echo Image_return($map, $background, $X, $Y);
+                        $output .= Tile_image($map, $background, $X, $Y);
                     }
                 }
             }
-            echo "<br>";
+            $output.= "<br>";
         }
-        for ($i=0; $i < count($inventory); $i++)
-        {
-            if ($inventory[$i]=="null")
-            {
-                echo "<img src='../image/slot.jpg' alt=''>";
-            }else
-            {
-                echo "<img src='../image/".$inventory[$i].".jpg' alt=''>";
-            }
 
+        //grafiken för
+        foreach ($inventory as $item) 
+        {
+            $output .= $item == "null" ? "<img src='../image/slot.jpg' alt=''>" : "<img src='../image/$item.jpg' alt=''>";
         }
-        echo "<br>";
-        for ($i=0; $i < 5; $i++)
+
+        $output.= "<br>";
+        for ($i=0; $i < count($inventory); $i++)
         {
             if ($i==$num)
             {
-                echo "<img src='../image/selector_arrow.jpg' alt=''>";
+                $output .= "<img src='../image/selector_arrow.jpg' alt=''>";
             }else
             {
-                echo "<img src='../image/selector_slot.jpg' alt=''>";
+                $output .= "<img src='../image/selector_slot.jpg' alt=''>";
             }
 
         }
         $sql = "UPDATE `player` SET `craftmode` = '".$craftmode."' WHERE `player`.`id` = ".$_SESSION["id"].";";
         $result = $conn->query($sql);
+
+        echo $output;
     ?>
 </div>

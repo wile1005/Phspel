@@ -40,18 +40,7 @@
           $_SESSION["name"] = $_POST["name"];
           $_SESSION["maxplayer"]=0;
           $name_taken = false;
-          //loggar in i databas
-          $servername = "localhost";
-          $username = "root";
-          $password = "";
-          $dbname = "phspel";
-          //connects to mysqli server
-          $conn = new mysqli($servername, $username, $password, $dbname);
-          // Check connection
-          if ($conn->connect_error)
-          {
-              die("Connection failed: " . $conn->connect_error);
-          }
+          include"Database_login.php";
 
           //tittar om spelaren finns och om lösenordet matchar sickas den till spelet
           $sql = "SELECT `playername`,`password`,`id`FROM `player`";
@@ -61,7 +50,7 @@
             if ($row["playername"]==$_SESSION["name"]&&$_POST["name"]!=""&&$row["password"]==$_POST["password1"])
             {
               $_SESSION["id"]=$row["id"];
-              header("location:Spel.php");
+              header("location:Phspel.php");
             }
           }
 

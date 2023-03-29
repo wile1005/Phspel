@@ -84,6 +84,16 @@
           //trycker 5
           document.getElementById("5").click();
       }
+      else if(event.keyCode == 54) {
+          console.log('6');
+          //trycker 6
+          document.getElementById("5").click();
+      }
+      else if(event.keyCode == 55) {
+          console.log('7');
+          //trycker 7
+          document.getElementById("5").click();
+      }
       else if(event.keyCode == 13) {
           console.log('place');
           //trycker place

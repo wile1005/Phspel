@@ -5,7 +5,7 @@
         {
             for($Y=1; $Y < $worldsize-1; $Y++)
             {
-                if(rand(1,10) < 2&&$map[$X][$Y]==1)
+                if(rand(1,10) < 4&&$map[$X][$Y]==1)
                 {
                     $map[$X][$Y] = 2;
                 }

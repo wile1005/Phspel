@@ -2,24 +2,12 @@
     if(array_key_exists('reset', $_POST))
     {
         session_start();
-        //bla bla bla loggin till mysql
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "phspel";
-
-        //connects to mysqli server
-        $conn = new mysqli($servername, $username, $password, $dbname);
-        // Check connection
-        if ($conn->connect_error)
-        {
-            die("Connection failed: " . $conn->connect_error);
-        }
+        include "Database_login.php";
 
         $playerY = 2;
         $playerX = 2;
         $num = 0;
-        $inventory = array("null","null","null","null","null");
+        $inventory = array("null","null","null","null","null","null","null");
         generate_world();
 
         $sql = "SELECT `id` FROM `player`;";

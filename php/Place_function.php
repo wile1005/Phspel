@@ -1,19 +1,7 @@
 <?php
     function place($inventory,$map,$playerX,$playerY,$num)
     {
-        //bla bla bla loggin till mysql
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "phspel";
-
-        //connects to mysqli server
-        $conn = new mysqli($servername, $username, $password, $dbname);
-        // Check connection
-        if ($conn->connect_error)
-        {
-            die("Connection failed: " . $conn->connect_error);
-        }
+        include"Database_login.php";
 
         for ($i=0; $i < count($inventory); $i++)
         {
@@ -26,6 +14,11 @@
             {
                 $inventory[$i] = "null";
                 $map[$playerX][$playerY]=9;
+                break;
+            }elseif ($inventory[$i]=="wood_wall"&&$map[$playerX][$playerY]!=14 && $num == $i)
+            {
+                $inventory[$i] = "null";
+                $map[$playerX][$playerY]=14;
                 break;
             }
         }
