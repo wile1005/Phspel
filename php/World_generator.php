@@ -42,11 +42,14 @@
         //deseart generator
         Desert_generator($map,$worldsize);
 
+        //ocean generator
+        ocean_generator($map,$worldsize);
+
         //mountain generator
         Mountain_generator($map,$worldsize);
 
-        //ocean generator
-        ocean_generator($map,$worldsize);
+        //fixes holes in the map
+        hole_fixer($map,$worldsize);
 
         //tree placer
         tree_placer($map,$worldsize);
@@ -54,6 +57,9 @@
         //cactus placer
         cactus_placer($map,$worldsize);
         
+        //fixes holes in the map
+        hole_fixer($map,$worldsize);
+
         //beach fixer
         beach_fixer($map,$worldsize);
 

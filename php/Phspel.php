@@ -6,7 +6,7 @@
   </head>
   <body>
     <main>
-        <div class='result'></div>
+        <div class='GFX_result'></div>
         <iframe src='Spel.php' title='description'></iframe>
         <div id="game">
             <?php
@@ -16,6 +16,10 @@
                 }
             ?>
             <?php include 'Crafting.php';?>
+            <div id="chat">
+                <iframe src="Chat/Chat.php" frameborder="0" class="messages"></iframe>
+                <?php include 'chat/Send_message.php'?>
+            </div>
             <?php include 'Javascript.php';?>
         </div>
     </main>   

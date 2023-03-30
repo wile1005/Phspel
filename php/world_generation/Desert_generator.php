@@ -1,7 +1,7 @@
 <?php
     function desert_generator(&$map,$worldsize)
     {
-        $desertsize = 10;
+        $desertsize = 40;
         $desertgain = 25;
         $desertamount = 2;
 
@@ -9,7 +9,7 @@
         {
             for($Y=1; $Y < $worldsize-1; $Y++)
             {
-                if(rand(1,100) < $desertamount)
+                if(rand(1,5000) < $desertamount)
                 {
                     $map[$X][$Y] = 11;
                 }

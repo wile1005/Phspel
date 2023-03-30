@@ -38,6 +38,24 @@ body
         {
             background-color: white;
         }
+        #chat
+        {
+            iframe
+            {
+                position: unset;
+                height: unset;
+                width: unset;
+            }
+            img
+            {
+                max-width: 100px;
+                max-height: 100px;
+            }
+            #messages
+            {
+                max-height: 500px;
+            }
+        }
     }
 }
 

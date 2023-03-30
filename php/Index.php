@@ -43,11 +43,11 @@
           include"Database_login.php";
 
           //tittar om spelaren finns och om lösenordet matchar sickas den till spelet
-          $sql = "SELECT `playername`,`password`,`id`FROM `player`";
+          $sql = "SELECT `name`,`password`,`id`FROM `player`";
           $result = $conn->query($sql);
           while($row = $result->fetch_assoc())
           {
-            if ($row["playername"]==$_SESSION["name"]&&$_POST["name"]!=""&&$row["password"]==$_POST["password1"])
+            if ($row["name"]==$_SESSION["name"]&&$_POST["name"]!=""&&$row["password"]==$_POST["password1"])
             {
               $_SESSION["id"]=$row["id"];
               header("location:Phspel.php");
@@ -68,11 +68,11 @@
           }          
           
           //tittar om spelaren redan finns
-          $sql = "SELECT `playername`,`id`FROM `player`";
+          $sql = "SELECT `name`,`id`FROM `player`";
           $result = $conn->query($sql);
           while($row = $result->fetch_assoc())
           {
-            if ($row["playername"]==$_POST["new_user"]&&$_POST["new_user"]!="")
+            if ($row["name"]==$_POST["new_user"]&&$_POST["new_user"]!="")
             {
               $name_taken = true;
             }
@@ -85,7 +85,7 @@
             echo "name was already taken";
           }else if ($name_taken == false&&$_POST["new_user"]!=""&&$_POST["password2"]!=""&&$_SESSION["maxplayer"]!=0)
           {
-            $sql = "INSERT INTO `player` (`id`,`playername`, `password`, `playerX`, `playerY`,`perms`) VALUES ('".($_SESSION["maxplayer"])."','".$_POST["new_user"]."','".$_POST["password2"]."', '2', '2','none')";
+            $sql = "INSERT INTO `player` (`id`,`name`, `password`, `playerX`, `playerY`,`perms`) VALUES ('".($_SESSION["maxplayer"])."','".$_POST["new_user"]."','".$_POST["password2"]."', '2', '2','none')";
             $result = $conn->query($sql);
             echo "New user created!";
           }else

@@ -88,6 +88,24 @@
                     }
                 }
             }
+        }if ($map[$playerX][$playerY]==14)
+        {
+            //wall hit
+            for ($i=0; $i <$inventory_size ; $i++)
+            {
+                if ($inventory[$i] == "axe"&&$num==$i)
+                {
+                    $map[$playerX][$playerY]=1;
+                    for ($i=0; $i <$inventory_size ; $i++)
+                    {
+                        if ($inventory[$i] == "null")
+                        {
+                            $inventory[$i] = "plank";
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
         $sql = "UPDATE `world` SET `map` = '".json_encode($map)."' WHERE `world`.`id` = 1;";

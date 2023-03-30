@@ -6,14 +6,26 @@
             url:'GFX.php',
             type:'POST',
             success:function(results) {
-                jQuery(".result").html(results);
+                jQuery(".GFX_result").html(results);
             }
         });
     }
     timer = setInterval(refresh_time,100);
 </script>
 
-
+<script>
+  //refreshar class ="result" (gfx.php) varje 100ms
+    function refresh_time() {
+        jQuery.ajax({
+            url:'Chat/Chat.php',
+            type:'POST',
+            success:function(results) {
+                jQuery(".messages").html(results);
+            }
+        });
+    }
+    timer = setInterval(refresh_time,500);
+</script>
 
 <script type="text/javascript">
     //Event listner som tittar ifall tangenter på tangentbordet klickas på
@@ -87,12 +99,12 @@
       else if(event.keyCode == 54) {
           console.log('6');
           //trycker 6
-          document.getElementById("5").click();
+          document.getElementById("6").click();
       }
       else if(event.keyCode == 55) {
           console.log('7');
           //trycker 7
-          document.getElementById("5").click();
+          document.getElementById("7").click();
       }
       else if(event.keyCode == 13) {
           console.log('place');

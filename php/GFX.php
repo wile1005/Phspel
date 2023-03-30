@@ -7,7 +7,7 @@
         session_start();
 
         //hämtar spelar X och Y
-        $sql = "SELECT `playerX`,`playerY`,`craftmode`,`inventory`,`num`,`id` FROM `player`;";
+        $sql = "SELECT `playerX`,`playerY`,`craftmode`,`inventory`,`num`,`id` FROM `player` WHERE `player`.`id` = ".$_SESSION["id"].";";
         $result = $conn->query($sql);
         $row = $result -> fetch_array(MYSQLI_ASSOC);
         if($_SESSION["id"]==$row["id"])

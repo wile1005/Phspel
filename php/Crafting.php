@@ -9,13 +9,14 @@
 			<input id="Stone_pickaxe" type="submit" name="Stone_pickaxe" class="button" value="Stone pickaxe" />
 			<input id="Furnace" type="submit" name="Furnace" class="button" value="Furnace" />
 			<input id="Wood_wall" type="submit" name="Wood_wall" class="button" value="Wood wall" />
+			<input id="axe" type="submit" name="axe" class="button" value="axe" />
 	</form>
 </div>
 <div class="php">
   	<?php
 		session_start();
 		include"Database_login.php";
-        $sql = "SELECT `playerX`,`playerY`,`craftmode`,`inventory`,`num`,`id` FROM `player`;";
+        $sql = "SELECT `playerX`,`playerY`,`craftmode`,`inventory`,`num`,`id` FROM `player` WHERE `player`.`id` = ".$_SESSION["id"].";";
         $result = $conn->query($sql);
         $row = $result -> fetch_array(MYSQLI_ASSOC);
         if($_SESSION["id"]==$row["id"])
@@ -162,6 +163,24 @@
 				}
 				break;
 			}
+			}
+		}else if(array_key_exists('axe', $_POST))
+		{
+			for ($i=0; $i <$inventory_size ; $i++)
+			{
+				if ($inventory[$i]=="plank")
+				{
+					for ($j=0; $j < $inventory_size; $j++)
+					{
+					if ($inventory[$i]=="plank"&&$inventory[$j]=="stick"&& $i!=$j)
+					{
+						$inventory[$i] = "axe";
+						$inventory[$j] = "null";
+						break;
+					}
+					}
+					break;
+				}
 			}
 		}
 		$sql = "UPDATE `player` SET `inventory` = '".json_encode($inventory)."' WHERE `player`.`id` = ".$_SESSION["id"].";";

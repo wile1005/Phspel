@@ -1,14 +1,15 @@
 <?php
     function ocean_generator(&$map,$worldsize)
     {
-        $oceansize = 5;
+        $oceansize = 25;
         $oceangain = 25;
+        $oceanamount = 2;
 
         for($X=1; $X < $worldsize-1; $X++)
         {
             for($Y=1; $Y < $worldsize-1; $Y++)
             {
-                if(rand(1,100) < 2)
+                if(rand(1,2000) < $oceanamount)
                 {
                     $map[$X][$Y] = 10;
                 }

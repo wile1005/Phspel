@@ -36,13 +36,13 @@
     session_start();
     $_SESSION["selected_world"]=1;
     
-    include"Database_login.php";
+    include "Database_login.php";
 
     //hämtar player variabler (playerX, playerY, inventory från player)
-    $sql = "SELECT `id`,`playerX`,`playerY`,`inventory`,`num`,`craftmode` FROM `player`";
+    $sql = "SELECT `id`,`playerX`,`playerY`,`inventory`,`num`,`craftmode` FROM `player` WHERE `player`.`id` = ".$_SESSION["id"]."";
     $result = $conn->query($sql);
     $row = $result -> fetch_array(MYSQLI_ASSOC);
-    if($row["id"]===$_SESSION["id"])
+    if($_SESSION["id"]==$row["id"])
     {
         $playerX = $row["playerX"];
         $playerY = $row["playerY"];
@@ -110,12 +110,16 @@
     //ändrar vilken inventory slot som är selectad
     foreach($_POST as $key => $value) 
     {
-        if(is_numeric($key)) {
+        if(is_numeric($key)) 
+        {
             $num = $key - 1;
             break;
         }
     }
-
+    if(array_key_exists('drop', $_POST))
+    {
+        $inventory = place($inventory,$map,$playerX,$playerY,$num);
+    }   
 
     if(array_key_exists('place', $_POST))
     {
