@@ -1,13 +1,14 @@
 <?php
     //kollar om tilen kan bli slagen
-    function hit(&$map, $playerX, $playerY,$inventory, $num)
+    function hit(&$map, $playerX, $playerY,$inventory, $num, $background)
     {
-        include"Database_login.php";
+        include "Database_login.php";
+        include "Background_return.php";
         $inventory_size=count($inventory);
         if ($map[$playerX][$playerY]==2)
         {
             //tree hit
-            $map[$playerX][$playerY]=1;
+            background_return($map,$playerX,$playerY,$background);
             for ($i=0; $i <$inventory_size ; $i++)
             {
                 if ($inventory[$i] == "null")
@@ -23,7 +24,7 @@
             {
                 if ($inventory[$i] == "Wood_pickaxe"&&$num==$i||$inventory[$i] == "stone_pickaxe"&&$num==$i)
                 {
-                    $map[$playerX][$playerY]=4;
+                    background_return($map,$playerX,$playerY,$background);
                     for ($j=0; $j < $inventory_size; $j++)
                     {
                         if ($inventory[$j] == "null")
@@ -41,7 +42,7 @@
             {
                 if ($inventory[$i] == "stone_pickaxe"&&$num==$i)
                 {
-                    $map[$playerX][$playerY]=4;
+                    background_return($map,$playerX,$playerY,$background);
                     for ($j=0; $j < $inventory_size; $j++)
                     {
                         if ($inventory[$j] == "null")
@@ -59,7 +60,7 @@
             {
                 if ($inventory[$i] == "iron_pickaxe"&&$num==$i)
                 {
-                    $map[$playerX][$playerY]=4;
+                    background_return($map,$playerX,$playerY,$background);
                     for ($j=0; $j < $inventory_size; $j++)
                     {
                         if ($inventory[$j] == "null")
@@ -77,7 +78,7 @@
             {
                 if ($inventory[$i] == "Wood_pickaxe"&&$num==$i||$inventory[$i] == "stone_pickaxe"&&$num==$i)
                 {
-                    $map[$playerX][$playerY]=4;
+                    background_return($map,$playerX,$playerY,$background);
                     for ($j=0; $j < $inventory_size; $j++)
                     {
                         if ($inventory[$j] == "null")
@@ -95,7 +96,7 @@
             {
                 if ($inventory[$i] == "axe"&&$num==$i)
                 {
-                    $map[$playerX][$playerY]=1;
+                    background_return($map,$playerX,$playerY,$background);
                     for ($i=0; $i <$inventory_size ; $i++)
                     {
                         if ($inventory[$i] == "null")

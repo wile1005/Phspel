@@ -1,0 +1,70 @@
+$Main_color: gray;
+$Secondary_color: #f6f2f2;
+$Text_color: darken(gray,20%);
+$Button_color: darken(lightblue,20%);
+html
+{
+    height: 100%;
+    body
+    {
+        height: 100%;
+    }
+}
+main
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    #login
+    {
+        display: flex;
+        flex-direction: column;
+        color: $Text_color;
+        border-radius: 10px;
+        background-color: $Secondary_color;
+        padding: 2vh 5vh 5vh 5vh;
+        gap: 1vh;
+        align-items: center;
+        .input
+        {
+            height: 3vh;
+        }
+        #back_arrow
+        {
+            position: relative;
+            left: -100px;
+            img
+            {
+                width: 25px;
+                height: 25px;
+            }
+        }
+        .button
+        {
+            width: 25vh;
+            border-radius: 5px;
+            font-size: 3vh;
+            padding: 1vh;
+            color: white;
+            appearance: none;
+            border: none;
+        }
+        #submit
+        {
+            background-color: #b1c100;
+        }
+        #submit:hover
+        {
+            background-color: darken(#b1c100,10%);
+        }
+        a
+        {
+            color: blue;
+        }
+        a:hover
+        {
+            color: darken(blue,20%);
+        }
+    }   
+}

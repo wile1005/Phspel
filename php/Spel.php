@@ -27,10 +27,11 @@
 
     // includar andra php filer (funktioner)
     include "World_generator.php";
-    include "Movecheck_function.php";
-    include "Reset_function.php";
-    include "Place_function.php";
-    include "Hit_function.php";
+    include "Functions/Movecheck_function.php";
+    include "Functions/Reset_function.php";
+    include "Functions/Place_function.php";
+    include "Functions/Hit_function.php";
+    include "Functions/Drop_function.php";
 
     //startar sessionen
     session_start();
@@ -70,7 +71,7 @@
             $playerX -= 1;
         }else
         {
-            $inventory = hit($map,$playerX-1,$playerY,$inventory,$num);
+            $inventory = hit($map,$playerX-1,$playerY,$inventory,$num,$background);
         }
 
     }else if(array_key_exists('down', $_POST))
@@ -81,7 +82,7 @@
             $playerX += 1;
         }else
         {
-            $inventory = hit($map,$playerX+1,$playerY,$inventory,$num);
+            $inventory = hit($map,$playerX+1,$playerY,$inventory,$num,$background);
         }
 
     }else if(array_key_exists('left', $_POST))
@@ -92,7 +93,7 @@
             $playerY -= 1;
         }else
         {
-            $inventory = hit($map,$playerX,$playerY-1,$inventory,$num);
+            $inventory = hit($map,$playerX,$playerY-1,$inventory,$num,$background);
         }
 
     }else if(array_key_exists('right', $_POST))
@@ -103,7 +104,7 @@
             $playerY += 1;
         }else
         {
-            $inventory = hit($map,$playerX,$playerY+1,$inventory,$num);
+            $inventory = hit($map,$playerX,$playerY+1,$inventory,$num,$background);
         }
     }
 
@@ -116,11 +117,14 @@
             break;
         }
     }
+
+    //tar bort itemet i spelarens valda hotbar slot
     if(array_key_exists('drop', $_POST))
     {
-        $inventory = place($inventory,$map,$playerX,$playerY,$num);
+        drop($inventory,$num);
     }   
 
+    //placerar ut itemet spelaren håller i
     if(array_key_exists('place', $_POST))
     {
         $inventory = place($inventory,$map,$playerX,$playerY,$num);

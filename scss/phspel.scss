@@ -21,17 +21,18 @@ body
         }
         #craft_meny
         {
-            h2
-            {
-                text-align: center;
-            }
             background-color: white;
             form
             {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
                 gap: 5px;
                 padding: 1vh;
-                display: flex;
-                flex-direction: column;
+                h1
+                {
+                    grid-column: 1/3;
+                    text-align: center;
+                }
             }
         }
         #spel

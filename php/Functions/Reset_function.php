@@ -4,41 +4,48 @@
         session_start();
         include "Database_login.php";
 
-        $playerY = 2;
-        $playerX = 2;
+        $playerY = 5;
+        $playerX = 5;
         $num = 0;
-        $inventory = array("null","null","null","null","null","null","null");
+        $inventory = array_fill(0,7,"null");
         generate_world();
 
         $sql = "SELECT `id` FROM `player`;";
         $result = $conn->query($sql);
 
-        if ($result === false) {
+        if ($result === false) 
+        {
             echo "Error: " . mysqli_error($conn);
-        } else {
-            while($row = $result->fetch_assoc()) {
+        } else 
+        {
+            while($row = $result->fetch_assoc()) 
+            {
                 //Nollställer alla spelare
                 $sql = "UPDATE `player` SET `playerY` = '".$playerY."' WHERE `player`.`id` = ".$row["id"].";";
                 $updateResult = $conn->query($sql);
-                if ($updateResult === false) {
+                if ($updateResult === false) 
+                {
                     echo "Error: " . mysqli_error($conn);
                 }
                 
                 $sql = "UPDATE `player` SET `playerX` = '".$playerX."' WHERE `player`.`id` = ".$row["id"].";";
                 $updateResult = $conn->query($sql);
-                if ($updateResult === false) {
+                if ($updateResult === false) 
+                {
                     echo "Error: " . mysqli_error($conn);
                 }
                 
                 $sql = "UPDATE `player` SET `inventory` = '".$num."' WHERE `player`.`id` = ".$row["id"].";";
                 $updateResult = $conn->query($sql);
-                if ($updateResult === false) {
+                if ($updateResult === false) 
+                {
                     echo "Error: " . mysqli_error($conn);
                 }
 
                 $sql = "UPDATE `player` SET `inventory` = '".json_encode($inventory)."' WHERE `player`.`id` = ".$row["id"].";";
                 $updateResult = $conn->query($sql);
-                if ($updateResult === false) {
+                if ($updateResult === false) 
+                {
                     echo "Error: " . mysqli_error($conn);
                 }
             }

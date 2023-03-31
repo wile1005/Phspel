@@ -3,7 +3,7 @@
   //refreshar class ="result" (gfx.php) varje 100ms
     function refresh_time() {
         jQuery.ajax({
-            url:'GFX.php',
+            url:'GFX/GFX.php',
             type:'POST',
             success:function(results) {
                 jQuery(".GFX_result").html(results);
@@ -11,20 +11,6 @@
         });
     }
     timer = setInterval(refresh_time,100);
-</script>
-
-<script>
-  //refreshar class ="result" (gfx.php) varje 100ms
-    function refresh_time() {
-        jQuery.ajax({
-            url:'Chat/Chat.php',
-            type:'POST',
-            success:function(results) {
-                jQuery(".messages").html(results);
-            }
-        });
-    }
-    timer = setInterval(refresh_time,500);
 </script>
 
 <script type="text/javascript">

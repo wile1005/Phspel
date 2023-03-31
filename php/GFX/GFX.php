@@ -1,8 +1,8 @@
 <div id="GFX">
     <?php
-        include"GFX_Tile_image.php";
-        include"GFX_Player_image.php";
-        include"Database_login.php";
+        include "GFX_Tile_image.php";
+        include "GFX_Player_image.php";
+        include "../Database_login.php";
 
         session_start();
 
@@ -64,7 +64,7 @@
             $output.= "<br>";
         }
 
-        //grafiken för
+        //grafiken för inventoryt
         foreach ($inventory as $item) 
         {
             $output .= $item == "null" ? "<img src='../image/slot.jpg' alt=''>" : "<img src='../image/$item.jpg' alt=''>";
