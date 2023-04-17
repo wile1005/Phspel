@@ -19,7 +19,7 @@
 		//jag hatar hur detta fungerar
 
 		session_start();
-		include "Database_login.php";
+		include "Database/Database_login.php";
         $sql = "SELECT `playerX`,`playerY`,`craftmode`,`inventory`,`num`,`id` FROM `player` WHERE `player`.`id` = ".$_SESSION["id"].";";
         $result = $conn->query($sql);
         $row = $result -> fetch_array(MYSQLI_ASSOC);
@@ -60,11 +60,11 @@
 					break;
 				}
 			}
-		}else if(array_key_exists('stick', $_POST))
+		}if(array_key_exists('stick', $_POST))
 		{
-			for ($i=0; $i <$inventory_size ; $i++)
+			for($i=0; $i <$inventory_size ; $i++)
 			{
-				if ($inventory[$i]=="plank"&&$craftmode=="bench")
+				if ($inventory[$i]=="plank")
 				{
 					$inventory[$i] ="stick";
 					break;
@@ -74,16 +74,16 @@
 		{
 			for ($i=0; $i <$inventory_size ; $i++)
 			{
-				if ($inventory[$i]=="plank"&&$craftmode=="bench")
+				if ($inventory[$i]=="plank"&&$craftmode=="workbench")
 				{
 					for ($j=0; $j < $inventory_size; $j++)
 					{
-					if ($inventory[$j]=="stick"&& $i!=$j)
-					{
-						$inventory[$i] ="sword";
-						$inventory[$j] ="null";
-						break;
-					}
+						if ($inventory[$j]=="stick"&& $i!=$j)
+						{
+							$inventory[$i] ="sword";
+							$inventory[$j] ="null";
+							break;
+						}
 					}
 					break;
 				}
@@ -92,7 +92,7 @@
 		{
 			for ($i=0; $i <$inventory_size ; $i++)
 			{
-				if ($inventory[$i]=="plank"&&$craftmode=="bench")
+				if ($inventory[$i]=="plank"&&$craftmode=="workbench")
 				{
 					for ($j=0; $j < $inventory_size; $j++)
 					{
@@ -110,7 +110,7 @@
 		{
 			for ($i=0; $i <$inventory_size ; $i++)
 			{
-				if ($inventory[$i]=="stone"&&$craftmode=="bench")
+				if ($inventory[$i]=="stone"&&$craftmode=="workbench")
 				{
 					for ($j=0; $j < $inventory_size; $j++)
 					{
@@ -135,7 +135,7 @@
 		{
 			for ($i=0; $i <$inventory_size ; $i++)
 			{
-				if ($inventory[$i]=="stone"&&$craftmode=="bench")
+				if ($inventory[$i]=="stone"&&$craftmode=="workbench")
 				{
 					for ($j=0; $j < $inventory_size; $j++)
 					{
@@ -153,7 +153,7 @@
 		{
 			for ($i=0; $i <$inventory_size ; $i++)
 			{
-				if ($inventory[$i]=="plank"&&$craftmode=="bench")
+				if ($inventory[$i]=="plank"&&$craftmode=="workbench")
 				{
 					for ($j=0; $j < $inventory_size; $j++)
 					{
@@ -171,7 +171,7 @@
 		{
 			for ($i=0; $i <$inventory_size ; $i++)
 			{
-				if ($inventory[$i]=="plank"&&$craftmode=="bench")
+				if ($inventory[$i]=="plank"&&$craftmode=="workbench")
 				{
 					for ($j=0; $j < $inventory_size; $j++)
 					{

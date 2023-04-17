@@ -26,41 +26,25 @@
     $debug = true;
 
     // includar andra php filer (funktioner)
-    include "World_generator.php";
+    include "World_generation/Cave_generator.php";
+    include "World_generation/World_generator.php";
     include "Functions/Movecheck_function.php";
     include "Functions/Reset_function.php";
     include "Functions/Place_function.php";
     include "Functions/Hit_function.php";
     include "Functions/Drop_function.php";
+    include "Functions/Craftmode_function.php";
+    include "Database/Get_map.php";
+    include "Database/Update_database.php";
+    include "Database/Get_player_variables.php";
 
-    //startar sessionen
+    //startar sessionen och hämtar databasen
     session_start();
-    $_SESSION["selected_world"]=1;
-    
-    include "Database_login.php";
+    include "Database/Database_login.php";
 
-    //hämtar player variabler (playerX, playerY, inventory från player)
-    $sql = "SELECT `id`,`playerX`,`playerY`,`inventory`,`num`,`craftmode` FROM `player` WHERE `player`.`id` = ".$_SESSION["id"]."";
-    $result = $conn->query($sql);
-    $row = $result -> fetch_array(MYSQLI_ASSOC);
-    if($_SESSION["id"]==$row["id"])
-    {
-        $playerX = $row["playerX"];
-        $playerY = $row["playerY"];
-        $num = $row["num"];
-        $craftmode = $row["craftmode"];
-        $inventory = json_decode($row["inventory"]);
-    }
-
-    // hämtar mapen
-    $sql = "SELECT `map`,`background`,`id` FROM `world`";
-    $result = $conn->query($sql);
-    $row = $result -> fetch_array(MYSQLI_ASSOC);
-    if($_SESSION["selected_world"]==$row["id"])
-    {
-        $map = json_decode($row["map"]);
-        $background = json_decode($row["background"]);
-    }
+    //hämtar spelar variabler och kartan
+    get_player_variables($current_floor,$playerX,$playerY,$num,$craftmode,$inventory);
+    get_map($map,$background,$current_floor);
 
     //rörelsekod för spelet
     if(array_key_exists('upp', $_POST))
@@ -71,7 +55,7 @@
             $playerX -= 1;
         }else
         {
-            $inventory = hit($map,$playerX-1,$playerY,$inventory,$num,$background);
+            hit($map,$playerX-1,$playerY,$inventory,$num,$background);
         }
 
     }else if(array_key_exists('down', $_POST))
@@ -82,7 +66,7 @@
             $playerX += 1;
         }else
         {
-            $inventory = hit($map,$playerX+1,$playerY,$inventory,$num,$background);
+            hit($map,$playerX+1,$playerY,$inventory,$num,$background);
         }
 
     }else if(array_key_exists('left', $_POST))
@@ -93,7 +77,7 @@
             $playerY -= 1;
         }else
         {
-            $inventory = hit($map,$playerX,$playerY-1,$inventory,$num,$background);
+            hit($map,$playerX,$playerY-1,$inventory,$num,$background);
         }
 
     }else if(array_key_exists('right', $_POST))
@@ -104,10 +88,29 @@
             $playerY += 1;
         }else
         {
-            $inventory = hit($map,$playerX,$playerY+1,$inventory,$num,$background);
+            hit($map,$playerX,$playerY+1,$inventory,$num,$background);
         }
     }
+    //kollar ifall spelaren står på en trappa ner eller up
+    if($map[$playerX][$playerY]==17)
+    {
+        $current_floor++;
+        $playerX += rand(-1,1);
+        $playerY += rand(-1,1);
+        // hämtar mapen
+        get_map($map,$background,$current_floor);
 
+        update_database($map,$playerX,$playerY,$inventory,$num,$background,$current_floor,$craftmode);
+    }elseif($map[$playerX][$playerY]==18)
+    {
+        $current_floor--;
+        $playerX += rand(-1,1);
+        $playerY += rand(-1,1);
+        // hämtar mapen
+        get_map($map,$background,$current_floor);
+
+        update_database($map,$playerX,$playerY,$inventory,$num,$background,$current_floor,$craftmode);
+    }
     //ändrar vilken inventory slot som är selectad
     foreach($_POST as $key => $value) 
     {
@@ -127,20 +130,15 @@
     //placerar ut itemet spelaren håller i
     if(array_key_exists('place', $_POST))
     {
-        $inventory = place($inventory,$map,$playerX,$playerY,$num);
+        place($inventory,$map,$playerX,$playerY,$num);
     }     
 
-    //updaterar spelar positionen
-    $sql = "UPDATE `player` SET `playerY` = '".$playerY."' WHERE `player`.`id` = ".$_SESSION["id"].";";
-    $result = $conn->query($sql);
-    $sql = "UPDATE `player` SET `playerX` = '".$playerX."' WHERE `player`.`id` = ".$_SESSION["id"].";";
-    $result = $conn->query($sql);
+    //hämtar craftmode beroende på tilen under
+    get_craftmode($map, $playerX, $playerY, $craftmode);
+    
+    //updaterar databasen
+    update_database($map,$playerX,$playerY,$inventory,$num,$background,$current_floor,$craftmode);
 
-    //updaterar spelarens inventory och num
-    $sql = "UPDATE `player` SET `inventory` = '".json_encode($inventory)."' WHERE `player`.`id` = ".$_SESSION["id"].";";
-    $result = $conn->query($sql);
-    $sql = "UPDATE `player` SET `num` = '".$num."' WHERE `player`.`id` = ".$_SESSION["id"].";";
-    $result = $conn->query($sql);
 
     if($debug==true)
     {

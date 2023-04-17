@@ -17,7 +17,7 @@
             ?>
             <?php include 'Crafting.php';?>
             <div id="chat">
-                <iframe src="Chat/Chat.php" frameborder="0" class="messages"></iframe>
+                <div class='Chat_result'></div>
                 <?php include 'chat/Send_message.php'?>
             </div>
             <?php include 'Javascript.php';?>

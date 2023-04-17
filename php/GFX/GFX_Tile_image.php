@@ -15,7 +15,10 @@
             11 => '../image/sand.png',
             12 => '../image/cactus.png',
             13 => '../image/coal_ore.png',
-            14 => '../image/wood_wall.png'
+            14 => '../image/wood_wall.png',
+            16 => '../image/anvil.png',
+            17 => '../image/Stairs_down.png',
+            18 => '../image/Stairs_up.png'
         ];
         
         $image_path = isset($image_paths[$map[$X][$Y]]) ? $image_paths[$map[$X][$Y]] : '';

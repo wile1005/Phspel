@@ -2,16 +2,17 @@
     <?php
         include "GFX_Tile_image.php";
         include "GFX_Player_image.php";
-        include "../Database_login.php";
+        include "../Database/Database_login.php";
 
         session_start();
 
         //hämtar spelar X och Y
-        $sql = "SELECT `playerX`,`playerY`,`craftmode`,`inventory`,`num`,`id` FROM `player` WHERE `player`.`id` = ".$_SESSION["id"].";";
+        $sql = "SELECT `playerX`,`playerY`,`floor`,`craftmode`,`inventory`,`num`,`id` FROM `player` WHERE `player`.`id` = ".$_SESSION["id"].";";
         $result = $conn->query($sql);
         $row = $result -> fetch_array(MYSQLI_ASSOC);
         if($_SESSION["id"]==$row["id"])
         {
+            $current_floor = $row["floor"];
             $playerX = $row["playerX"];
             $playerY = $row["playerY"];
             $craftmode = $row["craftmode"];
@@ -21,16 +22,15 @@
 
 
         //hämtar kartan och bakgrunden
-        $sql = "SELECT `map`,`background`,`id` FROM `world`";
+        $sql = "SELECT `map`,`background`,`id` FROM `world` where `world`.`id` = ".$current_floor."";
         $result = $conn->query($sql);
-        while($row = $result->fetch_assoc())
+        $row = $result -> fetch_array(MYSQLI_ASSOC);
+        if($current_floor==$row["id"])
         {
-            if($_SESSION["selected_world"]==$row["id"])
-            {
-                $map = json_decode($row["map"]);
-                $background = json_decode($row["background"]);
-            }
+            $map = json_decode($row["map"]);
+            $background = json_decode($row["background"]);
         }
+        
 
         //SPELARENS SYNFÄLLT
         $output = "";
@@ -50,7 +50,7 @@
                         //om spelare finns på X oxh y cordinaten skriv ut spelaren
                         if ($row["playerX"]==$X && $row["playerY"]==$Y && $map[$X][$Y]!=8)
                         {
-                            $output .= Player_image($map, $background, $X, $Y, $craftmode);
+                            $output .= Player_image($map, $background, $X, $Y);
                             $playerprint = true;
                             break;
                         }

@@ -1,8 +1,7 @@
 <?php
     //kollar om tilen kan bli slagen
-    function hit(&$map, $playerX, $playerY,$inventory, $num, $background)
+    function hit(&$map, $playerX, $playerY, &$inventory, $num, $background)
     {
-        include "Database_login.php";
         include "Background_return.php";
         $inventory_size=count($inventory);
         if ($map[$playerX][$playerY]==2)
@@ -108,10 +107,5 @@
                 }
             }
         }
-
-        $sql = "UPDATE `world` SET `map` = '".json_encode($map)."' WHERE `world`.`id` = 1;";
-        $result = $conn->query($sql);
-
-        return($inventory);
     }
 ?>

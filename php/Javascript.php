@@ -1,4 +1,19 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+
+<script>
+  //refreshar class ="messages" varje 100ms (funkar inte)
+    function refresh_time() {
+        jQuery.ajax({
+            url:'Chat/Chat.php',
+            type:'POST',
+            success:function(results) {
+                jQuery(".Chat_result").html(results);
+            }
+        });
+    }
+    timer = setInterval(refresh_time,500);
+</script>
+
 <script>
   //refreshar class ="result" (gfx.php) varje 100ms
     function refresh_time() {
