@@ -1,16 +1,13 @@
 <?php
-    function cave_generator(&$map,$worldsize)
+    function cave_generator(&$map,$worldsize,$cavesize,$cavefrequency)
     {
         //genererar grottor 
-        $cavesize = 40;
-        $cavegain = 25;
-        $caveamount = 2;
 
         for($X=0; $X < $worldsize-1; $X++)
         {
             for($Y=1; $Y < $worldsize-1; $Y++)
             {
-                if(rand(1,5000) < $caveamount)
+                if(rand(1,5000) < $cavefrequency)
                 {
                     $map[$X][$Y] = 4;
                 }
@@ -23,7 +20,7 @@
             {
                 for($Y=1; $Y < $worldsize-1; $Y++) 
                 {
-                    if($map[$X][$Y] == 4&&rand(1,100) < $cavegain) 
+                    if($map[$X][$Y] == 4&&rand(1,100) < 25 ) 
                     {
                         $map2[$X][$Y-1] = 4;
                         $map2[$X][$Y+1] = 4;

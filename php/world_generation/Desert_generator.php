@@ -1,10 +1,7 @@
 <?php
-    function desert_generator(&$map,$worldsize)
+    function desert_generator(&$map,$worldsize,$desertsize,$desertamount)
     {
         //genererar öken 
-        $desertsize = 40;
-        $desertgain = 25;
-        $desertamount = 2;
 
         for($X=0; $X < $worldsize-1; $X++)
         {
@@ -23,7 +20,7 @@
             {
                 for($Y=1; $Y < $worldsize-1; $Y++) 
                 {
-                    if($map[$X][$Y] == 11&&rand(1,100) < $desertgain) 
+                    if($map[$X][$Y] == 11&&rand(1,100) < 25) 
                     {
                         $map2[$X][$Y-1] = 11;
                         $map2[$X][$Y+1] = 11;

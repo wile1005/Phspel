@@ -1,10 +1,7 @@
 <?php
-    function ocean_generator(&$map,$worldsize)
+    function ocean_generator(&$map,$worldsize,$oceansize,$oceanamount)
     {
         //genererar hav
-        $oceansize = 25;
-        $oceangain = 25;
-        $oceanamount = 2;
 
         for($X=1; $X < $worldsize-1; $X++)
         {
@@ -23,7 +20,7 @@
             {
                 for($Y=1; $Y < $worldsize-1; $Y++) 
                 {
-                    if($map[$X][$Y] == 10&&rand(1,100) < $oceangain) 
+                    if($map[$X][$Y] == 10&&rand(1,100) < 25) 
                     {
                         $map2[$X][$Y-1] = 10;
                         $map2[$X][$Y+1] = 10;

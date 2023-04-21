@@ -1,10 +1,7 @@
 <?php
-    function Mountain_generator(&$map,$worldsize)
+    function Mountain_generator(&$map,$worldsize,$mountainsize,$mountainamount)
     {
         //genererar berg
-        $mountainsize = 25;
-        $mountaingain = 25;
-        $mountainamount = 2;
 
         for($X=1; $X < $worldsize-1; $X++)
         {
@@ -23,7 +20,7 @@
             {
                 for($Y=1; $Y < $worldsize-1; $Y++) 
                 {
-                    if($map[$X][$Y] == 5&&rand(1,100) < $mountaingain) 
+                    if($map[$X][$Y] == 5&&rand(1,100) < 25) 
                     {
                         $map2[$X][$Y-1] = 5;
                         $map2[$X][$Y+1] = 5;

@@ -10,6 +10,10 @@ input
     padding: 3px;
     border-radius: 5px;
 }
+input:hover
+{
+    background-color: #a6a2a2;
+}
 h1
 {
     background-color:#f6f2f2; 

@@ -10,6 +10,7 @@
         {
             include_once $file;
         }
+       
 
         //variabler
         $map;
@@ -28,13 +29,13 @@
                     $map[$i] = array_fill(0,$worldsize,1);
                 }
                 //deseart generator
-                Desert_generator($map,$worldsize);
+                Desert_generator($map,$worldsize,$desertsize,$desertamount);
 
                 //ocean generator
-                ocean_generator($map,$worldsize);
+                ocean_generator($map,$worldsize,$oceansize,$oceanamount);
 
                 //mountain generator
-                Mountain_generator($map,$worldsize);
+                Mountain_generator($map,$worldsize,$mountainsize,$mountainamount);
 
                 //fixes holes in the map
                 hole_fixer($map,$worldsize);
@@ -63,9 +64,8 @@
                 {
                     $map[$i] = array_fill(0,$worldsize,5);
                 }
-
                 //skapar grottor
-                cave_generator($map,$worldsize);
+                cave_generator($map,$worldsize,$cavesize,$cavefrequency);
 
                 //generates ores
                 ore_generator($map,$worldsize);

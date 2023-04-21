@@ -23,11 +23,18 @@
     </form>
 <?php
     //debug läget (visar mer info)
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
     $debug = true;
 
     // includar andra php filer (funktioner)
     //includar alla worldgen filer
     foreach (glob("Functions/*.php") as $file) 
+    {
+        include $file;
+    }
+    foreach (glob("Plugins/*.php") as $file) 
     {
         include $file;
     }
