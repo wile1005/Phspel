@@ -1,8 +1,7 @@
 <?php
     function Stairs_check($map,$playerX,$playerY,&$current_floor)
     {
-        include "Database/Database_login.php";
-
+        //funkar inte(fixa senare)
         //kollar ifall spelaren står på en trappa ner eller up
         if($map[$playerX][$playerY]==17)
         {

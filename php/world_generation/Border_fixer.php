@@ -1,9 +1,10 @@
 <?php
     function border_fix(&$map,$worldsize)
     {
+        //fixa en border runt kartan
         $mapX_length = count($map);
         $mapY_length = count($map[0]);
-        //fixa border
+        
         for($X=0; $X < $mapX_length; ++$X)
         {
             for($Y=0; $Y < $mapY_length; ++$Y)

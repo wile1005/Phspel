@@ -1,6 +1,9 @@
 <?php
     function ore_generator(&$map,$worldsize)
     {
+        //genererar ores
+
+        //dela up i flera funktioner och genera i veins istället för random
         $map2 = $map;
         for($X=1; $X < $worldsize-1; $X++)
         {

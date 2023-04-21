@@ -1,6 +1,7 @@
 <?php
     function ocean_generator(&$map,$worldsize)
     {
+        //genererar hav
         $oceansize = 25;
         $oceangain = 25;
         $oceanamount = 2;

@@ -1,0 +1,31 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+input
+{
+    background-color: #f6f2f2;
+    border: 1px solid black;
+    padding: 3px;
+    border-radius: 5px;
+}
+h1
+{
+    background-color:#f6f2f2; 
+    padding: 5px; 
+    border-radius: 5px;
+    width: 100px;
+}
+.debug
+{
+    margin: 2px;
+    background-color:white; 
+    padding: 5px; 
+    border-radius: 5px;
+    width: 150px;
+}
+#game
+{
+        margin: 10px;
+}

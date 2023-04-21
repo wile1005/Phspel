@@ -1,7 +1,8 @@
-<style>#inputs{visibility:visible;height:0;}</style>
-<div id="inputs">
+<style>#game{visibility:hidden;height:0;}</style>
+<link rel="stylesheet" href="../scss/Debug.css">
+<div id="game">
+    <h1>PHsPel</h1>
     <form class="" method="post">
-        <h1>PHsPel</h1>
         <input id="up" type="submit" name="upp" class="button" value="upp" />
         <input id="down" type="submit" name="down" class="button" value="down" />
         <input id="left" type="submit" name="left" class="button" value="left" />
@@ -20,26 +21,26 @@
         <input id="6" type="submit" name="6" class="button" value="6" />
         <input id="7" type="submit" name="7" class="button" value="7" />
     </form>
-</div>
 <?php
     //debug läget (visar mer info)
     $debug = true;
 
     // includar andra php filer (funktioner)
-    include "World_generation/Cave_generator.php";
+    //includar alla worldgen filer
+    foreach (glob("Functions/*.php") as $file) 
+    {
+        include $file;
+    }
     include "World_generation/World_generator.php";
-    include "Functions/Movecheck_function.php";
-    include "Functions/Reset_function.php";
-    include "Functions/Place_function.php";
-    include "Functions/Hit_function.php";
-    include "Functions/Drop_function.php";
-    include "Functions/Craftmode_function.php";
     include "Database/Get_map.php";
     include "Database/Update_database.php";
     include "Database/Get_player_variables.php";
 
     //startar sessionen och hämtar databasen
-    session_start();
+    if(session_status()!=2)
+    {
+        session_start();
+    }
     include "Database/Database_login.php";
 
     //hämtar spelar variabler och kartan
@@ -91,6 +92,22 @@
             hit($map,$playerX,$playerY+1,$inventory,$num,$background);
         }
     }
+
+    //kod för att plocka up items funkar inte
+    if(array_key_exists('pickup', $_POST))
+    {
+        pickup($map,$playerX,$playerY,$inventory,$num,$background);
+    }
+
+    //resetar alla spelare och genererar om världen (funkar inte :( )
+    if(array_key_exists('reset', $_POST))
+    {
+        reset_func();
+        get_map($map,$background,$current_floor);
+        get_player_variables($current_floor,$playerX,$playerY,$num,$craftmode,$inventory);
+        update_database($map,$playerX,$playerY,$inventory,$num,$background,$current_floor,$craftmode);
+    }
+
     //kollar ifall spelaren står på en trappa ner eller up
     if($map[$playerX][$playerY]==17)
     {
@@ -139,6 +156,11 @@
     //updaterar databasen
     update_database($map,$playerX,$playerY,$inventory,$num,$background,$current_floor,$craftmode);
 
+    function convert($size)
+    {
+        $unit=array('b','kb','mb','gb','tb','pb');
+        return @round($size/pow(1024,($i=floor(log($size,1024)))),2).' '.$unit[$i];
+    }
 
     if($debug==true)
     {
@@ -154,23 +176,21 @@
             {
                 if($_SESSION["id"]==$row["id"])
                 {
-                    echo("Debug: info, ");
-                    echo("ID: ".$row["id"]);
-                    echo(", Position: ".$row["playerX"]."x,".$row["playerY"]."y, ");
-                    echo("Inventory: ".$row["inventory"]." ");
-                    echo("num: ".$num." ");
-                    echo("Craftmode: ".$craftmode);
-                    echo(", Standing on: ".$map[$row["playerX"]][$row["playerY"]]);
+                    echo("<style>#game{visibility:visible;height:0;}</style>");
+                    echo("<div id = 'debug'>");
+                    echo("<p class ='debug'>Debug: info </p>");
+                    echo("<p class ='debug'>ID: ".$row["id"]."</p>");
+                    echo("<p class ='debug'>Position: ".$row["playerX"]."x,".$row["playerY"]."y </p>");
+                    echo("<p class ='debug'>Inventory: ".$row["inventory"]."</p>");
+                    echo("<p class ='debug'>num: ".$num."</p>");
+                    echo("<p class ='debug'>Craftmode: ".$craftmode."</p>");
+                    echo("<p class ='debug'>Standing on: ".$map[$row["playerX"]][$row["playerY"]]."</p>");
+                    echo("<p class ='debug'>memory usage: ". convert(memory_get_usage(true))."</p>");
+                    echo("</div>");
                 }
             }
         }
-        function convert($size)
-        {
-            $unit=array('b','kb','mb','gb','tb','pb');
-            return @round($size/pow(1024,($i=floor(log($size,1024)))),2).' '.$unit[$i];
-        }
-
-        echo ", memory usage: ". convert(memory_get_usage(true)); // 123 kb
     }   
 ?>
+</div>
 <?php include 'Javascript.php';?>

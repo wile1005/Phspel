@@ -1,6 +1,7 @@
 <?php
     function cactus_placer(&$map,$worldsize)
     {
+        //placerar kaktusar på sand tiles
         for($X=1; $X < $worldsize-1; $X++)
         {
             for($Y=1; $Y < $worldsize-1; $Y++)

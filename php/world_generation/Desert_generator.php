@@ -1,6 +1,7 @@
 <?php
     function desert_generator(&$map,$worldsize)
     {
+        //genererar öken 
         $desertsize = 40;
         $desertgain = 25;
         $desertamount = 2;

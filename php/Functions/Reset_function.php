@@ -1,9 +1,8 @@
 <?php
-    if(array_key_exists('reset', $_POST))
+    function reset_func()
     {
-        session_start();
         include "Database/Database_login.php";
-
+        
         $playerY = 5;
         $playerX = 5;
         $num = 0;

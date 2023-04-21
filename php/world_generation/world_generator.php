@@ -1,22 +1,19 @@
 <?php
     function generate_world()
     {
+        //sätter max minnet till 4gb och loggar in i databasen
         ini_set('memory_limit','4G');
         include "Database/Database_login.php";
-        include "World_generation/Border_fixer.php";
-        include "World_generation/Ocean_generator.php";
-        include "World_generation/Mountain_generator.php";
-        include "World_generation/Desert_generator.php";
-        include "World_generation/Tree_placer.php";
-        include "World_generation/Beach_fixer.php";
-        include "World_generation/Cactus_planter.php";
-        include "World_generation/Hole_fixer.php";
-        include "World_generation/Ore_generator.php";
-        include "World_generation/Stairs_generation.php";
+
+        //includar alla worldgen filer
+        foreach (glob("world_generation/*.php") as $file) 
+        {
+            include_once $file;
+        }
 
         //variabler
         $map;
-        $worldsize = 110;
+        $worldsize = 100;
 
         for($layer=1; $layer < 4; $layer++)
         {
@@ -57,21 +54,26 @@
                 //fixes holes in the map
                 hole_fixer($map,$worldsize);
 
-                //generates ores
-                ore_generator($map,$worldsize);
-
                 $map = border_fix($map,$worldsize);
             }else
             {
-                //skapar grottor
+                //om lagret är under 1 skapar den grottor istället för en overworld
                 $map = array_fill(0,$worldsize,5);
                 for($i=0; $i < count($map); $i++)
                 {
                     $map[$i] = array_fill(0,$worldsize,5);
                 }
+
+                //skapar grottor
+                cave_generator($map,$worldsize);
+
+                //generates ores
+                ore_generator($map,$worldsize);
+
+                $map = border_fix($map,$worldsize);
             }
 
-            //tar map och gör omvandlar den till background
+            //tar $map och omvandlar den till background
             $background = array_merge(array(), $map);
             for($X=0; $X < count($map); $X++)
             {
@@ -95,6 +97,8 @@
                     }
                 }
             }
+
+            //updaterar map och background
             $sql = "SELECT `map`,`background` FROM `world`";
 
             $sql = "UPDATE `world` SET `background` = '".json_encode($background)."' WHERE `world`.`Layer` = ".$layer.";";
@@ -103,6 +107,7 @@
             $sql = "UPDATE `world` SET `map` = '".json_encode($map)."' WHERE `world`.`Layer` = ".$layer.";";
             $result = $conn->query($sql);
         }
+
         //genererar trappor mellan varje våning
         Stairs_generator($worldsize);
     }

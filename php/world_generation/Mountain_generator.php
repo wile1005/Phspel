@@ -1,6 +1,7 @@
 <?php
     function Mountain_generator(&$map,$worldsize)
     {
+        //genererar berg
         $mountainsize = 25;
         $mountaingain = 25;
         $mountainamount = 2;

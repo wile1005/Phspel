@@ -1,6 +1,7 @@
 <?php
     function beach_fixer(&$map,$worldsize)
     {
+        //gör om alla tiles brevid vatten till sand
         for($X=1; $X < $worldsize-1; $X++)
         {
             for($Y=1; $Y < $worldsize-1; $Y++)

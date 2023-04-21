@@ -1,5 +1,5 @@
 <?php
-    function cave_generator(&$map,$worldsize)
+    function iron_generator(&$map,$worldsize)
     {
         //genererar grottor 
         $cavesize = 40;

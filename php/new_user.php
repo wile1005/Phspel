@@ -64,7 +64,7 @@
                                     $_SESSION["id"]=$row["id"];
                                 }
                             }
-                            header("location:Functions/Initialize_new_player.php");
+                            header("location:Database/Initialize_new_player.php");
                         }else
                         {
                             echo "User is already taken";

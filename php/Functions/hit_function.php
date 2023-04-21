@@ -2,7 +2,6 @@
     //kollar om tilen kan bli slagen
     function hit(&$map, $playerX, $playerY, &$inventory, $num, $background)
     {
-        include "Background_return.php";
         $inventory_size=count($inventory);
         if ($map[$playerX][$playerY]==2)
         {

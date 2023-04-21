@@ -42,13 +42,13 @@
                 if ($X > -1 && $Y > -1 && $X < count($map) && $Y < count($map[1]))
                 {
                     //kollar igenom alla spelare
-                    $sql = "SELECT `playerX`,`playerY`,`craftmode`,`id` FROM `player`;";
+                    $sql = "SELECT `playerX`,`playerY`,`craftmode`,`id`,`floor` FROM `player`;";
                     $result = $conn->query($sql);
                     while($row = $result->fetch_assoc())
                     {
                         $playerprint = false;
                         //om spelare finns på X oxh y cordinaten skriv ut spelaren
-                        if ($row["playerX"]==$X && $row["playerY"]==$Y && $map[$X][$Y]!=8)
+                        if ($row["playerX"]==$X && $row["playerY"]==$Y && $map[$X][$Y]!=8 && $row["floor"]==$current_floor)
                         {
                             $output .= Player_image($map, $background, $X, $Y);
                             $playerprint = true;
