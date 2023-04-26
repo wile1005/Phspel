@@ -1,5 +1,5 @@
 <?php
-    function update_database($map,$playerX,$playerY,$inventory,$num,$background,$current_floor,$craftmode)
+    function update_player($map,$playerX,$playerY,$inventory,$num,$current_floor,$craftmode)
     {
         include "Database/Database_login.php";
 
@@ -17,10 +17,6 @@
         $sql = "UPDATE `player` SET `num` = '".$num."' WHERE `player`.`id` = ".$_SESSION["id"].";";
         $result = $conn->query($sql);
         $sql = "UPDATE `player` SET `craftmode` = '".$craftmode."' WHERE `player`.`id` = ".$_SESSION["id"].";";
-        $result = $conn->query($sql);
-
-        //updaterar kartan
-        $sql = "UPDATE `world` SET `map` = '".json_encode($map)."' WHERE `world`.`id` = ".$current_floor.";";
         $result = $conn->query($sql);
     }
 ?>

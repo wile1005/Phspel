@@ -30,18 +30,11 @@
 
     // includar andra php filer (funktioner)
     //includar alla worldgen filer
-    foreach (glob("Functions/*.php") as $file) 
-    {
-        include $file;
-    }
-    foreach (glob("Plugins/*.php") as $file) 
+    foreach (glob("{Functions,Plugins,Database}/*.php", GLOB_BRACE) as $file) 
     {
         include $file;
     }
     include "World_generation/World_generator.php";
-    include "Database/Get_map.php";
-    include "Database/Update_database.php";
-    include "Database/Get_player_variables.php";
 
     //startar sessionen och hämtar databasen
     if(session_status()!=2)
@@ -110,31 +103,11 @@
     if(array_key_exists('reset', $_POST))
     {
         reset_func();
-        get_map($map,$background,$current_floor);
+        //hämtar dom nya grejorna(mapen spelare)
         get_player_variables($current_floor,$playerX,$playerY,$num,$craftmode,$inventory);
-        update_database($map,$playerX,$playerY,$inventory,$num,$background,$current_floor,$craftmode);
+        get_map($map,$background,$current_floor);
     }
 
-    //kollar ifall spelaren står på en trappa ner eller up
-    if($map[$playerX][$playerY]==17)
-    {
-        $current_floor++;
-        $playerX += rand(-1,1);
-        $playerY += rand(-1,1);
-        // hämtar mapen
-        get_map($map,$background,$current_floor);
-
-        update_database($map,$playerX,$playerY,$inventory,$num,$background,$current_floor,$craftmode);
-    }elseif($map[$playerX][$playerY]==18)
-    {
-        $current_floor--;
-        $playerX += rand(-1,1);
-        $playerY += rand(-1,1);
-        // hämtar mapen
-        get_map($map,$background,$current_floor);
-
-        update_database($map,$playerX,$playerY,$inventory,$num,$background,$current_floor,$craftmode);
-    }
     //ändrar vilken inventory slot som är selectad
     foreach($_POST as $key => $value) 
     {
@@ -156,12 +129,18 @@
     {
         place($inventory,$map,$playerX,$playerY,$num);
     }     
-
-    //hämtar craftmode beroende på tilen under
-    get_craftmode($map, $playerX, $playerY, $craftmode);
     
-    //updaterar databasen
-    update_database($map,$playerX,$playerY,$inventory,$num,$background,$current_floor,$craftmode);
+    //kollar om spelaren står på en trappa upp/ner (förstör saker därför i denna if sats)
+    if(!stairscheck($map,$playerX,$playerY,$current_floor))
+    {
+        //hämtar craftmode beroende på tilen under
+        get_craftmode($map, $playerX, $playerY, $craftmode);
+
+        //updaterar databasen
+        update_map($map,$background,$current_floor);
+    }
+
+    update_player($map,$playerX,$playerY,$inventory,$num,$current_floor,$craftmode);
 
     function convert($size)
     {
@@ -171,31 +150,26 @@
 
     if($debug==true)
     {
-        $sql = "SELECT `playerX`,`playerY`,`inventory`,`id` FROM `player`;";
+        $sql = "SELECT `id`,`playerX`,`playerY`,`floor`,`inventory`,`num`,`craftmode` FROM `player` WHERE `player`.`id` = ".$_SESSION["id"]."";
         $result = $conn->query($sql);
-
+        $row = $result -> fetch_array(MYSQLI_ASSOC);
         if ($result === false) 
         {
             echo "Error: " . mysqli_error($conn);
         } else 
         {
-            while($row = $result->fetch_assoc()) 
-            {
-                if($_SESSION["id"]==$row["id"])
-                {
-                    echo("<style>#game{visibility:visible;height:0;}</style>");
-                    echo("<div id = 'debug'>");
-                    echo("<p class ='debug'>Debug: info </p>");
-                    echo("<p class ='debug'>ID: ".$row["id"]."</p>");
-                    echo("<p class ='debug'>Position: ".$row["playerX"]."x,".$row["playerY"]."y </p>");
-                    echo("<p class ='debug'>Inventory: ".$row["inventory"]."</p>");
-                    echo("<p class ='debug'>num: ".$num."</p>");
-                    echo("<p class ='debug'>Craftmode: ".$craftmode."</p>");
-                    echo("<p class ='debug'>Standing on: ".$map[$row["playerX"]][$row["playerY"]]."</p>");
-                    echo("<p class ='debug'>memory usage: ". convert(memory_get_usage(true))."</p>");
-                    echo("</div>");
-                }
-            }
+            echo("<style>#game{visibility:visible;height:0;}</style>");
+            echo("<div id = 'debug'>");
+            echo("<p class ='debug'>Debug: info </p>");
+            echo("<p class ='debug'>ID: ".$row["id"]."</p>");
+            echo("<p class ='debug'>Position: ".$row["playerX"]."x,".$row["playerY"]."y </p>");
+            echo("<p class ='debug'>Floor: ".$row["floor"]."</p>");
+            echo("<p class ='debug'>Inventory: ".$row["inventory"]."</p>");
+            echo("<p class ='debug'>Num: ".$num."</p>");
+            echo("<p class ='debug'>Craftmode: ".$craftmode."</p>");
+            echo("<p class ='debug'>Standing on: ".$map[$row["playerX"]][$row["playerY"]]."</p>");
+            echo("<p class ='debug'>Memory usage: ". convert(memory_get_usage(true))."</p>");
+            echo("</div>");
         }
     }   
 ?>

@@ -6,15 +6,10 @@
         include "Database/Database_login.php";
 
         //includar alla worldgen filer
-        foreach (glob("world_generation/*.php") as $file) 
+        foreach (glob("{world_generation/*.php,world_generation/Ore_generation/*.php}", GLOB_BRACE) as $file) 
         {
             include_once $file;
         }
-       
-
-        //variabler
-        $map;
-        $worldsize = 100;
 
         for($layer=1; $layer < 4; $layer++)
         {
@@ -45,10 +40,13 @@
 
                 //cactus placer
                 cactus_placer($map,$worldsize);
+
+                //generates coal
+                Coal_generator($map,$worldsize,$coalsize,$coalfrequency);
                 
                 //fixes holes in the map
                 hole_fixer($map,$worldsize);
-
+                
                 //beach fixer
                 beach_fixer($map,$worldsize);
 
@@ -67,8 +65,11 @@
                 //skapar grottor
                 cave_generator($map,$worldsize,$cavesize,$cavefrequency);
 
-                //generates ores
-                ore_generator($map,$worldsize);
+                //generates coal
+                Coal_generator($map,$worldsize,$coalsize,$coalfrequency);
+
+                //generates iron
+                Iron_generator($map,$worldsize,$ironsize,$ironfrequency);
 
                 $map = border_fix($map,$worldsize);
             }

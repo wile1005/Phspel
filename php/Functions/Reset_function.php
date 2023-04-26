@@ -13,7 +13,6 @@
             return ($var >= $min && $var <= $max);
         }
         generate_world();
-
         $sql = "SELECT `id` FROM `player`;";
         $result = $conn->query($sql);
 

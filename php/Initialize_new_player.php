@@ -1,5 +1,5 @@
 <?php
-    include "database_login.php";
+    include "Database/database_login.php";
     session_start();
 
     $playerY = 5;
@@ -49,5 +49,5 @@
     {
         echo "Error: " . mysqli_error($conn);
     }
-    header("location:../phspel.php");
+    header("location:phspel.php");
 ?>
