@@ -7,21 +7,12 @@
         <input id="down" type="submit" name="down" class="button" value="Down" />
         <input id="left" type="submit" name="left" class="button" value="Left" />
         <input id="right" type="submit" name="right" class="button" value="Right" />
-        <input id="place" type="submit" name="place" class="button" value="Place" />
+        <input id="enter" type="submit" name="enter" class="button" value="Enter" />
         <input id="pickup" type="submit" name="pickup" class="button" value="Pickup" />
         <input id="reset" type="submit" name="reset" class="button" value="Reset" />
         <input id="drop" type="submit" name="drop" class="button" value="Drop" />
         <input id="inventory" type="submit" name="inventory" class="button" value="Inventory" />
         <input id="crafting" type="submit" name="crafting" class="button" value="Crafting" />
-    </form>
-    <form class="" method="post">
-        <input id="1" type="submit" name="1" class="button" value="1" />
-        <input id="2" type="submit" name="2" class="button" value="2" />
-        <input id="3" type="submit" name="3" class="button" value="3" />
-        <input id="4" type="submit" name="4" class="button" value="4" />
-        <input id="5" type="submit" name="5" class="button" value="5" />
-        <input id="6" type="submit" name="6" class="button" value="6" />
-        <input id="7" type="submit" name="7" class="button" value="7" />
     </form>
 <?php
     //debug läget (visar mer info)
@@ -32,7 +23,7 @@
 
     // includar alla nödvändiga filer
     //includar alla worldgen filer
-    foreach (glob("{Functions,Plugins,Database}/*.php", GLOB_BRACE) as $file) 
+    foreach (glob("{Functions,Plugins,Database,Crafting}/*.php", GLOB_BRACE) as $file) 
     {
         include $file;
     }
@@ -50,18 +41,32 @@
     get_player_variables($current_floor,$playerX,$playerY,$num,$craftmode,$inventory);
     get_map($map,$background,$current_floor);
 
+    //öppnar / stänger inventoriet
     if(array_key_exists('inventory', $_POST))
     {
-        if($_SESSION["showui"]==false)
+        if($_SESSION["ui"]!="inventory")
         {
-            $_SESSION["showui"]=true;
+            $_SESSION["ui"]="inventory";
         }else
         {
-            $_SESSION["showui"]=false;
+            $_SESSION["ui"]="none";
         }
     }
 
-    if($_SESSION["showui"]==false)
+    //öppnar / stänger crafting menyn
+    if(array_key_exists('crafting', $_POST))
+    {
+        if($_SESSION["ui"]!="crafting")
+        {
+            $_SESSION["ui"]="crafting";
+        }else
+        {
+            $_SESSION["ui"]="none";
+        }
+    }
+
+    //kollar så att spelaren inte har invenoriet öppet
+    if($_SESSION["ui"]=="none")
     {
         //rörelsekod för spelet
         if(array_key_exists('upp', $_POST))
@@ -108,21 +113,31 @@
                 hit($map,$playerX,$playerY+1,$inventory,$num,$background);
             }
         }
+
+        //kod för att plocka up items (funkar inte)
+        if(array_key_exists('pickup', $_POST))
+        {
+            pickup($map,$playerX,$playerY,$inventory,$num,$background);
+        }
+
+        //placerar ut itemet spelaren håller i
+        if(array_key_exists('enter', $_POST))
+        {
+            place($inventory,$map,$playerX,$playerY,$num);
+        }  
     }else
     {
-        if(array_key_exists('upp', $_POST))
+        //kontroller för ui
+        if(array_key_exists('upp', $_POST)&&$num>0)
         {
             $num--;
         }else if(array_key_exists('down', $_POST))
         {
             $num++;
+        }else if(array_key_exists('enter', $_POST))
+        {
+            craft($recipes,$inventory,$num,$craftmode);
         }
-    }
-
-    //kod för att plocka up items funkar inte
-    if(array_key_exists('pickup', $_POST))
-    {
-        pickup($map,$playerX,$playerY,$inventory,$num,$background);
     }
 
     //resetar alla spelare och genererar om världen (funkar inte :( )
@@ -148,13 +163,7 @@
     if(array_key_exists('drop', $_POST))
     {
         drop($inventory,$num);
-    }   
-
-    //placerar ut itemet spelaren håller i
-    if(array_key_exists('place', $_POST))
-    {
-        place($inventory,$map,$playerX,$playerY,$num);
-    }     
+    }      
     
     //kollar om spelaren står på en trappa upp/ner (förstör saker därför i denna if sats)
     if(!stairscheck($map,$playerX,$playerY,$current_floor))

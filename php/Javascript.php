@@ -51,80 +51,46 @@
           console.log('left');
           //trycker left
           document.getElementById("left").click();
-      }
-      else if(event.keyCode == 38) {
+      }else if(event.keyCode == 38) 
+      {
           console.log('up');
           //trycker up
           document.getElementById("up").click();
-      }
-      else if(event.keyCode == 39) {
+      }else if(event.keyCode == 39) 
+      {
           console.log('right');
           //trycker right
           document.getElementById("right").click();
-      }
-      else if(event.keyCode == 40) {
+      }else if(event.keyCode == 40) 
+      {
           console.log('down');
           //trycker down
           document.getElementById("down").click();
-      }else if(event.keyCode == 65) {
+      }else if(event.keyCode == 65) 
+      {
           console.log('left');
           //trycker left
           document.getElementById("left").click();
-      }
-      else if(event.keyCode == 87) {
+      }else if(event.keyCode == 87) 
+      {
           console.log('up');
           //trycker up
           document.getElementById("up").click();
-      }
-      else if(event.keyCode == 68) {
+      }else if(event.keyCode == 68) 
+      {
           console.log('right');
           //trycker right
           document.getElementById("right").click();
-      }
-      else if(event.keyCode == 83) {
+      }else if(event.keyCode == 83) 
+      {
           console.log('down');
           //trycker down
           document.getElementById("down").click();
-      }
-      else if(event.keyCode == 49) {
-          console.log('1');
-          //trycker 1
-          document.getElementById("1").click();
-      }
-      else if(event.keyCode == 50) {
-          console.log('2');
-          //trycker 2
-          document.getElementById("2").click();
-      }
-      else if(event.keyCode == 51) {
-          console.log('3');
-          //trycker 3
-          document.getElementById("3").click();
-      }
-      else if(event.keyCode == 52) {
-          console.log('4');
-          //trycker 4
-          document.getElementById("4").click();
-      }
-      else if(event.keyCode == 53) {
-          console.log('5');
-          //trycker 5
-          document.getElementById("5").click();
-      }
-      else if(event.keyCode == 54) {
-          console.log('6');
-          //trycker 6
-          document.getElementById("6").click();
-      }
-      else if(event.keyCode == 55) {
-          console.log('7');
-          //trycker 7
-          document.getElementById("7").click();
       }else if(event.keyCode == 13) 
       {
-          console.log('place');
+          console.log('enter');
           //trycker place
-          document.getElementById("place").click();
+          document.getElementById("enter").click();
       }else if(event.keyCode == 81) 
       {
           console.log('pickup');
@@ -140,6 +106,11 @@
           console.log('inventory');
           //trycker pickup
           document.getElementById("inventory").click();
+      }else if(event.keyCode == 90) 
+      {
+          console.log('crafting');
+          //trycker pickup
+          document.getElementById("crafting").click();
       }
     });
 </script>

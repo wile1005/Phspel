@@ -2,107 +2,117 @@
     //kollar om tilen kan bli slagen
     function hit(&$map, $playerX, $playerY, &$inventory, $num, $background)
     {
+        $itemfound = false;
         $inventory_size=count($inventory);
         if ($map[$playerX][$playerY]==2)
         {
             //tree hit
             background_return($map,$playerX,$playerY,$background);
-            for ($i=0; $i <$inventory_size ; $i++)
+            for($i=0; $i < $inventory_size; $i++)
             {
-                if ($inventory[$i] == "null")
+                if($inventory[$i][0]=="log")
                 {
-                    $inventory[$i] = "log";
-                    break;
+                    $itemfound = true;
+                    $inventory[$i][1]++;
                 }
+            }
+            if ($itemfound == false)
+            {
+                array_push($inventory,array("log",1));
             }
         }elseif ($map[$playerX][$playerY]==5)
         {
             //stone hit
-            for ($i=0; $i <$inventory_size ; $i++)
+            if($inventory[$num]=="wood_pickaxe")
             {
-                if ($inventory[$i] == "Wood_pickaxe"&&$num==$i||$inventory[$i] == "stone_pickaxe"&&$num==$i)
+                background_return($map,$playerX,$playerY,$background);
+                for($i=0; $i < $inventory_size; $i++)
                 {
-                    background_return($map,$playerX,$playerY,$background);
-                    for ($j=0; $j < $inventory_size; $j++)
+                    if($inventory[$i][0]=="stone")
                     {
-                        if ($inventory[$j] == "null")
-                        {
-                            $inventory[$j] = "stone";
-                            break;
-                        }
+                        $itemfound = true;
+                        $inventory[$i][1]++;
                     }
+                }
+                if ($itemfound == false)
+                {
+                    array_push($inventory,array("stone",1));
                 }
             }
         }elseif ($map[$playerX][$playerY]==6)
         {
             //iron hit
-            for ($i=0; $i <$inventory_size ; $i++)
+            if($inventory[$num]=="stone_pickaxe")
             {
-                if ($inventory[$i] == "stone_pickaxe"&&$num==$i)
+                background_return($map,$playerX,$playerY,$background);
+                for($i=0; $i < $inventory_size; $i++)
                 {
-                    background_return($map,$playerX,$playerY,$background);
-                    for ($j=0; $j < $inventory_size; $j++)
+                    if($inventory[$i][0]=="raw_iron")
                     {
-                        if ($inventory[$j] == "null")
-                        {
-                            $inventory[$j] = "raw_iron";
-                            break;
-                        }
+                        $itemfound = true;
+                        $inventory[$i][1]++;
                     }
+                }
+                if ($itemfound == false)
+                {
+                    array_push($inventory,array("raw_iron",1));
                 }
             }
         }elseif ($map[$playerX][$playerY]==7)
         {
             //redstone ore hit
-            for ($i=0; $i <$inventory_size ; $i++)
+            if($inventory[$num]=="iron_pickaxe")
             {
-                if ($inventory[$i] == "iron_pickaxe"&&$num==$i)
+                background_return($map,$playerX,$playerY,$background);
+                for($i=0; $i < $inventory_size; $i++)
                 {
-                    background_return($map,$playerX,$playerY,$background);
-                    for ($j=0; $j < $inventory_size; $j++)
+                    if($inventory[$i][0]=="redstone")
                     {
-                        if ($inventory[$j] == "null")
-                        {
-                            $inventory[$j] = "redstone";
-                            break;
-                        }
+                        $itemfound = true;
+                        $inventory[$i][1]++;
                     }
+                }
+                if ($itemfound == false)
+                {
+                    array_push($inventory,array("redstone",1));
                 }
             }
         }elseif ($map[$playerX][$playerY]==13)
         {
             //coal ore hit
-            for ($i=0; $i <$inventory_size ; $i++)
+            if($inventory[$num]=="Wood_pickaxe"||"stone_pickaxe"||"iron_pickaxe")
             {
-                if ($inventory[$i] == "Wood_pickaxe"&&$num==$i||$inventory[$i] == "stone_pickaxe"&&$num==$i)
+                background_return($map,$playerX,$playerY,$background);
+                for($i=0; $i < $inventory_size; $i++)
                 {
-                    background_return($map,$playerX,$playerY,$background);
-                    for ($j=0; $j < $inventory_size; $j++)
+                    if($inventory[$i][0]=="coal")
                     {
-                        if ($inventory[$j] == "null")
-                        {
-                            $inventory[$j] = "coal";
-                            break;
-                        }
+                        $itemfound = true;
+                        $inventory[$i][1]++;
                     }
+                }
+                if ($itemfound == false)
+                {
+                    array_push($inventory,array("coal",1));
                 }
             }
         }if ($map[$playerX][$playerY]==14)
         {
             //wall hit
-            for ($i=0; $i <$inventory_size ; $i++)
+            if($inventory[$num]=="axe")
             {
-                if ($inventory[$i] == "axe"&&$num==$i)
+                background_return($map,$playerX,$playerY,$background);
+                for($i=0; $i < $inventory_size; $i++)
                 {
-                    background_return($map,$playerX,$playerY,$background);
-                    for ($i=0; $i <$inventory_size ; $i++)
+                    if($inventory[$i][0]=="plank")
                     {
-                        if ($inventory[$i] == "null")
-                        {
-                            $inventory[$i] = "plank";
-                            break;
-                        }
+                        $itemfound = true;
+                        $inventory[$i][1]++;
                     }
+                }
+                if ($itemfound == false)
+                {
+                    array_push($inventory,array("plank",1));
                 }
             }
         }

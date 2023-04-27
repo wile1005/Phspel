@@ -37,9 +37,12 @@
 
         //SPELARENS SYNFÄLLT
         $output = "";
+
+        //Grafikens höjd
         for ($X=-3+$playerX; $X < 4+$playerX; $X++)
         {
-            for ($Y=-3+$playerY; $Y < 4+$playerY; $Y++)
+            //Grafikens bred
+            for ($Y=-4+$playerY; $Y < 5+$playerY; $Y++)
             {
                 //ÄR SYNFÄLLT UTANFÖR ARRAY???
                 if ($X > -1 && $Y > -1 && $X < count($map) && $Y < count($map[1]))

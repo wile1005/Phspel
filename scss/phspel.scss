@@ -19,7 +19,7 @@ body
             position: absolute;
             left: 1vh;
             height: 700px;
-            width: 700px;
+            width: 900px;
             z-index:5;
         }
         #game
@@ -35,21 +35,22 @@ body
                 {
                     position: absolute;
                     height: 700px;
-                    width: 700px;
+                    width: 900px;
                 }
                 #ui
                 {
                     position: absolute;
                     height: 700px;
-                    width: 700px;
+                    width: 900px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    #inventory
+                    .menu
                     {
                         display: flex;
                         flex-direction: column;
                         text-align: center;
+                        background-color: white;
                     }
                 }
             }

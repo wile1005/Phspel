@@ -18,7 +18,6 @@
                 <div id ="GFX" class='GFX_result'></div>
                 <div id ="ui" class="Ui"></div>
             </div>
-            <?php include 'Crafting.php';?>
             <div id="chat">
                 <div class='Chat_result'></div>
                 <?php include 'chat/Send_message.php'?>

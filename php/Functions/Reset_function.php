@@ -7,7 +7,7 @@
         $playerX = 5;
         $num = 0;
         $current_floor = 1;
-        $inventory = array_fill(0,7,"null");
+        $inventory = array();
         function in_range($var, $min, $max) 
         {
             return ($var >= $min && $var <= $max);
