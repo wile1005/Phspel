@@ -9,14 +9,19 @@
         //hämtar spelar X och Y
         $sql = "SELECT `playerX`,`playerY`,`floor`,`craftmode`,`inventory`,`num`,`id` FROM `player` WHERE `player`.`id` = ".$_SESSION["id"].";";
         $result = $conn->query($sql);
-        $row = $result -> fetch_array(MYSQLI_ASSOC);
-        $current_floor = $row["floor"];
-        $playerX = $row["playerX"];
-        $playerY = $row["playerY"];
-        $craftmode = $row["craftmode"];
-        $num = $row["num"];
-        $inventory=json_decode($row["inventory"]);
-        
+        if (!$result) 
+        {
+            echo "Error: " . mysqli_error($conn);
+        } else 
+        {
+            $row = $result->fetch_assoc();
+            $current_floor = $row["floor"];
+            $playerX = $row["playerX"];
+            $playerY = $row["playerY"];
+            $craftmode = $row["craftmode"];
+            $num = $row["num"];
+            $inventory=json_decode($row["inventory"]);
+        }
 
 
         //hämtar kartan och bakgrunden

@@ -34,15 +34,20 @@
                     {
                         $sql = "SELECT `name`,`password`,`id` FROM `player`";
                         $result = $conn->query($sql);
-                        $user_exists=false;
-                        while($row = $result->fetch_assoc())
+                        if (!$result) 
                         {
+                            echo "Error: " . mysqli_error($conn);
+                        } else 
+                        {
+                            $user_exists = false;
+                            $row = $result->fetch_assoc();
+                            
                             //checks if user exists
-                            if ($row["name"]==$_POST["name"])
-                            {
-                                $user_exists=true;
+                            if($row["name"] == $_POST["name"]) {
+                                $user_exists = true;
                             }
                         }
+                        
                         if($user_exists!=true)
                         {
                             //insert variables

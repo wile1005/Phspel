@@ -3,8 +3,6 @@
     include "../Database/Database_login.php";
     $sql = "SELECT `message`,`id` FROM `chat` ORDER BY id DESC LIMIT 10";
     $result = $conn->query($sql);
-    while($row = $result->fetch_assoc()) 
-    {
-        echo "<p>".$row["message"] . "</p>";
-    }
+    $row = $result->fetch_assoc();
+    echo "<p>".$row["message"] . "</p>";
 ?>
