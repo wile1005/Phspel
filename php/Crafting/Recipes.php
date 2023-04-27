@@ -2,7 +2,7 @@
     $recipes = array
     (
         "plank",
-        "stick",
+        "workbench",
         "wood pickaxe"
     );
 ?>

@@ -1,6 +1,7 @@
 <?php
-    function add_to_inventory(&$inventory,$item)
+    function add_item_to_inventory(&$inventory,$item)
     {
+        //lägger till ett item till inventoriet
         $itemfound = false;
         $inventory_size=count($inventory);
         
@@ -16,5 +17,10 @@
         {
             array_push($inventory,array($item,1));
         }
+    }
+    function add_tool_to_inventory(&$inventory,$item)
+    {
+        // lägger till ett tool till inventoriet
+        array_push($inventory,$item);
     }
 ?>

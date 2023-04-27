@@ -134,7 +134,7 @@
         }else if(array_key_exists('down', $_POST))
         {
             $num++;
-        }else if(array_key_exists('enter', $_POST))
+        }else if(array_key_exists('enter', $_POST)&&$_SESSION["ui"]=="crafting")
         {
             craft($recipes,$inventory,$num,$craftmode);
         }
