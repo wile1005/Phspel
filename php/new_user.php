@@ -55,15 +55,14 @@
                             $stmt->bind_param("ss", $name, $password);
                             $stmt->execute();
                             $stmt->close();
+
+                            //gets and sets user id
                             $result = $conn->query($sql);
-                            while($row = $result->fetch_assoc())
-                            {
-                                //checks for user id
-                                if ($row["name"]==ucfirst($_POST["name"]))
-                                {
-                                    $_SESSION["id"]=$row["id"];
-                                }
-                            }
+                            $row = $result->fetch_assoc();
+                            $_SESSION["id"]=$row["id"];
+                            $_session["showui"]=false;
+
+                            //sends user to get player initializesed
                             header("location:Initialize_new_player.php");
                         }else
                         {

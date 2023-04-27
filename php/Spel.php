@@ -3,14 +3,16 @@
 <div id="game">
     <h1>PHsPel</h1>
     <form class="" method="post">
-        <input id="up" type="submit" name="upp" class="button" value="upp" />
-        <input id="down" type="submit" name="down" class="button" value="down" />
-        <input id="left" type="submit" name="left" class="button" value="left" />
-        <input id="right" type="submit" name="right" class="button" value="right" />
-        <input id="place" type="submit" name="place" class="button" value="place" />
-        <input id="pickup" type="submit" name="pickup" class="button" value="pickup" />
-        <input id="reset" type="submit" name="reset" class="button" value="reset" />
-        <input id="drop" type="submit" name="drop" class="button" value="drop" />
+        <input id="up" type="submit" name="upp" class="button" value="Upp" />
+        <input id="down" type="submit" name="down" class="button" value="Down" />
+        <input id="left" type="submit" name="left" class="button" value="Left" />
+        <input id="right" type="submit" name="right" class="button" value="Right" />
+        <input id="place" type="submit" name="place" class="button" value="Place" />
+        <input id="pickup" type="submit" name="pickup" class="button" value="Pickup" />
+        <input id="reset" type="submit" name="reset" class="button" value="Reset" />
+        <input id="drop" type="submit" name="drop" class="button" value="Drop" />
+        <input id="inventory" type="submit" name="inventory" class="button" value="Inventory" />
+        <input id="crafting" type="submit" name="crafting" class="button" value="Crafting" />
     </form>
     <form class="" method="post">
         <input id="1" type="submit" name="1" class="button" value="1" />
@@ -28,68 +30,92 @@
     error_reporting(E_ALL);
     $debug = true;
 
-    // includar andra php filer (funktioner)
+    // includar alla nödvändiga filer
     //includar alla worldgen filer
     foreach (glob("{Functions,Plugins,Database}/*.php", GLOB_BRACE) as $file) 
     {
         include $file;
     }
     include "World_generation/World_generator.php";
+    include "Database/Database_login.php";
 
-    //startar sessionen och hämtar databasen
+    //startar sessionen
     if(session_status()!=2)
     {
         session_start();
     }
-    include "Database/Database_login.php";
+    
 
     //hämtar spelar variabler och kartan
     get_player_variables($current_floor,$playerX,$playerY,$num,$craftmode,$inventory);
     get_map($map,$background,$current_floor);
 
-    //rörelsekod för spelet
-    if(array_key_exists('upp', $_POST))
+    if(array_key_exists('inventory', $_POST))
     {
-    //Rörelse kod för up
-        if (movecheck($map, $playerX-1, $playerY)==true)
+        if($_SESSION["showui"]==false)
         {
-            $playerX -= 1;
+            $_SESSION["showui"]=true;
         }else
         {
-            hit($map,$playerX-1,$playerY,$inventory,$num,$background);
+            $_SESSION["showui"]=false;
         }
+    }
 
-    }else if(array_key_exists('down', $_POST))
+    if($_SESSION["showui"]==false)
     {
-    //Rörelse kod för ner
-        if (movecheck($map, $playerX+1, $playerY)==true)
+        //rörelsekod för spelet
+        if(array_key_exists('upp', $_POST))
         {
-            $playerX += 1;
-        }else
+        //Rörelse kod för up
+            if (movecheck($map, $playerX-1, $playerY)==true)
+            {
+                $playerX -= 1;
+            }else
+            {
+                hit($map,$playerX-1,$playerY,$inventory,$num,$background);
+            }
+
+        }else if(array_key_exists('down', $_POST))
         {
-            hit($map,$playerX+1,$playerY,$inventory,$num,$background);
+        //Rörelse kod för ner
+            if (movecheck($map, $playerX+1, $playerY)==true)
+            {
+                $playerX += 1;
+            }else
+            {
+                hit($map,$playerX+1,$playerY,$inventory,$num,$background);
+            }
+
+        }else if(array_key_exists('left', $_POST))
+        {
+        //Rörelse kod för vänster
+            if (movecheck($map, $playerX, $playerY-1)==true)
+            {
+                $playerY -= 1;
+            }else
+            {
+                hit($map,$playerX,$playerY-1,$inventory,$num,$background);
+            }
+
+        }else if(array_key_exists('right', $_POST))
+        {
+        //Rörelse kod för höger
+            if (movecheck($map, $playerX, $playerY+1)==true)
+            {
+                $playerY += 1;
+            }else
+            {
+                hit($map,$playerX,$playerY+1,$inventory,$num,$background);
+            }
         }
-
-    }else if(array_key_exists('left', $_POST))
+    }else
     {
-    //Rörelse kod för vänster
-        if (movecheck($map, $playerX, $playerY-1)==true)
+        if(array_key_exists('upp', $_POST))
         {
-            $playerY -= 1;
-        }else
+            $num--;
+        }else if(array_key_exists('down', $_POST))
         {
-            hit($map,$playerX,$playerY-1,$inventory,$num,$background);
-        }
-
-    }else if(array_key_exists('right', $_POST))
-    {
-    //Rörelse kod för höger
-        if (movecheck($map, $playerX, $playerY+1)==true)
-        {
-            $playerY += 1;
-        }else
-        {
-            hit($map,$playerX,$playerY+1,$inventory,$num,$background);
+            $num++;
         }
     }
 
@@ -160,7 +186,7 @@
         {
             echo("<style>#game{visibility:visible;height:0;}</style>");
             echo("<div id = 'debug'>");
-            echo("<p class ='debug'>Debug: info </p>");
+            echo("<p class ='debug'>Debug info </p>");
             echo("<p class ='debug'>ID: ".$row["id"]."</p>");
             echo("<p class ='debug'>Position: ".$row["playerX"]."x,".$row["playerY"]."y </p>");
             echo("<p class ='debug'>Floor: ".$row["floor"]."</p>");

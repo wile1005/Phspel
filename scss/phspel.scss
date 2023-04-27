@@ -18,8 +18,9 @@ body
         {
             position: absolute;
             left: 1vh;
-            height: 107%;
-            width: 697px;
+            height: 700px;
+            width: 700px;
+            z-index:5;
         }
         #game
         {
@@ -30,7 +31,27 @@ body
             gap: 20px;
             #spel
             {
-                
+                #gfx
+                {
+                    position: absolute;
+                    height: 700px;
+                    width: 700px;
+                }
+                #ui
+                {
+                    position: absolute;
+                    height: 700px;
+                    width: 700px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    #inventory
+                    {
+                        display: flex;
+                        flex-direction: column;
+                        text-align: center;
+                    }
+                }
             }
             #craft_meny
             {

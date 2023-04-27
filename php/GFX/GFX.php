@@ -10,15 +10,13 @@
         $sql = "SELECT `playerX`,`playerY`,`floor`,`craftmode`,`inventory`,`num`,`id` FROM `player` WHERE `player`.`id` = ".$_SESSION["id"].";";
         $result = $conn->query($sql);
         $row = $result -> fetch_array(MYSQLI_ASSOC);
-        if($_SESSION["id"]==$row["id"])
-        {
-            $current_floor = $row["floor"];
-            $playerX = $row["playerX"];
-            $playerY = $row["playerY"];
-            $craftmode = $row["craftmode"];
-            $num = $row["num"];
-            $inventory=json_decode($row["inventory"]);
-        }
+        $current_floor = $row["floor"];
+        $playerX = $row["playerX"];
+        $playerY = $row["playerY"];
+        $craftmode = $row["craftmode"];
+        $num = $row["num"];
+        $inventory=json_decode($row["inventory"]);
+        
 
 
         //hämtar kartan och bakgrunden
@@ -62,25 +60,6 @@
                 }
             }
             $output.= "<br>";
-        }
-
-        //grafiken för inventoryt
-        foreach ($inventory as $item) 
-        {
-            $output .= $item == "null" ? "<img src='../image/slot.jpg' alt=''>" : "<img src='../image/$item.jpg' alt=''>";
-        }
-
-        $output.= "<br>";
-        for ($i=0; $i < count($inventory); $i++)
-        {
-            if ($i==$num)
-            {
-                $output .= "<img src='../image/selector_arrow.jpg' alt=''>";
-            }else
-            {
-                $output .= "<img src='../image/selector_slot.jpg' alt=''>";
-            }
-
         }
         $sql = "UPDATE `player` SET `craftmode` = '".$craftmode."' WHERE `player`.`id` = ".$_SESSION["id"].";";
         $result = $conn->query($sql);

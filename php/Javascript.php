@@ -1,7 +1,7 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
 
 <script>
-  //refreshar class ="messages" varje 100ms (funkar inte)
+  //refreshar class ="messages" varje 100ms (funkar)
     function refresh_time() {
         jQuery.ajax({
             url:'Chat/Chat.php',
@@ -22,6 +22,20 @@
             type:'POST',
             success:function(results) {
                 jQuery(".GFX_result").html(results);
+            }
+        });
+    }
+    timer = setInterval(refresh_time,100);
+</script>
+
+<script>
+  //refreshar class ="result" (gfx.php) varje 100ms
+    function refresh_time() {
+        jQuery.ajax({
+            url:'Ui/Ui.php',
+            type:'POST',
+            success:function(results) {
+                jQuery(".Ui").html(results);
             }
         });
     }
@@ -106,21 +120,26 @@
           console.log('7');
           //trycker 7
           document.getElementById("7").click();
-      }
-      else if(event.keyCode == 13) {
+      }else if(event.keyCode == 13) 
+      {
           console.log('place');
           //trycker place
           document.getElementById("place").click();
-      }
-      else if(event.keyCode == 81) {
+      }else if(event.keyCode == 81) 
+      {
           console.log('pickup');
           //trycker pickup
           document.getElementById("pickup").click();
-      }
-      else if(event.keyCode == 69) {
+      }else if(event.keyCode == 69) 
+      {
           console.log('drop');
           //trycker pickup
           document.getElementById("drop").click();
+      }else if(event.keyCode == 88) 
+      {
+          console.log('inventory');
+          //trycker pickup
+          document.getElementById("inventory").click();
       }
     });
 </script>
