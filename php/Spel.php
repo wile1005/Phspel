@@ -8,9 +8,7 @@
         <input id="left" type="submit" name="left" class="button" value="Left" />
         <input id="right" type="submit" name="right" class="button" value="Right" />
         <input id="enter" type="submit" name="enter" class="button" value="Enter" />
-        <input id="pickup" type="submit" name="pickup" class="button" value="Pickup" />
         <input id="reset" type="submit" name="reset" class="button" value="Reset" />
-        <input id="drop" type="submit" name="drop" class="button" value="Drop" />
         <input id="inventory" type="submit" name="inventory" class="button" value="Inventory" />
         <input id="crafting" type="submit" name="crafting" class="button" value="Crafting" />
     </form>
@@ -34,11 +32,15 @@
     if(session_status()!=2)
     {
         session_start();
+        if(!isset($_SESSION["id"]))
+        {
+            header("location:index.php");
+        }
     }
     
 
     //hämtar spelar variabler och kartan
-    get_player_variables($current_floor,$playerX,$playerY,$num,$craftmode,$inventory);
+    get_player_variables($current_floor,$playerX,$playerY,$num,$craftmode,$inventory,$holding);
     get_map($map,$background,$current_floor);
 
     //öppnar / stänger inventoriet
@@ -46,6 +48,7 @@
     {
         if($_SESSION["ui"]!="inventory")
         {
+            $num=0;
             $_SESSION["ui"]="inventory";
         }else
         {
@@ -58,6 +61,7 @@
     {
         if($_SESSION["ui"]!="crafting")
         {
+            $num=0;
             $_SESSION["ui"]="crafting";
         }else
         {
@@ -123,7 +127,7 @@
         //placerar ut itemet spelaren håller i
         if(array_key_exists('enter', $_POST))
         {
-            place($inventory,$map,$playerX,$playerY,$num);
+            place($inventory,$map,$playerX,$playerY,$holding);
         }  
     }else
     {
@@ -131,21 +135,33 @@
         if(array_key_exists('upp', $_POST)&&$num>0)
         {
             $num--;
-        }else if(array_key_exists('down', $_POST))
+        }else if(array_key_exists('down', $_POST)&&$_SESSION["ui"]=="inventory"&&$num<count($inventory)-1)
+        {
+            $num++;
+        }else if(array_key_exists('down', $_POST)&&$_SESSION["ui"]=="crafting")
         {
             $num++;
         }else if(array_key_exists('enter', $_POST)&&$_SESSION["ui"]=="crafting")
         {
             craft($recipes,$inventory,$num,$craftmode);
+        }else if(array_key_exists('enter', $_POST)&&$_SESSION["ui"]=="inventory")
+        {
+            //sätter vad spelaren håller i
+            if(is_array($inventory[$num]))
+            {
+                $holding = $inventory[$num][0];
+            }else
+            {
+                $holding = $inventory[$num];
+            }
         }
     }
-
     //resetar alla spelare och genererar om världen (funkar inte :( )
     if(array_key_exists('reset', $_POST))
     {
         reset_func();
         //hämtar dom nya grejorna(mapen spelare)
-        get_player_variables($current_floor,$playerX,$playerY,$num,$craftmode,$inventory);
+        get_player_variables($current_floor,$playerX,$playerY,$num,$craftmode,$inventory,$holding);
         get_map($map,$background,$current_floor);
     }
 
@@ -175,7 +191,7 @@
         update_map($map,$background,$current_floor);
     }
 
-    update_player($map,$playerX,$playerY,$inventory,$num,$current_floor,$craftmode);
+    update_player($map,$playerX,$playerY,$inventory,$num,$current_floor,$craftmode,$holding);
 
     function convert($size)
     {
@@ -201,6 +217,7 @@
             echo("<p class ='debug'>Floor: ".$row["floor"]."</p>");
             echo("<p class ='debug'>Inventory: ".$row["inventory"]."</p>");
             echo("<p class ='debug'>Num: ".$num."</p>");
+            echo("<p class ='debug'>Holding: ".$holding."</p>");
             echo("<p class ='debug'>Craftmode: ".$craftmode."</p>");
             echo("<p class ='debug'>Standing on: ".$map[$row["playerX"]][$row["playerY"]]."</p>");
             echo("<p class ='debug'>Memory usage: ". convert(memory_get_usage(true))."</p>");

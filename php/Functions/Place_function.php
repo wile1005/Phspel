@@ -1,40 +1,18 @@
 <?php
-    function place(&$inventory,&$map,$playerX,$playerY,$num)
+    function place(&$inventory,&$map,$playerX,$playerY,&$holding)
     {
         include "Database/Database_login.php";
+        include "../Crafting/Find_item.php";
         
+        $index;
+
         if($map[$playerX][$playerY]!=17&&$map[$playerX][$playerY]!=18)
         {
-            switch($inventory[$num]) 
+            switch($holding)
             {
-                case 'workbench': 
-                $inventory[$num] = "null";
+                case 'workbench':
+                $inventory[find_item($inventory,"workbench")][1]--;
                 $map[$playerX][$playerY]=3;
-                break;
-
-                case 'furnace': 
-                $inventory[$num] = "null";
-                $map[$playerX][$playerY]=9;
-                break;
-
-                case 'wood_wall': 
-                $inventory[$num] = "null";
-                $map[$playerX][$playerY]=14;
-                break;
-
-                case 'stone_wall': 
-                $inventory[$num] = "null";
-                $map[$playerX][$playerY]=15;
-                break;
-
-                case 'anvil': 
-                    $inventory[$num] = "null";
-                    $map[$playerX][$playerY]=16;
-                    break;
-
-                default:
-                    $craftmode = "none";
-                    break;
             }
         }
 

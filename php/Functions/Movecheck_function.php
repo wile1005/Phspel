@@ -1,6 +1,7 @@
 <?php
     function movecheck(&$map, $playerX, $playerY)
     {
+        //checks if player can move to the tile
         switch ($map[$playerX][$playerY]) {
             case 2:
             case 5:

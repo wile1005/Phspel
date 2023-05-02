@@ -5,7 +5,7 @@
     {
         include $file;
     }
-
+    
     //startar sessionen
     if(session_status()!=2)
     {
@@ -22,37 +22,46 @@
 
     echo"<div id='healthbar'></div>";//fixa en healthbar
 
+
     //skriver ut rätt ui beroende på session ui
     if($_SESSION["ui"]=="inventory")
     {
         //kod för inventoriet
         echo"<div id='inventory' class='menu'>";
+        echo"<h2>Inventory</h2>";
         for($i=0; $i < count($inventory); $i++)
         {
+            echo"<li>";
+            echo"<img src=../Images/Icons/".str_replace(" ","_",$inventory[$i][0]).".png>";
             //skriver ut om itemet är selectat
             if($i == $num)
             {
-                echo"<p>> ".$inventory[$i][1]." ".$inventory[$i][0]." <</p>";
+                echo"<p>".$inventory[$i][1]." ".$inventory[$i][0]." <</p>";
             }else
             {
                 echo"<p>".$inventory[$i][1]." ".$inventory[$i][0]." </p>";
             }
+            echo"</li>";
         }
         echo"</div>";
     }elseif($_SESSION["ui"]=="crafting")
     {
         //kod för crafting ui
         echo"<div id='crafting' class='menu'>";
-        for($i=0; $i < count($recipes); $i++)
+        echo"<h2>Crafting</h2>";
+        for($i=0; $i < count($recipes2); $i++)
         {
+            echo"<li>";
+            echo"<img src=../Images/Icons/".str_replace(" ","_",$recipes2[$i][0]).".png>";
             //skriver ut om receptet är selectat
             if($i == $num)
             {
-                echo"<p>> ".$recipes[$i]." <</p>";
+                echo"<p>".$recipes2[$i][0]." <</p>";
             }else
             {
-                echo"<p>".$recipes[$i]."</p>";
+                echo"<p>".$recipes2[$i][0]."</p>";
             }
+            echo"</li>";
         }
         echo"</div>";
     }

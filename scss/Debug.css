@@ -1,5 +1,7 @@
+@font-face { font-family: ARCADECLASSIC; src: url('ARCADECLASSIC.TTF'); }
 *
 {
+    font-family: ARCADECLASSIC; 
     margin: 0;
     padding: 0;
 }

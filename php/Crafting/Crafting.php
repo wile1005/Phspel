@@ -1,42 +1,42 @@
 <?php
+    function craft2($recipes,&$inventory,$item_to_craft,$craftmode)
+    {
+
+    }
     function craft($recipes,&$inventory,$num,$craftmode)
     {
         //simplifiera detta
 
+        $index;
         //crafting logic
-        if($recipes[$num]=="plank")
+        switch ($recipes[$num]) 
         {
-            for($i=0; $i < count($inventory); $i++)
+            case "plank":
+            $index = find_item($inventory,"log");
+            if($inventory[$index][1]>0)
             {
-                if($inventory[$i][0]=="log"&&$inventory[$i][1]>0)
-                {
-                    $inventory[$i][1]-=1;
-                    add_item_to_inventory($inventory,"plank");
-                    break;
-                }
+                $inventory[$index][1]-=1;
+                add_item_to_inventory($inventory,"plank");
             }
-        }else if($recipes[$num]=="workbench")
-        {
-            for($i=0; $i < count($inventory); $i++)
+            break;
+
+            case "workbench":
+            $index = find_item($inventory,"log");
+            if($inventory[$index][1]>9)
             {
-                if($inventory[$i][0]=="log"&&$inventory[$i][1]>9)
-                {
-                    $inventory[$i][1]-=2;
-                    add_item_to_inventory($inventory,"workbench");
-                    break;
-                }
+                $inventory[$index][1]-=10;
+                add_item_to_inventory($inventory,"workbench");
             }
-        }else if($recipes[$num]=="wood pickaxe"&&$craftmode=="workbench")
-        {
-            for($i=0; $i < count($inventory); $i++)
+            break;
+
+            case "wood pickaxe" && $craftmode=="workbench":
+            $index = find_item($inventory,"log");
+            if($inventory[$index][1]>4)
             {
-                if($inventory[$i][0]=="log"&&$inventory[$i][1]<4)
-                {
-                    $inventory[$i][1]-=1;
-                    add_tool_to_inventory($inventory,"wood_pickaxe");
-                    break;
-                }
+                $inventory[$index][1]-=5;
+                add_item_to_inventory($inventory,"wood_pickaxe");
             }
+            break;
         }
     }
 ?>

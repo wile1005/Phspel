@@ -1,7 +1,7 @@
 <?php
     function add_item_to_inventory(&$inventory,$item)
     {
-        //lägger till ett item till inventoriet
+        //adds item to inventory
         $itemfound = false;
         $inventory_size=count($inventory);
         
@@ -9,18 +9,15 @@
         {
             if($inventory[$i][0]==$item)
             {
-                $itemfound = true;
                 $inventory[$i][1]++;
+                return;
             }
         }
-        if ($itemfound == false)
-        {
-            array_push($inventory,array($item,1));
-        }
+        array_push($inventory,array($item,1));
     }
     function add_tool_to_inventory(&$inventory,$item)
     {
-        // lägger till ett tool till inventoriet
+        //adds tool to invetory
         array_push($inventory,$item);
     }
 ?>

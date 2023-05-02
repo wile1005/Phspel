@@ -2,8 +2,10 @@ $Main_color: gray;
 $Secondary_color: #f6f2f2;
 $Text_color: darken(gray,20%);
 $Button_color: darken(lightblue,20%);
+@font-face { font-family: ARCADECLASSIC; src: url('ARCADECLASSIC.TTF'); }
 *
 {
+    font-family: ARCADECLASSIC; 
     padding: 0;
     margin: 0;
 }
@@ -26,7 +28,7 @@ body
         {
             width: 100%;
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
+            grid-template-columns: 2fr 1fr;
             grid-template-rows: repeat(1fr ,3);
             gap: 20px;
             #spel
@@ -47,10 +49,35 @@ body
                     justify-content: center;
                     .menu
                     {
+                        padding: 20px;
+                        border-radius: 10px;
                         display: flex;
                         flex-direction: column;
                         text-align: center;
-                        background-color: white;
+                        justify-content: center;
+                        background-color: $Secondary_color;
+                        h2
+                        {
+                            font-size: 50px;
+                        }
+                        li
+                        {
+                            list-style: none;
+                            gap: 5px;
+                            display: flex;
+                            p
+                            {
+                                font-size: 30px;
+                            }
+                            img
+                            {
+                                width: 40px;
+                            }
+                        }
+                        .submenu
+                        {
+
+                        }
                     }
                 }
             }

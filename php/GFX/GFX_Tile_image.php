@@ -2,23 +2,23 @@
     function Tile_image(&$map, &$background, $X, $Y) 
     {
         $image_paths = [
-            1 => '../image/grass' . rand(1, 2) . '.png',
-            2 => '../image/tree.png',
-            3 => '../image/workbench_place.png',
-            4 => '../image/stone_floor.png',
-            5 => '../image/stone_wall.png',
-            6 => '../image/iron_ore.png',
-            7 => '../image/redstone_ore.png',
-            8 => '../image/bedrock.jpg',
-            9 => '../image/furnace_place.png',
-            10 => '../image/water.png',
-            11 => '../image/sand.png',
-            12 => '../image/cactus.png',
-            13 => '../image/coal_ore.png',
-            14 => '../image/wood_wall.png',
-            16 => '../image/anvil.png',
-            17 => '../image/Stairs_down.png',
-            18 => '../image/Stairs_up.png'
+            1 => '../images/grass' . rand(1, 2) . '.png',
+            2 => '../images/tree.png',
+            3 => '../images/workbench_place.png',
+            4 => '../images/stone_floor.png',
+            5 => '../images/stone_wall.png',
+            6 => '../images/iron_ore.png',
+            7 => '../images/redstone_ore.png',
+            8 => '../images/bedrock.jpg',
+            9 => '../images/furnace_place.png',
+            10 => '../images/water.png',
+            11 => '../images/sand.png',
+            12 => '../images/cactus.png',
+            13 => '../images/coal_ore.png',
+            14 => '../images/wood_wall.png',
+            16 => '../images/anvil.png',
+            17 => '../images/Stairs_down.png',
+            18 => '../images/Stairs_up.png'
         ];
         
         $image_path = isset($image_paths[$map[$X][$Y]]) ? $image_paths[$map[$X][$Y]] : '';

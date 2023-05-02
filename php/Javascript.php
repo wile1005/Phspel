@@ -39,7 +39,7 @@
             }
         });
     }
-    timer = setInterval(refresh_time,100);
+    timer = setInterval(refresh_time,500);
 </script>
 
 <script type="text/javascript">
@@ -89,18 +89,8 @@
       }else if(event.keyCode == 13) 
       {
           console.log('enter');
-          //trycker place
+          //trycker enter
           document.getElementById("enter").click();
-      }else if(event.keyCode == 81) 
-      {
-          console.log('pickup');
-          //trycker pickup
-          document.getElementById("pickup").click();
-      }else if(event.keyCode == 69) 
-      {
-          console.log('drop');
-          //trycker pickup
-          document.getElementById("drop").click();
       }else if(event.keyCode == 88) 
       {
           console.log('inventory');
@@ -111,6 +101,11 @@
           console.log('crafting');
           //trycker pickup
           document.getElementById("crafting").click();
+      }else if(event.keyCode == 27) 
+      {
+          console.log('reset');
+          //trycker pickup
+          document.getElementById("reset").click();
       }
     });
 </script>

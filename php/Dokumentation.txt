@@ -1,0 +1,155 @@
+Chat
+    Chat_filter.php
+    Denna fil tar bort <> från strings
+
+    Chat.php
+    Denna fil skriver ut dom senaste 10 medelanden från chat databasen
+
+    Send_message.php
+    Denna fil lägger till medelande till chat databsen
+
+Crafting
+    Add_to_inventory
+    Denna fil lägger till ett item/tool i inventoriet
+
+    Crafting.php
+    Denna fil har alla crafting recept och lägger till / tar bort items för att bygga ett nytt item
+
+    Find_item.php 
+    Denna fil hittar indexet av ett item i inventory
+
+    Recipes.php
+    Denna fil har en array med namnet på crafting recept
+
+Database
+    Database_login.php
+    Denna fil loggar in i databasen
+
+    Get_map.php
+    Denna fil hämtar alla variabler i world databasen
+
+    Get_player_varibles.php
+    Denna fil hämtar alla variabler i player databasen
+
+    Update_database.php
+    Denna fil updaterar antigen player eller map databasen
+
+Functions
+    Background_return.php
+    Denna fil kollar på backgrunds mapen och sickar tillbacka korisponderande tile (defult tile) 
+    exempelvis grön backgrund ger grästile
+
+    get_craftmode.php
+    Denna fil hämtar craftmode beroende på vilken tile spelaren står på
+    exempelvis står spelaren på en ugn kan den smälta järn
+
+    hit_function.php
+    Denna funktion bestämer om tilen spelaren går till kan slås sönder eller inte
+    
+    movecheck_function.php
+    Denna funktion kollar om spelaren kan röra sig till nästa tile 
+    (returnerar den false kan spelaren inte gå till nästa tile)
+
+    Pickup_function.php
+    Denna funktion ska plocka up itemet spelaren står på men gör ingenting då jag ändrar inventory systemet
+
+    Place_function.php
+    Denna funktion placerar blocket spelaren håller id
+
+    Reset_funktion.php
+    Denna funktion nollställer kartan samt alla spelares variabler
+
+    Stairscheck_function.php
+    Denna funktion kollar ifall spelaren står på en up/ner trappa och går upp / ner en våning beronde på trappan
+
+GFX
+    GFX_Player_image.php
+    Denna fil skriver ut spelar grafiken beroende på tilen dom står på
+
+    GFX_Tile_return.php
+    Denna fil skriver ut tile grafik beroende på map 
+
+    GFX.php
+    Denna fil skriver ut spelets grafik
+
+Plugins
+    Denna folder blir autoloadad av spel.php så robin kan lägga till sin jävla aligator
+
+Ui
+    Ui.php
+    Denna fil skriver ut uin till spelet
+
+World_generation
+    Dessa filler änderar eller lägger till i mapen
+
+    Ore_generation
+        Coal_generator
+        Denna fil genererar kol på stentiles i map
+
+        Iron_generator
+        Denna fil genererar järnmalm på stentiles i map
+
+        Redstone_generator
+        Denna fil genererar Redstone_ore på stentiles i map
+    
+    Beach_fixer.php
+    Denna fil genererar sand på tiles runt vatten
+
+    Border_fixer.php
+    Denna fil genererar bedrock väggar runt kartan
+
+    Cactus_planter.php
+    Denna fil lägger kaktus på sand
+
+    Cave_generator.php
+    Denna fil genererar grottor i stentiles
+
+    Desert_generator.php
+    Denna fil genererar massor av sand (en öken) 
+
+    Hole_fixer.php
+    Denna fil fixar ställen i kartan där singulära tiles uppstår
+    exempelvis en grästile omringad av stentiles
+
+    Mountain_generator.php
+    Denna fil skapar berg 
+
+    Ocean_generator.php
+    Denna fil skapar have
+
+    Stairs_generation.php
+    Denna fil skapar trappor mellan olika våningar
+
+    Tree_placer.php
+    Denna fil lägger träd på grästiles
+
+    World_generator.php
+    Denna fil skapar och lägger till / uptaterar map i olika lager
+
+    Worldgen_config.php
+    Denna fil inehåller configsen för olika element i World_generation
+
+Annat
+    Dokumentation.txt
+    Denna fil inehåller dokumentation av olika filer i phspel (du är här :) )
+
+    Index.php
+    Denna fil tar dig till login.php
+
+    Initialize_new_player.php
+    Denna fil nollställer spelarens variabler och tar en sedan till phspel.php
+
+    Javascript.php
+    denna fil inehåller all javascript (varför är det en php fil?)
+
+    Login.php
+    I denna fil loggar man in i phspel
+
+    new_user.php
+    I denna fil skapar man en ny användare
+
+    Phspel.php
+    I denna fil fins själva spelet :)
+
+    Spel.php
+    I denna fil finns alla kontroller till spelet och den mesta koden
