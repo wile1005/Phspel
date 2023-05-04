@@ -1,5 +1,5 @@
 <?php
-    function add_item_to_inventory(&$inventory,$item)
+    function add_item_to_inventory(&$inventory,$item,$quantity)
     {
         //adds item to inventory
         $itemfound = false;
@@ -9,7 +9,7 @@
         {
             if($inventory[$i][0]==$item)
             {
-                $inventory[$i][1]++;
+                $inventory[$i][1]+=$quantity;
                 return;
             }
         }

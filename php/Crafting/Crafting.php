@@ -27,7 +27,7 @@
             {   
                 $inventory[find_item($inventory,$recipes[$num][$i][0])][1]-=$recipes[$num][$i][1];
             }
-            add_item_to_inventory($inventory,$recipes[$num][0]);
+            add_item_to_inventory($inventory,$recipes[$num][0],1);
         }
     }
 ?>

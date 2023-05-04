@@ -12,14 +12,25 @@
     ["workbench","none",
     ["wood",10]],
 
+    ["wood wall","none",
+    ["plank",2]],
+
+    ["torch","none",
+    ["coal",2],
+    ["wood",2]],
+
     ["wood pickaxe","workbench",
     ["wood",5]],
 
-    ["wood wall","workbench",
-    ["plank",2]],
+    ["wood axe","workbench",
+    ["wood",5]],
 
-    ["torch","workbench",
-    ["coal",2],
-    ["wood",2]]
+    ["wood shovel","workbench",
+    ["wood",5]],
+
+    ["stone pickaxe","workbench",
+    ["wood",5],
+    ["stone",5]]
+
     ]',true);
 ?>

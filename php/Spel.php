@@ -75,7 +75,7 @@
         //rörelsekod för spelet
         if(array_key_exists('upp', $_POST))
         {
-        //Rörelse kod för up
+            //Rörelse kod för up
             if (movecheck($map, $playerX-1, $playerY)==true)
             {
                 $playerX -= 1;
@@ -86,7 +86,7 @@
 
         }else if(array_key_exists('down', $_POST))
         {
-        //Rörelse kod för ner
+            //Rörelse kod för ner
             if (movecheck($map, $playerX+1, $playerY)==true)
             {
                 $playerX += 1;
@@ -97,7 +97,7 @@
 
         }else if(array_key_exists('left', $_POST))
         {
-        //Rörelse kod för vänster
+            //Rörelse kod för vänster
             if (movecheck($map, $playerX, $playerY-1)==true)
             {
                 $playerY -= 1;
@@ -108,7 +108,7 @@
 
         }else if(array_key_exists('right', $_POST))
         {
-        //Rörelse kod för höger
+            //Rörelse kod för höger
             if (movecheck($map, $playerX, $playerY+1)==true)
             {
                 $playerY += 1;

@@ -51,17 +51,20 @@
         echo"<h2>Crafting</h2>";
         for($i=$num; $i < count($recipes); $i++)
         {
-            echo"<li>";
-            echo"<img src=../Images/Icons/".str_replace(" ","_",$recipes[$i][0]).".png>";
-            //skriver ut om receptet är selectat
-            if($i == $num)
+            if($i<$num+5&&$recipes[$i][1]==$craftmode)
             {
-                echo"<p>".$recipes[$i][0]." <</p>";
-            }else
-            {
-                echo"<p>".$recipes[$i][0]."</p>";
+                echo"<li>";
+                echo"<img src=../Images/Icons/".str_replace(" ","_",$recipes[$i][0]).".png>";
+                //skriver ut om receptet är selectat
+                if($i == $num)
+                {
+                    echo"<p>".$recipes[$i][0]." <</p>";
+                }else
+                {
+                    echo"<p>".$recipes[$i][0]."</p>";
+                }
+                echo"</li>";
             }
-            echo"</li>";
         }
         echo"</div>";
     }
