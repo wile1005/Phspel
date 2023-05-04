@@ -1,11 +1,11 @@
 <?php
-    $recipes = array
+    $recipes2 = array
     (
         "plank",//recept här?
         "workbench",
         "wood pickaxe"
     );
-    $recipes2 = json_decode('[
+    $recipes = json_decode('[
     ["plank","none",
     ["wood",1]],
 
@@ -14,6 +14,9 @@
 
     ["wood pickaxe","workbench",
     ["wood",5]],
+
+    ["wood wall","workbench",
+    ["plank",2]],
 
     ["torch","workbench",
     ["coal",2],

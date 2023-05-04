@@ -81,7 +81,7 @@
                 $playerX -= 1;
             }else
             {
-                hit($map,$playerX-1,$playerY,$inventory,$num,$background);
+                hit($map,$playerX-1,$playerY,$inventory,$holding,$background);
             }
 
         }else if(array_key_exists('down', $_POST))
@@ -92,7 +92,7 @@
                 $playerX += 1;
             }else
             {
-                hit($map,$playerX+1,$playerY,$inventory,$num,$background);
+                hit($map,$playerX+1,$playerY,$inventory,$holding,$background);
             }
 
         }else if(array_key_exists('left', $_POST))
@@ -103,7 +103,7 @@
                 $playerY -= 1;
             }else
             {
-                hit($map,$playerX,$playerY-1,$inventory,$num,$background);
+                hit($map,$playerX,$playerY-1,$inventory,$holding,$background);
             }
 
         }else if(array_key_exists('right', $_POST))
@@ -114,7 +114,7 @@
                 $playerY += 1;
             }else
             {
-                hit($map,$playerX,$playerY+1,$inventory,$num,$background);
+                hit($map,$playerX,$playerY+1,$inventory,$holding,$background);
             }
         }
 

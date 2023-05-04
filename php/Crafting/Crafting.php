@@ -1,42 +1,33 @@
 <?php
-    function craft2($recipes,&$inventory,$item_to_craft,$craftmode)
-    {
-
-    }
     function craft($recipes,&$inventory,$num,$craftmode)
     {
-        //simplifiera detta
-
-        $index;
-        //crafting logic
-        switch ($recipes[$num]) 
+        $can_craft=false;
+        for($i=2; $i < count($recipes[$num]); $i++)
         {
-            case "plank":
-            $index = find_item($inventory,"log");
-            if($inventory[$index][1]>0)
+            //om find_item() hittar itemet går den vidare 
+            if(find_item($inventory,$recipes[$num][$i][0])!="not found")
             {
-                $inventory[$index][1]-=1;
-                add_item_to_inventory($inventory,"plank");
-            }
-            break;
-
-            case "workbench":
-            $index = find_item($inventory,"log");
-            if($inventory[$index][1]>9)
+                if($inventory[find_item($inventory,$recipes[$num][$i][0])][1]>$recipes[$num][$i][1]-1)
+                {
+                    $can_craft=true;
+                }else
+                {
+                    $can_craft=false;
+                    break;
+                }
+            }else
             {
-                $inventory[$index][1]-=10;
-                add_item_to_inventory($inventory,"workbench");
+                $can_craft=false;
+                break;
             }
-            break;
-
-            case "wood pickaxe" && $craftmode=="workbench":
-            $index = find_item($inventory,"log");
-            if($inventory[$index][1]>4)
-            {
-                $inventory[$index][1]-=5;
-                add_item_to_inventory($inventory,"wood_pickaxe");
+        }
+        if($can_craft==true)
+        {
+            for($i=2; $i < count($recipes[$num]); $i++)
+            {   
+                $inventory[find_item($inventory,$recipes[$num][$i][0])][1]-=$recipes[$num][$i][1];
             }
-            break;
+            add_item_to_inventory($inventory,$recipes[$num][0]);
         }
     }
 ?>

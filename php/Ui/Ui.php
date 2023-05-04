@@ -49,17 +49,17 @@
         //kod för crafting ui
         echo"<div id='crafting' class='menu'>";
         echo"<h2>Crafting</h2>";
-        for($i=0; $i < count($recipes2); $i++)
+        for($i=$num; $i < count($recipes); $i++)
         {
             echo"<li>";
-            echo"<img src=../Images/Icons/".str_replace(" ","_",$recipes2[$i][0]).".png>";
+            echo"<img src=../Images/Icons/".str_replace(" ","_",$recipes[$i][0]).".png>";
             //skriver ut om receptet är selectat
             if($i == $num)
             {
-                echo"<p>".$recipes2[$i][0]." <</p>";
+                echo"<p>".$recipes[$i][0]." <</p>";
             }else
             {
-                echo"<p>".$recipes2[$i][0]."</p>";
+                echo"<p>".$recipes[$i][0]."</p>";
             }
             echo"</li>";
         }
