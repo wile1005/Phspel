@@ -13,13 +13,13 @@ Crafting
     Denna fil lägger till ett item/tool i inventoriet
 
     Crafting.php
-    Denna fil har alla crafting recept och lägger till / tar bort items för att bygga ett nytt item
+    Denna fil inehåller logicen som gör om craftin recept till items
 
     Find_item.php 
     Denna fil hittar indexet av ett item i inventory
 
     Recipes.php
-    Denna fil har en array med namnet på crafting recept
+    Denna fil inehåller alla crafting recept
 
 Database
     Database_login.php

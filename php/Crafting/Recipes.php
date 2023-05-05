@@ -6,29 +6,32 @@
         "wood pickaxe"
     );
     $recipes = json_decode('[
-    ["plank","none",
+    ["plank","none",2,
     ["wood",1]],
 
-    ["workbench","none",
+    ["workbench","none",1,
     ["wood",10]],
 
-    ["wood wall","none",
+    ["wood wall","none",1,
     ["plank",2]],
 
-    ["torch","none",
+    ["wood door","none",1,
+    ["plank",5]],
+
+    ["torch","none",4,
     ["coal",2],
     ["wood",2]],
 
-    ["wood pickaxe","workbench",
+    ["wood pickaxe","workbench",1,
     ["wood",5]],
 
-    ["wood axe","workbench",
+    ["wood axe","workbench",1,
     ["wood",5]],
 
-    ["wood shovel","workbench",
+    ["wood shovel","workbench",1,
     ["wood",5]],
 
-    ["stone pickaxe","workbench",
+    ["stone pickaxe","workbench",1,
     ["wood",5],
     ["stone",5]]
 

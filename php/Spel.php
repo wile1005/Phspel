@@ -26,6 +26,8 @@
         include $file;
     }
     include "World_generation/World_generator.php";
+    include "Ui/Set_ui.php";
+    include "Ui/Move_ui.php";
     include "Database/Database_login.php";
 
     //startar sessionen
@@ -46,27 +48,13 @@
     //öppnar / stänger inventoriet
     if(array_key_exists('inventory', $_POST))
     {
-        if($_SESSION["ui"]!="inventory")
-        {
-            $num=0;
-            $_SESSION["ui"]="inventory";
-        }else
-        {
-            $_SESSION["ui"]="none";
-        }
+        set_ui($num,$craftmode,"inventory",$recipes);
     }
 
     //öppnar / stänger crafting menyn
     if(array_key_exists('crafting', $_POST))
     {
-        if($_SESSION["ui"]!="crafting")
-        {
-            $num=0;
-            $_SESSION["ui"]="crafting";
-        }else
-        {
-            $_SESSION["ui"]="none";
-        }
+        set_ui($num,$craftmode,"crafting",$recipes);
     }
 
     //kollar så att spelaren inte har invenoriet öppet
@@ -132,28 +120,23 @@
     }else
     {
         //kontroller för ui
-        if(array_key_exists('upp', $_POST)&&$num>0)
+        if(array_key_exists('upp', $_POST))
         {
-            $num--;
-        }else if(array_key_exists('down', $_POST)&&$_SESSION["ui"]=="inventory"&&$num<count($inventory)-1)
+            move_ui("upp",$num,$craftmode);
+        }else if(array_key_exists('down', $_POST))
         {
-            $num++;
-        }else if(array_key_exists('down', $_POST)&&$_SESSION["ui"]=="crafting")
-        {
-            $num++;
+            move_ui("down",$num,$craftmode);
         }else if(array_key_exists('enter', $_POST)&&$_SESSION["ui"]=="crafting")
         {
             craft($recipes,$inventory,$num,$craftmode);
         }else if(array_key_exists('enter', $_POST)&&$_SESSION["ui"]=="inventory")
         {
             //sätter vad spelaren håller i
-            if(is_array($inventory[$num]))
-            {
-                $holding = $inventory[$num][0];
-            }else
-            {
-                $holding = $inventory[$num];
-            }
+            $holding = $inventory[$num][0];
+            $moveinventory = $inventory[$num];
+            unset($inventory[$num]);
+            array_unshift($inventory, $moveinventory);
+            $_SESSION["ui"]="none";
         }
     }
     //resetar alla spelare och genererar om världen (funkar inte :( )

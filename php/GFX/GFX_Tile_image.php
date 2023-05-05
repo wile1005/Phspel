@@ -9,7 +9,7 @@
             5 => '../images/stone_wall.png',
             6 => '../images/iron_ore.png',
             7 => '../images/redstone_ore.png',
-            8 => '../images/bedrock.jpg',
+            8 => '../images/bedrock.png',
             9 => '../images/furnace_place.png',
             10 => '../images/water.png',
             11 => '../images/sand.png',

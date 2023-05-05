@@ -29,19 +29,22 @@
         //kod för inventoriet
         echo"<div id='inventory' class='menu'>";
         echo"<h2>Inventory</h2>";
-        for($i=0; $i < count($inventory); $i++)
+        for($i=$num-2; $i < count($inventory); $i++)
         {
-            echo"<li>";
-            echo"<img src=../Images/Icons/".str_replace(" ","_",$inventory[$i][0]).".png>";
-            //skriver ut om itemet är selectat
-            if($i == $num)
+            if($i>-1&&$i<$num+3)
             {
-                echo"<p>".$inventory[$i][1]." ".$inventory[$i][0]." <</p>";
-            }else
-            {
-                echo"<p>".$inventory[$i][1]." ".$inventory[$i][0]." </p>";
+                echo"<li>";
+                echo"<img src=../Images/Icons/".str_replace(" ","_",$inventory[$i][0]).".png>";
+                //skriver ut om itemet är selectat
+                if($i == $num)
+                {
+                    echo"<p>".$inventory[$i][1]." ".$inventory[$i][0]." <</p>";
+                }else
+                {
+                    echo"<p>".$inventory[$i][1]." ".$inventory[$i][0]." </p>";
+                }
+                echo"</li>";
             }
-            echo"</li>";
         }
         echo"</div>";
     }elseif($_SESSION["ui"]=="crafting")
@@ -49,9 +52,9 @@
         //kod för crafting ui
         echo"<div id='crafting' class='menu'>";
         echo"<h2>Crafting</h2>";
-        for($i=$num; $i < count($recipes); $i++)
+        for($i=$num-2; $i < count($recipes); $i++)
         {
-            if($i<$num+5&&$recipes[$i][1]==$craftmode)
+            if($i>-1&&$i<$num+3&&$recipes[$i][1]==$craftmode)
             {
                 echo"<li>";
                 echo"<img src=../Images/Icons/".str_replace(" ","_",$recipes[$i][0]).".png>";
@@ -63,6 +66,25 @@
                 {
                     echo"<p>".$recipes[$i][0]."</p>";
                 }
+                echo"</li>";
+            }
+        }
+        echo"</div>";
+        echo"<div id='required' class='menu'>";
+        echo"<h3>costs:<h3>";
+        foreach($recipes[$num] as list($required_item,$required_amount))
+        {
+            if(isset($required_item)&&find_item($inventory,$required_item)!="not found")
+            {
+                echo"<li>";
+                echo"<img src=../Images/Icons/".str_replace(" ","_",$required_item).".png>";
+                echo"<p>".$inventory[find_item($inventory,$required_item)][1]."/".$required_amount."</p>";
+                echo"</li>";
+            }elseif(isset($required_item))
+            {
+                echo"<li>";
+                echo"<img src=../Images/Icons/".str_replace(" ","_",$required_item).".png>";
+                echo"<p>0/".$required_amount."</p>";
                 echo"</li>";
             }
         }

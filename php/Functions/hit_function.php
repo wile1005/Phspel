@@ -28,7 +28,7 @@
         }elseif ($map[$playerX][$playerY]==7)
         {
             //redstone ore hit
-            if($holding=="wood pickaxe")
+            if($holding=="iron pickaxe")
             {
                 background_return($map,$playerX,$playerY,$background);
                 add_item_to_inventory($inventory,"stone",rand(4,6));
@@ -44,7 +44,7 @@
         }if ($map[$playerX][$playerY]==14)
         {
             //wall hit
-            if($holding=="wood pickaxe")
+            if($holding=="wood axe")
             {
                 background_return($map,$playerX,$playerY,$background);
                 add_item_to_inventory($inventory,"stone",1);
