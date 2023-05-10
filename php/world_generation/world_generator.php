@@ -83,7 +83,7 @@
                     if(in_range($map[$X][$Y],1,2))
                     {
                         $background[$X][$Y]="a1";
-                    }elseif(in_range($map[$X][$Y],4,7))
+                    }elseif(in_range($map[$X][$Y],4,8))
                     {
                         $background[$X][$Y]="a2";
                     }elseif($map[$X][$Y]==10)

@@ -7,10 +7,17 @@
         {
             switch($holding)
             {
-                case 'workbench':
-                $inventory[find_item($inventory,"workbench")][1]--;
-                $map[$playerX][$playerY]=3;
-                $holding = "none";
+                case "workbench":
+                    remove_item_from_inventory($inventory,"workbench",1);
+                    $map[$playerX][$playerY]=3;
+                    $holding = "none";
+                    break;
+                
+                case "furnace":
+                    remove_item_from_inventory($inventory,"furnace",1);
+                    $map[$playerX][$playerY]=9;
+                    $holding = "none";
+                    break;
             }
         }
 

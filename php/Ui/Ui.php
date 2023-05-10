@@ -1,6 +1,8 @@
 <?php
     //loggar in i databasen
     include "../Database/Database_login.php";
+    include "Escape_menu.php";
+    include "Options_menu.php";
     foreach (glob("../Crafting/*.php") as $file) 
     {
         include $file;
@@ -13,19 +15,31 @@
     }
 
     //hämtar craftmode inventory num
-    $sql = "SELECT `craftmode`,`inventory`,`num`,`id` FROM `player` WHERE `player`.`id` = ".$_SESSION["id"].";";
+    $sql = "SELECT `craftmode`,`inventory`,`num`,`id`,`holding` FROM `player` WHERE `player`.`id` = ".$_SESSION["id"].";";
     $result = $conn->query($sql);
     $row = $result -> fetch_array(MYSQLI_ASSOC);
     $craftmode = $row["craftmode"];
+    $holding = $row["holding"];
     $num = $row["num"];
     $inventory=json_decode($row["inventory"]);
 
-    echo"<div id='healthbar'></div>";//fixa en healthbar
+    //healthbar
+    echo"<div id='healthbar'>";
+    for($i=0; $i < 10; $i++)
+    {
+        echo"<img src=../Images/Icons/full_heart.png>";
+    }
+    echo"</div>";
+
+    echo"<div id='holding'>";
+    echo"<h1>".$holding."</h1>";
+    echo"</div>";
 
 
     //skriver ut rätt ui beroende på session ui
-    if($_SESSION["ui"]=="inventory")
+    switch($_SESSION["ui"])
     {
+        case"inventory":
         //kod för inventoriet
         echo"<div id='inventory' class='menu'>";
         echo"<h2>Inventory</h2>";
@@ -46,9 +60,9 @@
                 echo"</li>";
             }
         }
-        echo"</div>";
-    }elseif($_SESSION["ui"]=="crafting")
-    {
+        break;
+
+        case "crafting":
         //kod för crafting ui
         echo"<div id='crafting' class='menu'>";
         echo"<h2>Crafting</h2>";
@@ -70,7 +84,7 @@
             }
         }
         echo"</div>";
-        echo"<div id='required' class='menu'>";
+        echo"<div id='required_items' class='menu'>";
         echo"<h3>costs:<h3>";
         foreach($recipes[$num] as list($required_item,$required_amount))
         {
@@ -88,6 +102,38 @@
                 echo"</li>";
             }
         }
-        echo"</div>";
+        break;
+
+        case"escape":
+        echo"<div id='' class='menu'>";
+        echo"<h1>Phspel</h1>";
+        foreach ($escape_menu_items as $key => $option)
+        {
+            if($num==$key)
+            {
+                echo "<p>".$option."<</p>";
+            }else
+            {
+                echo "<p>".$option."</p>";
+            }
+        }
+        break;
+
+        case"options":
+        echo"<div id='' class='menu'>";
+        echo"<h1>Options</h1>";
+        foreach ($option_menu_items as $key => $option)
+        {
+            if($num==$key)
+            {
+                echo "<p>".$option."<</p>";
+            }else
+            {
+                echo "<p>".$option."</p>";
+            }
+        }
+        break;
+
     }
+    echo"</div>";
 ?>

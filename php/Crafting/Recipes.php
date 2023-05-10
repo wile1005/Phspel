@@ -22,6 +22,15 @@
     ["coal",2],
     ["wood",2]],
 
+    ["furnace","workbench",1,
+    ["stone",20]],
+
+    ["wood sword","workbench",1,
+    ["wood",5]],
+
+    ["wood hoe","workbench",1,
+    ["wood",5]],
+
     ["wood pickaxe","workbench",1,
     ["wood",5]],
 
@@ -33,7 +42,14 @@
 
     ["stone pickaxe","workbench",1,
     ["wood",5],
-    ["stone",5]]
+    ["stone",5]],
+
+    ["anvil","workbench",1,
+    ["iron",5]],
+
+    ["iron","furnace",1,
+    ["iron ore",4],
+    ["coal",1]]
 
     ]',true);
 ?>

@@ -1,37 +1,12 @@
 <?php
-    function pickup(&$map,$playerX,$playerY,&$inventory,$num,$background)
+    function pickup(&$map,$X,$Y,&$inventory,$background)
     {
-        for ($i=0; $i < 5; $i++)
+        switch($map[$X][$Y])
         {
-            if ($inventory[$i]=="null"&&$map[$playerX][$playerY]==9 && $num==$i)
-            {
-                //kollar vilke§n bakgrund som är under spelarn och sätter ut motsvarande objekt
-                if($background[$playerX][$playerY]=="a1")
-                {
-                    $map[$playerX][$playerY]=1;
-                    $inventory[$i] = "Furnace";
-                    break;
-                }elseif($background[$playerX][$playerY]=="a2")
-                {
-                    $map[$playerX][$playerY]=4;
-                    $inventory[$i] = "Furnace";
-                    break;
-                }
-            }else if ($inventory[$i]=="null"&&$map[$playerX][$playerY]==3 && $num==$i)
-            {
-                //kollar vilke§n bakgrund som är under spelarn och sätter ut motsvarande objekt
-                if($background[$playerX][$playerY]=="a1")
-                {
-                    $map[$playerX][$playerY]=1;
-                    $inventory[$i] = "workbench";
-                    break;
-                }elseif($background[$playerX][$playerY]=="a2")
-                {
-                    $map[$playerX][$playerY]=4;
-                    $inventory[$i] = "workbench";
-                    break;
-                }
-            }
+            case"3":
+            background_return($map,$X,$Y,$background);
+            add_item_to_inventory($inventory,"workbench",1);
+            break;
         }
     }
 ?>

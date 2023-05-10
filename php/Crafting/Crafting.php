@@ -25,7 +25,7 @@
         {
             for($i=3; $i < count($recipes[$num]); $i++)
             {   
-                $inventory[find_item($inventory,$recipes[$num][$i][0])][1]-=$recipes[$num][$i][1];
+                remove_item_from_inventory($inventory,$recipes[$num][$i][0],$recipes[$num][$i][1]);
             }
             add_item_to_inventory($inventory,$recipes[$num][0],$recipes[$num][2]);
         }

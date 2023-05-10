@@ -103,9 +103,9 @@
           document.getElementById("crafting").click();
       }else if(event.keyCode == 27) 
       {
-          console.log('reset');
+          console.log('escape');
           //trycker pickup
-          document.getElementById("reset").click();
+          document.getElementById("escape").click();
       }
     });
 </script>

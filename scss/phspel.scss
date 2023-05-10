@@ -15,107 +15,75 @@ body
     width: 100%;
     main
     {
-        padding: 10px;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         iframe
         {
             position: absolute;
-            left: 1vh;
             height: 700px;
-            width: 900px;
+            width: 1300px;
             z-index:5;
         }
-        #game
+        #gfx
         {
-            width: 100%;
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            grid-template-rows: repeat(1fr ,3);
+            position: absolute;
+            height: 700px;
+            width: 1300px;
+        }
+        #ui
+        {
+            position: absolute;
+            height: 700px;
+            width: 1300px;
+            display: flex;
             gap: 20px;
-            #spel
+            align-items: center;
+            justify-content: center;
+            #holding
             {
-                #gfx
-                {
-                    position: absolute;
-                    height: 700px;
-                    width: 900px;
-                }
-                #ui
-                {
-                    position: absolute;
-                    height: 700px;
-                    width: 900px;
-                    display: flex;
-                    gap: 20px;
-                    align-items: center;
-                    justify-content: center;
-                    .menu
-                    {
-                        gap: 10px;
-                        padding: 20px;
-                        border-radius: 10px;
-                        display: flex;
-                        flex-direction: column;
-                        text-align: center;
-                        justify-content: center;
-                        background-color: $Secondary_color;
-                        h2
-                        {
-                            font-size: 50px;
-                        }
-                        li
-                        {
-                            list-style: none;
-                            gap: 5px;
-                            display: flex;
-                            p
-                            {
-                                font-size: 30px;
-                            }
-                            img
-                            {
-                                width: 40px;
-                            }
-                        }
-                        .submenu
-                        {
-
-                        }
-                    }
-                }
+                position: absolute;
+                bottom: 0;
+                background-color: rgba(1,1,1,0.5);
+                color: #f6f2f2;
             }
-            #craft_meny
+            #healthbar
             {
-                height: 300px;
-                border-radius: 10px;
-                background-color: $Secondary_color;
+                position: absolute;
+                left: 5px;
+                bottom: 5px;
                 padding: 10px;
-                form
+                background-color: rgba(1,1,1,0.2);
+            }
+            .menu
+            {
+                gap: 10px;
+                padding: 20px;
+                border-radius: 10px;
+                display: flex;
+                flex-direction: column;
+                text-align: center;
+                justify-content: center;
+                background-color: $Secondary_color;
+                h1
                 {
-                    display: grid;
-                    grid-template-columns: 1fr 1fr;
+                    font-size: 50px;
+                }
+                li
+                {
+                    list-style: none;
                     gap: 5px;
-                    h1
+                    display: flex;
+                    p
                     {
-                        grid-column: 1/3;
-                        text-align: center;
+                        font-size: 30px;
                     }
-                }
-            }
-
-            #chat
-            {
-                height: 300px;
-                border-radius: 10px;
-                background-color: $Secondary_color;
-                padding: 10px;
-                img
-                {
-                    max-width: 100px;
-                    max-height: 100px;
-                }
-                #messages
-                {
-                    max-height: 500px;
+                    img
+                    {
+                        width: 40px;
+                    }
                 }
             }
         }

@@ -1,7 +1,7 @@
 <?php
-    if(isset($_SESSION["id"])==true)
+    if(isset($_SESSION["id"]))
     {
-        header("location:Index.php");
+        header("location:index.php");
     }
 ?>
 <html lang="en" dir="ltr">
@@ -13,16 +13,8 @@
   <body>
     <main>
         <iframe src='Spel.php' title='description'></iframe>
-        <div id="game">
-            <div id="spel">
-                <div id ="GFX" class='GFX_result'></div>
-                <div id ="ui" class="Ui"></div>
-            </div>
-            <div id="chat">
-                <div class='Chat_result'></div>
-                <?php include 'chat/Send_message.php'?>
-            </div>
-            <?php include 'Javascript.php';?>
-        </div>
+        <div id ="GFX" class='GFX_result'></div>
+        <div id ="ui" class="Ui"></div>
+        <?php include 'Javascript.php';?>
     </main>   
 </html>

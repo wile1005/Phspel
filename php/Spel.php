@@ -8,7 +8,7 @@
         <input id="left" type="submit" name="left" class="button" value="Left" />
         <input id="right" type="submit" name="right" class="button" value="Right" />
         <input id="enter" type="submit" name="enter" class="button" value="Enter" />
-        <input id="reset" type="submit" name="reset" class="button" value="Reset" />
+        <input id="escape" type="submit" name="escape" class="button" value="Escape" />
         <input id="inventory" type="submit" name="inventory" class="button" value="Inventory" />
         <input id="crafting" type="submit" name="crafting" class="button" value="Crafting" />
     </form>
@@ -17,7 +17,6 @@
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
-    $debug = true;
 
     // includar alla nödvändiga filer
     //includar alla worldgen filer
@@ -26,6 +25,8 @@
         include $file;
     }
     include "World_generation/World_generator.php";
+    include "Ui/Escape_menu.php";
+    include "Ui/Options_menu.php";
     include "Ui/Set_ui.php";
     include "Ui/Move_ui.php";
     include "Database/Database_login.php";
@@ -34,12 +35,7 @@
     if(session_status()!=2)
     {
         session_start();
-        if(!isset($_SESSION["id"]))
-        {
-            header("location:index.php");
-        }
     }
-    
 
     //hämtar spelar variabler och kartan
     get_player_variables($current_floor,$playerX,$playerY,$num,$craftmode,$inventory,$holding);
@@ -55,6 +51,12 @@
     if(array_key_exists('crafting', $_POST))
     {
         set_ui($num,$craftmode,"crafting",$recipes);
+    }
+
+    //öppnar / stänger escape meyn
+    if(array_key_exists('escape', $_POST))
+    {
+        set_ui($num,$craftmode,"escape",$recipes);
     }
 
     //kollar så att spelaren inte har invenoriet öppet
@@ -107,9 +109,9 @@
         }
 
         //kod för att plocka up items (funkar inte)
-        if(array_key_exists('pickup', $_POST))
+        if(array_key_exists('enter', $_POST))
         {
-            pickup($map,$playerX,$playerY,$inventory,$num,$background);
+            pickup($map,$playerX,$playerY,$inventory,$background);
         }
 
         //placerar ut itemet spelaren håller i
@@ -122,13 +124,19 @@
         //kontroller för ui
         if(array_key_exists('upp', $_POST))
         {
-            move_ui("upp",$num,$craftmode);
+            move_ui("upp",$num,$craftmode,$recipes,$inventory,$escape_menu_items,$option_menu_items);
         }else if(array_key_exists('down', $_POST))
         {
-            move_ui("down",$num,$craftmode);
+            move_ui("down",$num,$craftmode,$recipes,$inventory,$escape_menu_items,$option_menu_items);
         }else if(array_key_exists('enter', $_POST)&&$_SESSION["ui"]=="crafting")
         {
             craft($recipes,$inventory,$num,$craftmode);
+        }else if(array_key_exists('enter', $_POST)&&$_SESSION["ui"]=="escape")
+        {
+            escape_menu($escape_menu_items,$num);
+        }else if(array_key_exists('enter', $_POST)&&$_SESSION["ui"]=="options")
+        {
+            options_menu($option_menu_items,$num);
         }else if(array_key_exists('enter', $_POST)&&$_SESSION["ui"]=="inventory")
         {
             //sätter vad spelaren håller i
@@ -139,11 +147,10 @@
             $_SESSION["ui"]="none";
         }
     }
-    //resetar alla spelare och genererar om världen (funkar inte :( )
-    if(array_key_exists('reset', $_POST))
+    //resetar alla spelare och genererar om världen (funkar inte? :( )
+    if($_SESSION["ui"]=="reset")
     {
-        reset_func();
-        //hämtar dom nya grejorna(mapen spelare)
+        $_SESSION["ui"]="none";
         get_player_variables($current_floor,$playerX,$playerY,$num,$craftmode,$inventory,$holding);
         get_map($map,$background,$current_floor);
     }
@@ -182,7 +189,7 @@
         return @round($size/pow(1024,($i=floor(log($size,1024)))),2).' '.$unit[$i];
     }
 
-    if($debug==true)
+    if(isset($_SESSION["debug_mode"])&&$_SESSION["debug_mode"]==true)
     {
         $sql = "SELECT `id`,`playerX`,`playerY`,`floor`,`inventory`,`num`,`craftmode` FROM `player` WHERE `player`.`id` = ".$_SESSION["id"]."";
         $result = $conn->query($sql);
@@ -203,6 +210,7 @@
             echo("<p class ='debug'>Holding: ".$holding."</p>");
             echo("<p class ='debug'>Craftmode: ".$craftmode."</p>");
             echo("<p class ='debug'>Standing on: ".$map[$row["playerX"]][$row["playerY"]]."</p>");
+            echo("<p class ='debug'>Ui: ".$_SESSION["ui"]."</p>");
             echo("<p class ='debug'>Memory usage: ". convert(memory_get_usage(true))."</p>");
             echo("</div>");
         }
