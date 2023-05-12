@@ -10,7 +10,7 @@
                 return;
             }
         }
-        array_push($inventory,array($item_to_add,1));
+        array_push($inventory,array($item_to_add,$quantity));
     }
     function add_tool_to_inventory(&$inventory,$item)
     {

@@ -23,7 +23,7 @@
     $num = $row["num"];
     $inventory=json_decode($row["inventory"]);
 
-    //healthbar
+    //displays players health
     echo"<div id='healthbar'>";
     for($i=0; $i < 10; $i++)
     {
@@ -31,10 +31,20 @@
     }
     echo"</div>";
 
+    //displays what player is holding
     echo"<div id='holding'>";
     echo"<h1>".$holding."</h1>";
     echo"</div>";
 
+    //displays chat
+    $sql = "SELECT `message`,`id` FROM `chat` ORDER BY id DESC LIMIT 10";
+    $result = $conn->query($sql);
+    echo "<div id='chat'>";
+    while ($row = $result->fetch_assoc()) 
+    {
+        echo "<p>".$row["message"]."</p>";
+    }
+    echo "</div>";
 
     //skriver ut rätt ui beroende på session ui
     switch($_SESSION["ui"])
@@ -105,7 +115,7 @@
         break;
 
         case"escape":
-        echo"<div id='' class='menu'>";
+        echo"<div id='escape_menu' class='menu'>";
         echo"<h1>Phspel</h1>";
         foreach ($escape_menu_items as $key => $option)
         {
@@ -120,7 +130,7 @@
         break;
 
         case"options":
-        echo"<div id='' class='menu'>";
+        echo"<div id='options_menu' class='menu'>";
         echo"<h1>Options</h1>";
         foreach ($option_menu_items as $key => $option)
         {
@@ -133,7 +143,6 @@
             }
         }
         break;
-
     }
     echo"</div>";
 ?>

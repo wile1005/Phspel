@@ -1,0 +1,54 @@
+@font-face { font-family: ARCADECLASSIC; src: url('ARCADECLASSIC.TTF'); }
+*
+{
+    font-family: ARCADECLASSIC; 
+    margin: 0;
+    padding: 0;
+}
+#game
+{
+    position: absolute;
+    height: 700px !important;
+    width: 1300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    #debug
+    {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: inline-block;
+        margin: 2px;
+        background-color:white; 
+        padding: 5px; 
+        border-radius: 5px;
+        form
+        {
+            display: flex;
+            input
+            {
+                background-color: #f6f2f2;
+                border: 1px solid black;
+                padding: 3px;
+                border-radius: 5px;
+            }
+            input:hover
+            {
+                background-color: #a6a2a2;
+            }
+        }
+        h1
+        {
+            padding: 5px; 
+            border-radius: 5px;
+            width: 100px;
+        }
+    }
+    #chat_ui
+    {
+        position: absolute;
+        left: 0;
+    }
+}

@@ -42,7 +42,7 @@
         for ($X=-3+$playerX; $X < 4+$playerX; $X++)
         {
             //Grafikens bred
-            for ($Y=-6+$playerY; $Y < 7+$playerY; $Y++)
+            for ($Y=-7+$playerY; $Y < 8+$playerY; $Y++)
             {
                 //ÄR SYNFÄLLT UTANFÖR ARRAY???
                 if ($X > -1 && $Y > -1 && $X < count($map) && $Y < count($map[1]))

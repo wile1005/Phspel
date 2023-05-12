@@ -2,16 +2,25 @@ $Main_color: gray;
 $Secondary_color: #f6f2f2;
 $Text_color: darken(gray,20%);
 $Button_color: darken(lightblue,20%);
+$screen_width:1500px;
+$screen_height:700px;
 @font-face { font-family: ARCADECLASSIC; src: url('ARCADECLASSIC.TTF'); }
 *
 {
+    font-style: normal;
     font-family: ARCADECLASSIC; 
     padding: 0;
     margin: 0;
 }
+  
+@keyframes a {
+to {background-position:0 -200%}
+}
 body
 {
-    background-color: #10f40b;
+    background: linear-gradient(rgba(255,0,0,1) 0%, rgba(255,154,0,1) 10%, rgba(208,222,33,1) 20%, rgba(79,220,74,1) 30%, rgba(63,218,216,1) 40%, rgba(47,201,226,1) 50%, rgba(28,127,238,1) 60%, rgba(95,21,242,1) 70%, rgba(186,12,248,1) 80%, rgba(251,7,217,1) 90%, rgba(255,0,0,1) 100%)
+    0 0/100% 200%;
+    animation: a 20s linear infinite;
     width: 100%;
     main
     {
@@ -20,33 +29,55 @@ body
         display: flex;
         justify-content: center;
         align-items: center;
-        iframe
+        .ui_layer
         {
             position: absolute;
-            height: 700px;
-            width: 1300px;
+            height: $screen_height;
+            width: $screen_width;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        iframe
+        {
             z-index:5;
+            border: black solid 5px;
+            border-radius: 10px;
+        }
+        #send_message
+        {
+            form
+            {
+                z-index:6;
+                position: absolute;
+                left: 5px;
+                bottom: 70px;
+            }
         }
         #gfx
         {
-            position: absolute;
-            height: 700px;
-            width: 1300px;
+            
         }
         #ui
         {
-            position: absolute;
-            height: 700px;
-            width: 1300px;
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            justify-content: center;
+            #chat
+            {
+                background-color: rgba(1,1,1,0.2);
+                color: #f6f2f2;
+                position: absolute;
+                left: 5px;
+                padding: 5px;
+                bottom: 100px;
+                p
+                {
+                    font-size: 20px;
+                }
+            }
             #holding
             {
                 position: absolute;
                 bottom: 0;
-                background-color: rgba(1,1,1,0.5);
+                background-color: rgba(1,1,1,0.2);
                 color: #f6f2f2;
             }
             #healthbar
@@ -58,6 +89,7 @@ body
                 background-color: rgba(1,1,1,0.2);
             }
             .menu
+
             {
                 gap: 10px;
                 padding: 20px;

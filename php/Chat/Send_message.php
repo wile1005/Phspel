@@ -1,25 +1,25 @@
-<form class='' method='post'>
-    <input type='submit' class='button' value='Send message' />
+<form method='post'>
     <input type='text' name='message' value=''/>
+    <input type='submit' class='button' value='Send message' />
 </form>
 <?php
+    include "Database/Database_login.php";
     include "Chat_filter.php";
-    //kollar så att inputen inte är tom
-    if(isset($_POST['message']) && !empty($_POST['message']))
+    $new_message = $_POST["message"];
+    if(!isset($_SESSION["old_message"]))
     {
-        //lägger in message i chat databasen
-        $sql = "SELECT `id`,`name`FROM `player` WHERE `id` = ".$_SESSION["id"]."";
-        $result = $conn->query($sql);
-        $row = $result -> fetch_array(MYSQLI_ASSOC);
-
-        $message = $row["name"].": ";
-        $message .= $_POST["message"];
-
-        //chat_filter($message);
-        $stmt = $conn->prepare("INSERT INTO chat (`message`) VALUES (?)");
-        $stmt->bind_param("s", $message);
-        $stmt->execute();
-        $stmt->close();
-        $result = $conn->query($sql);
+        $_SESSION["old_message"]=$new_message;
+    }
+    if(isset($new_message)&&$new_message!="")
+    {
+        if($_SESSION["old_message"]!=$new_message)
+        {
+            $_SESSION["old_message"]=$new_message;
+            filter($new_message);
+            $stmt = $conn->prepare("INSERT INTO chat (`Message`) VALUES (?)");
+            $stmt->bind_param("s", $new_message);
+            $stmt->execute();
+            $stmt->close();
+        }
     }
 ?>

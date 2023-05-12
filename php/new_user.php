@@ -65,7 +65,8 @@
                             $result = $conn->query($sql);
                             $row = $result->fetch_assoc();
                             $_SESSION["id"]=$row["id"];
-                            $_session["showui"]=false;
+                            $_SESSION["ui"]="none";
+                            $_SESSION["debug_mode"]=false;
 
                             //sends user to get player initializesed
                             header("location:Initialize_new_player.php");

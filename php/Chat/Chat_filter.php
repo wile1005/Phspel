@@ -1,7 +1,15 @@
 <?php
-    function chat_filter(&$message)
+    function filter(&$message)
     {
-        $message = str_replace('<', '', $message);
-        $message = str_replace('>', '', $message);
-    }  
+        $filter = array
+        (
+            "<",
+            ">",
+            "vatsug"
+        );  
+        foreach($filter as $string_to_remove)
+        {
+            $message = str_replace('$string_to_remove', '', $message);
+        }
+    }
 ?>

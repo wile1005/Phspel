@@ -48,6 +48,17 @@
                     $_SESSION["ui"]="none";
                 }
                 break;
+
+            case"chat":
+                //öppnar inventoryt
+                if($_SESSION["ui"]!="chat")
+                {
+                    $_SESSION["ui"]="chat";
+                }else
+                {
+                    $_SESSION["ui"]="none";
+                }
+                break;
         }   
         
     }

@@ -3,6 +3,7 @@
     {
         include "Database/Database_login.php";
 
+        //kollar så man inte placerar på en trappa
         if($map[$playerX][$playerY]!=17&&$map[$playerX][$playerY]!=18)
         {
             switch($holding)

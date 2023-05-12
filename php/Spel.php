@@ -1,17 +1,23 @@
+<head>
+    <script src="Javascript.js" defer></script>
+    <script src="https://code.jquery.com/jquery-latest.min.js" defer></script>
+</head>
 <style>#game{visibility:hidden;height:0;}</style>
 <link rel="stylesheet" href="../scss/Debug.css">
 <div id="game">
-    <h1>PHsPel</h1>
-    <form class="" method="post">
-        <input id="up" type="submit" name="upp" class="button" value="Upp" />
-        <input id="down" type="submit" name="down" class="button" value="Down" />
-        <input id="left" type="submit" name="left" class="button" value="Left" />
-        <input id="right" type="submit" name="right" class="button" value="Right" />
-        <input id="enter" type="submit" name="enter" class="button" value="Enter" />
-        <input id="escape" type="submit" name="escape" class="button" value="Escape" />
-        <input id="inventory" type="submit" name="inventory" class="button" value="Inventory" />
-        <input id="crafting" type="submit" name="crafting" class="button" value="Crafting" />
-    </form>
+    <div id="debug">
+        <h1>PHsPel</h1>
+        <form class="" method="post">
+            <input id="up" type="submit" name="upp" class="button" value="Upp" />
+            <input id="down" type="submit" name="down" class="button" value="Down" />
+            <input id="left" type="submit" name="left" class="button" value="Left" />
+            <input id="right" type="submit" name="right" class="button" value="Right" />
+            <input id="enter" type="submit" name="enter" class="button" value="Enter" />
+            <input id="escape" type="submit" name="escape" class="button" value="Escape" />
+            <input id="inventory" type="submit" name="inventory" class="button" value="Inventory" />
+            <input id="crafting" type="submit" name="crafting" class="button" value="Crafting" />
+            <input id="chat" type="submit" name="chat" class="button" value="Chat" />
+        </form>
 <?php
     //debug läget (visar mer info)
     ini_set('display_errors', 1);
@@ -41,31 +47,37 @@
     get_player_variables($current_floor,$playerX,$playerY,$num,$craftmode,$inventory,$holding);
     get_map($map,$background,$current_floor);
 
-    //öppnar / stänger inventoriet
-    if(array_key_exists('inventory', $_POST))
+    switch(true)
     {
+        //öppnar / stänger inventoriet
+        case array_key_exists('inventory', $_POST):
         set_ui($num,$craftmode,"inventory",$recipes);
-    }
+        break;
 
-    //öppnar / stänger crafting menyn
-    if(array_key_exists('crafting', $_POST))
-    {
+        //öppnar / stänger crafting menyn
+        case array_key_exists('crafting', $_POST):
         set_ui($num,$craftmode,"crafting",$recipes);
-    }
+        break;
 
-    //öppnar / stänger escape meyn
-    if(array_key_exists('escape', $_POST))
-    {
+        //öppnar / stänger escape meyn
+        case array_key_exists('escape', $_POST):
         set_ui($num,$craftmode,"escape",$recipes);
+        break;
+
+        case array_key_exists('chat', $_POST):
+        set_ui($num,$craftmode,"chat",$recipes);
+        break;
     }
+    
 
     //kollar så att spelaren inte har invenoriet öppet
     if($_SESSION["ui"]=="none")
     {
         //rörelsekod för spelet
-        if(array_key_exists('upp', $_POST))
+        switch(true)
         {
             //Rörelse kod för up
+            case array_key_exists('upp', $_POST):
             if (movecheck($map, $playerX-1, $playerY)==true)
             {
                 $playerX -= 1;
@@ -73,10 +85,10 @@
             {
                 hit($map,$playerX-1,$playerY,$inventory,$holding,$background);
             }
+            break;
 
-        }else if(array_key_exists('down', $_POST))
-        {
             //Rörelse kod för ner
+            case array_key_exists('down', $_POST):
             if (movecheck($map, $playerX+1, $playerY)==true)
             {
                 $playerX += 1;
@@ -84,10 +96,10 @@
             {
                 hit($map,$playerX+1,$playerY,$inventory,$holding,$background);
             }
+            break;
 
-        }else if(array_key_exists('left', $_POST))
-        {
             //Rörelse kod för vänster
+            case array_key_exists('left', $_POST):
             if (movecheck($map, $playerX, $playerY-1)==true)
             {
                 $playerY -= 1;
@@ -95,10 +107,10 @@
             {
                 hit($map,$playerX,$playerY-1,$inventory,$holding,$background);
             }
+            break;
 
-        }else if(array_key_exists('right', $_POST))
-        {
             //Rörelse kod för höger
+            case array_key_exists('right', $_POST):
             if (movecheck($map, $playerX, $playerY+1)==true)
             {
                 $playerY += 1;
@@ -106,48 +118,52 @@
             {
                 hit($map,$playerX,$playerY+1,$inventory,$holding,$background);
             }
-        }
+            break;
 
-        //kod för att plocka up items (funkar inte)
-        if(array_key_exists('enter', $_POST))
-        {
+            //kod för att plocka up / lägga ner items
+            case array_key_exists('enter', $_POST):
             pickup($map,$playerX,$playerY,$inventory,$background);
-        }
-
-        //placerar ut itemet spelaren håller i
-        if(array_key_exists('enter', $_POST))
-        {
             place($inventory,$map,$playerX,$playerY,$holding);
-        }  
+            break;
+        }
     }else
     {
         //kontroller för ui
-        if(array_key_exists('upp', $_POST))
+        switch(true)
         {
+            case array_key_exists('upp', $_POST):
             move_ui("upp",$num,$craftmode,$recipes,$inventory,$escape_menu_items,$option_menu_items);
-        }else if(array_key_exists('down', $_POST))
-        {
+            break;
+
+            case array_key_exists('down', $_POST):
             move_ui("down",$num,$craftmode,$recipes,$inventory,$escape_menu_items,$option_menu_items);
-        }else if(array_key_exists('enter', $_POST)&&$_SESSION["ui"]=="crafting")
-        {
+            break;
+
+            case array_key_exists('enter', $_POST)&&$_SESSION["ui"]=="crafting":
             craft($recipes,$inventory,$num,$craftmode);
-        }else if(array_key_exists('enter', $_POST)&&$_SESSION["ui"]=="escape")
-        {
+            break;
+
+            case array_key_exists('enter', $_POST)&&$_SESSION["ui"]=="escape":
             escape_menu($escape_menu_items,$num);
-        }else if(array_key_exists('enter', $_POST)&&$_SESSION["ui"]=="options")
-        {
+            break;
+            
+            //
+            case array_key_exists('enter', $_POST)&&$_SESSION["ui"]=="options":
             options_menu($option_menu_items,$num);
-        }else if(array_key_exists('enter', $_POST)&&$_SESSION["ui"]=="inventory")
-        {
+            break;
+
+            case array_key_exists('enter', $_POST)&&$_SESSION["ui"]=="inventory":
             //sätter vad spelaren håller i
             $holding = $inventory[$num][0];
             $moveinventory = $inventory[$num];
             unset($inventory[$num]);
             array_unshift($inventory, $moveinventory);
             $_SESSION["ui"]="none";
+            break;
         }
     }
-    //resetar alla spelare och genererar om världen (funkar inte? :( )
+
+    //resetar alla spelare och genererar om världen (funkar? 🤔)
     if($_SESSION["ui"]=="reset")
     {
         $_SESSION["ui"]="none";
@@ -200,21 +216,18 @@
         } else 
         {
             echo("<style>#game{visibility:visible;height:0;}</style>");
-            echo("<div id = 'debug'>");
-            echo("<p class ='debug'>Debug info </p>");
-            echo("<p class ='debug'>ID: ".$row["id"]."</p>");
-            echo("<p class ='debug'>Position: ".$row["playerX"]."x,".$row["playerY"]."y </p>");
-            echo("<p class ='debug'>Floor: ".$row["floor"]."</p>");
-            echo("<p class ='debug'>Inventory: ".$row["inventory"]."</p>");
-            echo("<p class ='debug'>Num: ".$num."</p>");
-            echo("<p class ='debug'>Holding: ".$holding."</p>");
-            echo("<p class ='debug'>Craftmode: ".$craftmode."</p>");
-            echo("<p class ='debug'>Standing on: ".$map[$row["playerX"]][$row["playerY"]]."</p>");
-            echo("<p class ='debug'>Ui: ".$_SESSION["ui"]."</p>");
-            echo("<p class ='debug'>Memory usage: ". convert(memory_get_usage(true))."</p>");
+            echo("<p>Debug info </p>");
+            echo("<p>ID: ".$row["id"]."</p>");
+            echo("<p>Position: ".$row["playerX"]."x,".$row["playerY"]."y </p>");
+            echo("<p>Floor: ".$row["floor"]."</p>");
+            echo("<p>Inventory: ".$row["inventory"]."</p>");
+            echo("<p>Num: ".$num."</p>");
+            echo("<p>Holding: ".$holding."</p>");
+            echo("<p>Craftmode: ".$craftmode."</p>");
+            echo("<p>Standing on: ".$map[$row["playerX"]][$row["playerY"]]."</p>");
+            echo("<p>Ui: ".$_SESSION["ui"]."</p>");
+            echo("<p>Memory usage: ". convert(memory_get_usage(true))."</p>");
             echo("</div>");
         }
     }   
 ?>
-</div>
-<?php include 'Javascript.php';?>

@@ -39,7 +39,8 @@
                             if ($row["name"]==ucfirst($_POST["name"])&&$row["password"]==hash('sha256',$_POST["password"]))
                             {
                                 $_SESSION["id"]=$row["id"];
-                                $_SESSION["showui"]=false;
+                                $_SESSION["ui"]="none";
+                                $_SESSION["debug_mode"]=false;
                                 header("location:phspel.php");
                             }
                         }
