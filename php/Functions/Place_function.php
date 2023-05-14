@@ -19,6 +19,12 @@
                     $map[$playerX][$playerY]=9;
                     $holding = "none";
                     break;
+                
+                case "anvil":
+                    remove_item_from_inventory($inventory,"anvil",1);
+                    $map[$playerX][$playerY]=16;
+                    $holding = "none";
+                    break;
             }
         }
 

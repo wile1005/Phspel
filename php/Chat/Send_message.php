@@ -5,21 +5,17 @@
 <?php
     include "Database/Database_login.php";
     include "Chat_filter.php";
-    $new_message = $_POST["message"];
-    if(!isset($_SESSION["old_message"]))
+
+    if(isset($_POST["message"]) && $_POST["message"] !== $_SESSION["old_message"])
     {
-        $_SESSION["old_message"]=$new_message;
+        $new_message = $_POST["message"];
+        $_SESSION["old_message"] = $new_message;
+
+        filter($new_message);
+
+        $stmt = $conn->prepare("INSERT INTO chat (`Message`) VALUES (?)");
+        $stmt->bind_param("s", $new_message);
+        $stmt->execute();
+        $stmt->close();
     }
-    if(isset($new_message)&&$new_message!="")
-    {
-        if($_SESSION["old_message"]!=$new_message)
-        {
-            $_SESSION["old_message"]=$new_message;
-            filter($new_message);
-            $stmt = $conn->prepare("INSERT INTO chat (`Message`) VALUES (?)");
-            $stmt->bind_param("s", $new_message);
-            $stmt->execute();
-            $stmt->close();
-        }
-    }
-?>
+?> 

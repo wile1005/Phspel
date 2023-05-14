@@ -21,6 +21,9 @@
             if($num>0)
             {
                 $num--;
+            }else
+            {
+                $num = count($inventory)-1;
             }
             break;
 
@@ -28,6 +31,9 @@
             if($num<count($inventory)-1)
             {
                 $num++;
+            }else
+            {
+                $num = 0;
             }
             break;
 

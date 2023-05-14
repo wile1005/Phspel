@@ -19,6 +19,14 @@
         <script src="https://code.jquery.com/jquery-latest.min.js" defer></script>
   </head>
   <body>
+    <header>
+        <div id ="logo">
+            <img src="../images/logo.png" alt="">
+        </div>
+        <div id ="github">
+            <a href="https://github.com/wile1005/Phspel"><img src="../images/github.png" alt=""></a>
+        </div>
+    </header>
     <main>
         <iframe src='Spel.php' title='description' class='Ui_layer'></iframe>
         <div id ="GFX" class='GFX_result Ui_layer'></div>

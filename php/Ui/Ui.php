@@ -112,6 +112,17 @@
                 echo"</li>";
             }
         }
+        echo"<h3>have:<h3>";
+        echo"<li>";
+        echo"<img src=../Images/Icons/".str_replace(" ","_",$recipes[$num][0]).".png>";
+        if(find_item($inventory,$recipes[$num][0])!="not found")
+        {
+            echo"<p>".$inventory[find_item($inventory,$recipes[$num][0])][1]."</p>";
+        }else
+        {
+            echo"<p>0</p>";
+        }
+        echo"</li>";
         break;
 
         case"escape":

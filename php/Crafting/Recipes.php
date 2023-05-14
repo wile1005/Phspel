@@ -39,8 +39,24 @@
 
     ["wood shovel","workbench",1,
     ["wood",5]],
+    
+    ["stone sword","workbench",1,
+    ["wood",5],
+    ["stone",5]],
+
+    ["stone hoe","workbench",1,
+    ["wood",5],
+    ["stone",5]],
 
     ["stone pickaxe","workbench",1,
+    ["wood",5],
+    ["stone",5]],
+
+    ["stone axe","workbench",1,
+    ["wood",5],
+    ["stone",5]],
+
+    ["stone shovel","workbench",1,
     ["wood",5],
     ["stone",5]],
 
@@ -49,7 +65,71 @@
 
     ["iron","furnace",1,
     ["iron ore",4],
-    ["coal",1]]
+    ["coal",1]],
+
+    ["gold","furnace",1,
+    ["gold ore",4],
+    ["coal",1]],
+    
+    ["iron sword","anvil",1,
+    ["iron",5],
+    ["wood",5]],
+
+    ["iron hoe","anvil",1,
+    ["iron",5],
+    ["wood",5]],
+
+    ["iron pickaxe","anvil",1,
+    ["iron",5],
+    ["wood",5]],
+
+    ["iron axe","anvil",1,
+    ["iron",5],
+    ["wood",5]],
+
+    ["iron shovel","anvil",1,
+    ["iron",5],
+    ["wood",5]],
+
+    ["gold sword","anvil",1,
+    ["gold",5],
+    ["wood",5]],
+
+    ["gold hoe","anvil",1,
+    ["gold",5],
+    ["wood",5]],
+
+    ["gold pickaxe","anvil",1,
+    ["gold",5],
+    ["wood",5]],
+
+    ["gold axe","anvil",1,
+    ["gold",5],
+    ["wood",5]],
+
+    ["gold shovel","anvil",1,
+    ["gold",5],
+    ["wood",5]],
+
+    ["diamond sword","anvil",1,
+    ["diamond",10],
+    ["wood",5]],
+
+    ["diamond hoe","anvil",1,
+    ["diamond",10],
+    ["wood",5]],
+
+    ["diamond pickaxe","anvil",1,
+    ["diamond",10],
+    ["wood",5]],
+
+    ["diamond axe","anvil",1,
+    ["diamond",10],
+    ["wood",5]],
+
+    ["diamond shovel","anvil",1,
+    ["diamond",10],
+    ["wood",5]]
 
     ]',true);
 ?>
