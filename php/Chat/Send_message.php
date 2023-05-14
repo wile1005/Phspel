@@ -6,9 +6,14 @@
     include "Database/Database_login.php";
     include "Chat_filter.php";
 
+    $sql = "SELECT `name` FROM `player` WHERE `player`.`id` = ".$_SESSION["id"]."";
+    $result = $conn->query($sql);
+    $row = $result -> fetch_array(MYSQLI_ASSOC);
+    $new_message = $row["name"];
+
     if(isset($_POST["message"]) && $_POST["message"] !== $_SESSION["old_message"])
     {
-        $new_message = $_POST["message"];
+        $new_message .= ": ".$_POST["message"];
         $_SESSION["old_message"] = $new_message;
 
         filter($new_message);
