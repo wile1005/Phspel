@@ -36,13 +36,20 @@
     echo"<h1>".$holding."</h1>";
     echo"</div>";
 
-    //displays chat
+    //gets chat messages
     $sql = "SELECT `message`,`id` FROM `chat` ORDER BY id DESC LIMIT 10";
     $result = $conn->query($sql);
-    echo "<div id='chat'>";
+    $chat=array();
     while ($row = $result->fetch_assoc()) 
     {
-        echo "<p>".$row["message"]."</p>";
+        array_push($chat,$row["message"]);
+    }
+
+    //displays chat
+    echo "<div id='chat'>";
+    for ($i = count($chat) - 1; $i >= 0; $i--) 
+    {
+        echo "<p>".$chat[$i]."</p>";
     }
     echo "</div>";
 
