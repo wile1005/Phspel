@@ -1,9 +1,6 @@
 Chat
     Chat_filter.php
-    Denna fil tar bort <> från strings
-
-    Chat.php
-    Denna fil skriver ut dom senaste 10 medelanden från chat databasen
+    Denna fil filtrerar bort vissa ord från chatten
 
     Send_message.php
     Denna fil lägger till medelande till chat databsen
@@ -13,13 +10,16 @@ Crafting
     Denna fil lägger till ett item/tool i inventoriet
 
     Crafting.php
-    Denna fil inehåller logicen som gör om craftin recept till items
+    Denna fil inehåller logiken som gör om craftin recept till items
 
     Find_item.php 
     Denna fil hittar indexet av ett item i inventory
 
     Recipes.php
     Denna fil inehåller alla crafting recept
+
+    Remove_item_from_inventory.php
+    Denna fil tar bort items från spelarens invenory 
 
 Database
     Database_login.php
@@ -76,6 +76,14 @@ Plugins
     Denna folder blir autoloadad av spel.php så robin kan lägga till sin jävla aligator
 
 Ui
+    Escape_menu.php
+
+    Move_ui.php
+
+    Options_menu.php
+
+    Set_ui.php
+
     Ui.php
     Denna fil skriver ut uin till spelet
 
@@ -139,8 +147,8 @@ Annat
     Initialize_new_player.php
     Denna fil nollställer spelarens variabler och tar en sedan till phspel.php
 
-    Javascript.php
-    denna fil inehåller all javascript (varför är det en php fil?)
+    Javascript.js
+    denna fil inehåller all javascript (javascript är för nördar 😎)
 
     Login.php
     I denna fil loggar man in i phspel

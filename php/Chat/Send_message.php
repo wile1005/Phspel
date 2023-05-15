@@ -13,10 +13,9 @@
 
     if(isset($_POST["message"]) && $_POST["message"] !== $_SESSION["old_message"])
     {
+        filter($_POST["message"]);
         $new_message .= ": ".$_POST["message"];
         $_SESSION["old_message"] = $new_message;
-
-        filter($new_message);
 
         $stmt = $conn->prepare("INSERT INTO chat (`Message`) VALUES (?)");
         $stmt->bind_param("s", $new_message);

@@ -30,6 +30,7 @@
     <main>
         <iframe src='Spel.php' title='description' class='Ui_layer'></iframe>
         <div id ="GFX" class='GFX_result Ui_layer'></div>
+        <div id ="Mobs" class='Mobs Ui_layer'></div>
         <div id ="ui" class='Ui Ui_layer'></div>
         <div id ="send_message" class='Ui_layer'><?php include "Chat/Send_message.php"; ?></div> 
     </main>   

@@ -53,18 +53,16 @@
                             //insert variables
                             $name = ucfirst($_POST["name"]);
                             $password = hash('sha256',$_POST["password"]);
-                            $img = "../images/blank_profile.png";
 
                             //inserts new user into database
                             $stmt = $conn->prepare("INSERT INTO player (`name`, `password`) VALUES (?, ?)");
                             $stmt->bind_param("ss", $name, $password);
                             $stmt->execute();
+                            $newPlayerId = $stmt->insert_id;
                             $stmt->close();
 
-                            //gets and sets user id
-                            $result = $conn->query($sql);
-                            $row = $result->fetch_assoc();
-                            $_SESSION["id"]=$row["id"];
+                            //sets user id
+                            $_SESSION["id"]=$newPlayerId;
                             $_SESSION["ui"]="none";
                             $_SESSION["debug_mode"]=false;
 
