@@ -4,6 +4,7 @@
         //checks if player can move to the tile
         switch ($map[$playerX][$playerY]) {
             case 2:
+            case 5:
             case 6:
             case 7:
             case 8:
