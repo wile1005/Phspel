@@ -20,7 +20,7 @@ function refresh_ui() {
         }
     });
 }
-timer = setInterval(refresh_ui,500);
+timer = setInterval(refresh_ui,100);
 
 
 //Event listner som tittar ifall tangenter på tangentbordet klickas på
