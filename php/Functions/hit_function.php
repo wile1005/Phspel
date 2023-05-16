@@ -21,7 +21,7 @@
 
             case"6":
                 //iron hit
-                if($holding=="stone pickaxe")
+                if($holding=="stone pickaxe"||$holding=="iron pickaxe"||$holding=="gold pickaxe")
                 {
                     background_return($map,$playerX,$playerY,$background);
                     add_item_to_inventory($inventory,"iron ore",rand(1,4));
@@ -30,7 +30,7 @@
             
             case"7":
                 //redstone ore hit
-                if($holding=="iron pickaxe")
+                if($holding=="iron pickaxe"||$holding=="gold pickaxe")
                 {
                     background_return($map,$playerX,$playerY,$background);
                     add_item_to_inventory($inventory,"stone",rand(4,6));
@@ -52,6 +52,15 @@
                 {
                     background_return($map,$playerX,$playerY,$background);
                     add_item_to_inventory($inventory,"stone",1);
+                }
+                break;
+            
+            case"gold_ore":
+                //wall hit
+                if($holding=="iron pickaxe"||$holding=="gold pickaxe")
+                {
+                    background_return($map,$playerX,$playerY,$background);
+                    add_item_to_inventory($inventory,"gold ore",rand(1,4));
                 }
                 break;
         }

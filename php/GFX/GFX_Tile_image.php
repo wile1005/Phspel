@@ -20,7 +20,16 @@
             17 => '../images/Stairs_down.png',
             18 => '../images/Stairs_up.png'
         ];
-        
+        switch($map[$X][$Y])
+        {
+            case"gold_ore":
+                return '<img src="../images/gold_ore.png" alt="" id="' . $background[$X][$Y] . '" />';
+                break;
+            
+            case"diamond_ore":
+                return '<img src="../images/diamond_ore.png" alt="" id="' . $background[$X][$Y] . '" />';
+                break;
+        }
         $image_path = isset($image_paths[$map[$X][$Y]]) ? $image_paths[$map[$X][$Y]] : '';
         
         return '<img src="' . $image_path . '" alt="" id="' . $background[$X][$Y] . '" />';

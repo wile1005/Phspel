@@ -68,8 +68,19 @@
                 //generates coal
                 Coal_generator($map,$worldsize,$coalsize,$coalfrequency);
 
-                //generates iron
-                Iron_generator($map,$worldsize,$ironsize,$ironfrequency);
+                if($layer == 2)
+                {
+                    //generates iron
+                    Iron_generator($map,$worldsize,$ironsize,$ironfrequency);
+                }elseif($layer == 3)
+                {
+                    //generates gold
+                    gold_generator($map,$worldsize,$goldsize,$goldfrequency);
+                }elseif($layer == 4)
+                {
+                    //generates diamonds
+                    diamond_generator($map,$worldsize,$diamondsize,$diamondfrequency);
+                }
 
                 $map = border_fix($map,$worldsize);
             }
@@ -93,6 +104,9 @@
                     {
                         $background[$X][$Y]="a4";
                     }elseif(in_range($map[$X][$Y],13,13))
+                    {
+                        $background[$X][$Y]="a2";
+                    }elseif($map[$X][$Y]=="gold_ore"&&$map[$X][$Y]=="diamond_ore")
                     {
                         $background[$X][$Y]="a2";
                     }

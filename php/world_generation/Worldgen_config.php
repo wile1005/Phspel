@@ -27,4 +27,12 @@
     //iron ore config
     $ironsize = 5;
     $ironfrequency = 40;
+
+    //gold ore config
+    $goldsize = 5;
+    $goldfrequency = 40;
+    
+    //diamond ore config
+    $diamondsize = 5;
+    $diamondfrequency = 40;
 ?>
