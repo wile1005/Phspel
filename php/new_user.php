@@ -47,30 +47,35 @@
                                 $user_exists = true;
                             }
                         }
-                        
                         if($user_exists!=true)
                         {
                             //insert variables
                             $name = ucfirst($_POST["name"]);
-                            $password = hash('sha256',$_POST["password"]);
+                            if (preg_match('/[^\w]/', $name) || $name !== strip_tags($name))
+                            {
+                                echo "Username is not fine 😪";
+                            }else
+                            {
+                                $password = hash('sha256',$_POST["password"]);
 
-                            //inserts new user into database
-                            $stmt = $conn->prepare("INSERT INTO player (`name`, `password`) VALUES (?, ?)");
-                            $stmt->bind_param("ss", $name, $password);
-                            $stmt->execute();
-                            $newPlayerId = $stmt->insert_id;
-                            $stmt->close();
+                                //inserts new user into database
+                                $stmt = $conn->prepare("INSERT INTO player (`name`, `password`) VALUES (?, ?)");
+                                $stmt->bind_param("ss", $name, $password);
+                                $stmt->execute();
+                                $newPlayerId = $stmt->insert_id;
+                                $stmt->close();
 
-                            //sets user id
-                            $_SESSION["id"]=$newPlayerId;
-                            $_SESSION["ui"]="none";
-                            $_SESSION["debug_mode"]=false;
+                                //sets user id
+                                $_SESSION["id"]=$newPlayerId;
+                                $_SESSION["ui"]="none";
+                                $_SESSION["debug_mode"]=false;
 
-                            //sends user to get player initializesed
-                            header("location:Initialize_new_player.php");
+                                //sends user to get player initializesed
+                                header("location:Initialize_new_player.php");
+                            }
                         }else
                         {
-                            echo "User is already taken";
+                            echo "Username is already taken";
                         }
                     }else
                     {

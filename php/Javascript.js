@@ -10,7 +10,7 @@ function refresh_gfx() {
 }
 timer = setInterval(refresh_gfx,100);
 
-//refreshar class ="result" (gfx.php) varje 100ms
+//refreshar class ="ui" (ui.php) varje 100ms
 function refresh_ui() {
     jQuery.ajax({
         url:'Ui/Ui.php',

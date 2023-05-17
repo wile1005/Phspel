@@ -106,7 +106,7 @@
                     }elseif(in_range($map[$X][$Y],13,13))
                     {
                         $background[$X][$Y]="a2";
-                    }elseif($map[$X][$Y]=="gold_ore"&&$map[$X][$Y]=="diamond_ore")
+                    }elseif($map[$X][$Y]=="gold_ore"||$map[$X][$Y]=="diamond_ore")
                     {
                         $background[$X][$Y]="a2";
                     }
