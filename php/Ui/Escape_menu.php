@@ -4,8 +4,7 @@
     (
         "Back to game",
         "Options",
-        "Logout",
-        "Reset"
+        "Logout"
     );
 
     function escape_menu($menu_items,&$num)
