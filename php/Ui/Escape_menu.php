@@ -4,6 +4,7 @@
     (
         "Back to game",
         "Options",
+        "Reset",
         "Logout"
     );
 
