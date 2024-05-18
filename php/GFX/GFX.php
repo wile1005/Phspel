@@ -1,8 +1,9 @@
 <div id="GFX">
     <?php
-        include "GFX_Tile_image.php";
         include "GFX_Player_image.php";
         include "../Database/Database_login.php";
+        include "../../Assets/Tiles/Tiles.php";
+        include "../../Assets/Tiles/Background_tiles.php";
 
         session_start();
 
@@ -27,20 +28,23 @@
         $result = $conn->query($sql);
         $row = $result -> fetch_array(MYSQLI_ASSOC);
         $map = json_decode($row["map"]);
-        $background = json_decode($row["background"]);
+        $background_map = json_decode($row["background"]);
         
 
         //SPELARENS SYNFÄLLT
-        $output = "";
+        $terrain = "<div id='terrain'>";
+        $background = "<div id='background'>";
 
         //Grafikens höjd
-        for ($X=-3+$playerX; $X < 4+$playerX; $X++)
+        $viewheight = 8;
+        for ($X=-($viewheight/2)+1+$playerX; $X < ($viewheight/2)+$playerX; $X++)
         {
             //Grafikens bred
-            for ($Y=-7+$playerY; $Y < 8+$playerY; $Y++)
+            $viewwidth = 16;
+            for ($Y=-($viewwidth/2)+1+$playerY; $Y < ($viewwidth/2)+$playerY; $Y++)
             {
                 //ÄR SYNFÄLLT UTANFÖR ARRAY???
-                if ($X > -1 && $Y > -1 && $X < count($map) && $Y < count($map[1]))
+                if (isset($map[$X][$Y]))
                 {
                     //kollar igenom alla spelare
                     $sql = "SELECT `playerX`,`playerY`,`craftmode`,`id`,`floor` FROM `player`;";
@@ -49,24 +53,41 @@
                     {
                         $playerprint = false;
                         //om spelare finns på X oxh y cordinaten skriv ut spelaren
-                        if ($row["playerX"]==$X && $row["playerY"]==$Y && $map[$X][$Y]!=8 && $row["floor"]==$current_floor)
+                        if ($row["playerX"]==(int)$X && $row["playerY"]==(int)$Y && $map[$X][$Y]!=8 && $row["floor"]==$current_floor)
                         {
-                            $output .= Player_image($map, $background, $X, $Y);
+                            $terrain .= Player_image($map, (int)$X, (int)$Y);
+                            $background .= get_background_texture($background_tiles, $background_map[$X][$Y]);
                             $playerprint = true;
                             break;
                         }
                     }
                     if (!$playerprint)
                     {
-                        $output .= Tile_image($map, $background, $X, $Y);
+                        $terrain .= get_terrain_texture($tiles, $map[$X][$Y]);
+                        $background .= get_background_texture($background_tiles, $background_map[$X][$Y]);
                     }
+                }else
+                {
+                    $terrain .= '<img src="../assets/images/background_tiles/air.png"/>';
+                    $background .= '<img src="../assets/images/background_tiles/air.png"/>';
                 }
             }
-            $output.= "<br>";
+            $terrain.= "<br>";
+            $background.= "<br>";
         }
         $sql = "UPDATE `player` SET `craftmode` = '".$craftmode."' WHERE `player`.`id` = ".$_SESSION["id"].";";
         $result = $conn->query($sql);
 
-        echo $output;
+        echo $terrain."</div>";
+        echo $background."</div>";
+
+        function get_terrain_texture($tiles, $tileId)
+        {
+            return '<img src="../assets/images/tiles/'.$tiles[$tileId]["texture"].'"/>';
+        }
+        function get_background_texture($tiles, $tileId)
+        {
+            return '<img src="../assets/images/background_tiles/'.$tiles[$tileId]["texture"].'"/>';
+        }
     ?>
 </div>

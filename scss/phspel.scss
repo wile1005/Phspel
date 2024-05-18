@@ -71,10 +71,6 @@ body
                 bottom: 70px;
             }
         }
-        #gfx
-        {
-            
-        }
         #ui
         {
             #chat
@@ -140,6 +136,14 @@ body
     }
 }
 
+#GFX
+{
+    #terrain
+    {
+        position: absolute;
+    }
+}
+
 .button
 {
     padding: 2px;
@@ -151,24 +155,4 @@ body
 {
     background-color: darken($Secondary_color, 10%);
     border: black solid 1px;
-}
-
-#a1
-{
-  background-color: #4b692f;
-}
-
-#a2
-{
-  background-color: #696b6a;
-}
-
-#a3
-{
-  background-color: #3f3f74;
-}
-
-#a4
-{
-  background-color: #eec39a;
 }

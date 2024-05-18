@@ -9,16 +9,16 @@
     $cavefrequency = 5;
 
     //Mountain config
-    $mountainsize = 25;
-    $mountainamount = 2;
+    $mountainsize = 1;
+    $mountainfrequency = 2;
 
     //Desert config
     $desertsize = 40;
-    $desertamount = 2;
+    $desertfrequency = 2;
 
     //ocean config
-    $oceansize = 25;
-    $oceanamount = 2;
+    $oceansize = 20;
+    $oceanfrequency= 2;
 
     //coal ore config
     $coalsize = 5;

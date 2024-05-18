@@ -51,7 +51,7 @@
                         }
                     }
                 }
-                $sql = "UPDATE `world` SET `map` = '".json_encode($map[$layer])."' WHERE `world`.`id` = ".$layer.";";
+                $sql = "UPDATE `map` SET `map` = '".json_encode($map[$layer])."' WHERE `map`.`id` = ".$layer.";";
                 $result = $conn->query($sql);
             }
         }

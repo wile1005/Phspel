@@ -27,7 +27,7 @@
     echo"<div id='healthbar'>";
     for($i=0; $i < 10; $i++)
     {
-        echo"<img src=../Images/Icons/full_heart.png>";
+        echo"<img src=../Assets/Images/Icons/full_heart.png>";
     }
     echo"</div>";
 
@@ -37,20 +37,20 @@
     echo"</div>";
 
     //gets chat messages
-    $sql = "SELECT `message`,`id` FROM `chat` ORDER BY id DESC LIMIT 10";
-    $result = $conn->query($sql);
-    $chat=array();
-    while ($row = $result->fetch_assoc()) 
-    {
-        array_push($chat,$row["message"]);
-    }
+    //$sql = "SELECT `message`,`id` FROM `chat` ORDER BY id DESC LIMIT 10";
+    //$result = $conn->query($sql);
+    //$chat=array();
+    //while ($row = $result->fetch_assoc()) 
+    //{
+    //    array_push($chat,$row["message"]);
+    //}
 
     //displays chat
     echo "<div id='chat'>";
-    for ($i = count($chat) - 1; $i >= 0; $i--) 
-    {
-        echo "<p>".$chat[$i]."</p>";
-    }
+    //for ($i = count($chat) - 1; $i >= 0; $i--) 
+    //{
+    //    echo "<p>".$chat[$i]."</p>";
+    //}
     echo "</div>";
 
     //skriver ut rätt ui beroende på session ui
@@ -65,7 +65,7 @@
             if($i>-1&&$i<$num+3)
             {
                 echo"<li>";
-                echo"<img src=../Images/Icons/".str_replace(" ","_",$inventory[$i][0]).".png>";
+                echo"<img src=../Assets//Images/Items/".str_replace(" ","_",$inventory[$i][0]).".png>";
                 //skriver ut om itemet är selectat
                 if($i == $num)
                 {
@@ -88,7 +88,7 @@
             if($i>-1&&$i<$num+3&&$recipes[$i][1]==$craftmode)
             {
                 echo"<li>";
-                echo"<img src=../Images/Icons/".str_replace(" ","_",$recipes[$i][0]).".png>";
+                echo"<img src=../Assets/Images/Items/".str_replace(" ","_",$recipes[$i][0]).".png>";
                 //skriver ut om receptet är selectat
                 if($i == $num)
                 {
@@ -108,13 +108,13 @@
             if(isset($required_item)&&find_item($inventory,$required_item)!="not found")
             {
                 echo"<li>";
-                echo"<img src=../Images/Icons/".str_replace(" ","_",$required_item).".png>";
+                echo"<img src=../Assets/Images/Items/".str_replace(" ","_",$required_item).".png>";
                 echo"<p>".$inventory[find_item($inventory,$required_item)][1]."/".$required_amount."</p>";
                 echo"</li>";
             }elseif(isset($required_item))
             {
                 echo"<li>";
-                echo"<img src=../Images/Icons/".str_replace(" ","_",$required_item).".png>";
+                echo"<img src=../Assets/Images/Items/".str_replace(" ","_",$required_item).".png>";
                 echo"<p>0/".$required_amount."</p>";
                 echo"</li>";
             }
